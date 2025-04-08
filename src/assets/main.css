@@ -1,2 +1,11 @@
-@import './base.css';
+/*@import './base.css';
 
+.ant-table-thead > tr > th {
+    background-color: #f2fdf2 !important;
+    font-weight: bold !important;
+}
+
+/* Специфичный селектор, который точно перебьет Ant Design
+.ant-table-thead > tr > th span {
+    font-weight: bold !important;
+}*/

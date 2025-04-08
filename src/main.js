@@ -6,6 +6,10 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
+import 'ant-design-vue/dist/reset.css';
+// Подключаем Air datepicker
+import 'air-datepicker/air-datepicker.css';
+
 const isAdmin = location.pathname.startsWith('/admin');  // Проверяем, находится ли пользователь в админке
 
 const loadApp = async () => {
