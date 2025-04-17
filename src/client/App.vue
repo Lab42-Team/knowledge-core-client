@@ -3,7 +3,7 @@
     <h1>Клиентская часть</h1>
     <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/about">About</RouterLink>
-
+    <RouterLink to="/login">Login</RouterLink>
     <button type="button" class="btn btn-primary" @click="goToAdmin">Перейти в админскую часть</button>
 
     <router-view />

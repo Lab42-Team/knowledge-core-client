@@ -1,6 +1,19 @@
 <script>
+import {getUser, login} from '@/client/api/auth'
+
 export default {
-  name: "DashboardView"
+  name: "DashboardView",
+
+  mounted() {
+    this.loadUser();
+  },
+
+  methods: {
+    async loadUser() {
+      const response = await getUser()
+      console.log(response);
+    },
+  }
 }
 </script>
 

@@ -2,19 +2,22 @@
   <nav class="navbar">
     <ul class="navbar-list">
       <li class="navbar-item"><a href="#" @click="goToHome">Home</a></li>
-      <li class="navbar-item"><a href="#" @click="goToNews">News</a></li>
+
+      <li class="navbar-item">
+        <router-link :to="{ name: 'NewsList' }" exact-active-class="active-link">News</router-link>
+      </li>
 
       <li class="navbar-item"><a href="#" @click="goToClient">Перейти в клиентскую часть</a></li>
+
+      <li class="navbar-item"><a href="#" @click="btnLogout">Выход</a></li>
     </ul>
   </nav>
-
-
-
-
 </template>
 
-
 <script>
+
+import { logout } from '@/client/api/auth'
+
 export default {
   name: "Navbar",
 
@@ -26,8 +29,15 @@ export default {
     goToHome() {
       this.$router.push('/');
     },
-    goToNews() {
-      this.$router.push('/news');
+
+    async btnLogout() {
+      try {
+        await logout()
+        localStorage.removeItem('token')
+        window.location.href = '/login'
+      } catch (error) {
+        console.error('Ошибка при выходе:', error)
+      }
     },
   },
 }
