@@ -1,11 +1,9 @@
-import axios from 'axios';
-
-const API_URL = 'http://127.0.0.9/api/v1/news'; // Заменить на свой API URL
+import api from '@/client/api/axios' // импорт заранее настроенного axios-инстанса
 
 //получение списка новостей
 export const getNews = async () => {
     try {
-        const response = await axios.get(API_URL);
+        const response = await api.get('/v1/news');
         const news = response.data;
 
         // Запрашиваем названия статусов и добавляем их к новостям
@@ -27,7 +25,7 @@ export const getNews = async () => {
 //создание новости
 export const createNews = async (news) => {
     try {
-        const response = await axios.post(API_URL, news);
+        const response = await api.post('/v1/news', news);
         return response.data;
     } catch (error) {
         console.error('Ошибка при создании новости:', error);
@@ -38,7 +36,7 @@ export const createNews = async (news) => {
 //просмотр новости
 export const getNewsById = async (id) => {
     try {
-        const response = await axios.get(`${API_URL}/${id}`);
+        const response = await api.get(`/v1/news/${id}`);
         return response.data;
     } catch (error) {
         console.error('Ошибка при получении новости по id:', error);
@@ -49,7 +47,7 @@ export const getNewsById = async (id) => {
 //редактирование новости
 export const updateNews = async (id, news) => {
     try {
-        const response = await axios.patch(`${API_URL}/${id}`, news);
+        const response = await api.patch(`/v1/news/${id}`, news);
         return response.data;
     } catch (error) {
         console.error('Ошибка при редактировании новости:', error);
@@ -60,7 +58,7 @@ export const updateNews = async (id, news) => {
 //удаление новости
 export const deleteNews = async (id) => {
     try {
-        await axios.delete(`${API_URL}/${id}`);
+        await api.delete(`/v1/news/${id}`);
     } catch (error) {
         console.error('Ошибка при удалении новости:', error);
         throw error;
@@ -69,7 +67,7 @@ export const deleteNews = async (id) => {
 
 export const getNewsStatuses = async () => {
     try {
-        const response = await axios.get(`${API_URL}/get-statuses`);
+        const response = await api.get(`/v1/news/get-statuses`);
         return response.data.statuses;
     } catch (error) {
         console.error('Ошибка получения статусов:', error);
@@ -79,7 +77,7 @@ export const getNewsStatuses = async () => {
 
 export const getNewsStatusName = async (status) => {
     try {
-        const response = await axios.get(`${API_URL}/get-status-name/${status}`);
+        const response = await api.get(`/v1/news/get-status-name/${status}`);
         return response.data.statusName;
     } catch (error) {
         console.error('Ошибка получения статусов:', error);

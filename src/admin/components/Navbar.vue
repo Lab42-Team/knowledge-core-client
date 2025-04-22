@@ -1,7 +1,9 @@
 <template>
   <nav class="navbar">
     <ul class="navbar-list">
-      <li class="navbar-item"><a href="#" @click="goToHome">Home</a></li>
+      <li class="navbar-item">
+        <router-link :to="{ name: 'dashboard' }" exact-active-class="active-link">Home</router-link>
+      </li>
 
       <li class="navbar-item">
         <router-link :to="{ name: 'NewsList' }" exact-active-class="active-link">News</router-link>
@@ -25,9 +27,6 @@ export default {
     goToClient() {
       // переход на клиентскую часть с перезагрузкой страницы
       window.location.href = '/';
-    },
-    goToHome() {
-      this.$router.push('/');
     },
 
     async btnLogout() {

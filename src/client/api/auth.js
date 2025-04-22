@@ -1,23 +1,10 @@
-import axios from 'axios';
-
-const API_URL = 'http://127.0.0.9/api/auth'; // Заменить на свой API URL
-
-const API = axios.create({
-    baseURL: API_URL,
-})
-
-// Добавление токена авторизации ко всем запросам
-API.interceptors.request.use(config => {
-    const token = localStorage.getItem('token')
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`
-    }
-    return config
-})
+import api from './axios'
 
 export const login = async (data) => {
     try {
-        const response = await API.post('/login', data)
+        const response = await api.post('/auth/login', data)
+        const token = response.data.access_token
+        localStorage.setItem('token', token)
         return response.data
     } catch (error) {
         console.error('Login error:', error)
@@ -27,7 +14,8 @@ export const login = async (data) => {
 
 export const logout = async () => {
     try {
-        const response = await API.post('/logout')
+        const response = await api.post('/auth/logout')
+        localStorage.removeItem('token')
         return response.data
     } catch (error) {
         console.error('Logout error:', error)
@@ -35,19 +23,21 @@ export const logout = async () => {
     }
 }
 
-export const refresh = async () => {
-    try {
-        const response = await API.post('/refresh')
-        return response.data
-    } catch (error) {
-        console.error('Token refresh error:', error)
-        throw error.response?.data || { message: 'Token refresh failed' }
-    }
-}
+//export const refresh = async () => {
+//    try {
+//        const response = await api.post('/auth/refresh')
+//        const newToken = response.data.access_token
+//        localStorage.setItem('token', newToken)
+//        return response.data
+//    } catch (error) {
+//        console.error('Token refresh error:', error)
+//        throw error.response?.data || { message: 'Token refresh failed' }
+//    }
+//}
 
 export const getUser = async () => {
     try {
-        const response = await API.get('/me')
+        const response = await api.get('/auth/me')
         return response.data
     } catch (error) {
         console.error('Get user error:', error)
