@@ -4,18 +4,7 @@ import api from '@/client/api/axios' // импорт заранее настро
 export const getNews = async () => {
     try {
         const response = await api.get('/v1/news');
-        const news = response.data;
-
-        // Запрашиваем названия статусов и добавляем их к новостям
-        const newsStatusName = await Promise.all(
-            news.map(async (item) => {
-                const statusName = await getNewsStatusName(item.status);
-                return { ...item, statusName };
-            })
-        );
-
-        return newsStatusName;
-
+        return response.data;
     } catch (error) {
         console.error('Ошибка получения данных:', error);
         throw error;
@@ -75,12 +64,3 @@ export const getNewsStatuses = async () => {
     }
 };
 
-export const getNewsStatusName = async (status) => {
-    try {
-        const response = await api.get(`/v1/news/get-status-name/${status}`);
-        return response.data.statusName;
-    } catch (error) {
-        console.error('Ошибка получения статусов:', error);
-        throw error;
-    }
-};
