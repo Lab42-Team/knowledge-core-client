@@ -21,7 +21,7 @@
 
 <script>
 
-import { deleteNews } from '@/admin/api/news';
+import {deleteNews, getNewsStatuses} from '@/admin/api/news';
 import dayjs from "dayjs";
 import { Divider, Table, Input, Button } from 'ant-design-vue'; // Импортируем компоненты
 import { h } from 'vue';
@@ -37,61 +37,14 @@ export default {
 
   data() {
     return {
+      statuses: {},
       searchText: '',
-      columns: [
-        { title: 'ID', dataIndex: 'id', key: 'id' },
-        {
-          title: 'Название',
-          dataIndex: 'name',
-          key: 'name',
-          sorter: (a, b) => a.name.localeCompare(b.name),
-          filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
-            return h('div', { style: 'padding: 8px' }, [
-              h(Input, {
-                value: selectedKeys[0],
-                onInput: e => setSelectedKeys(e.target.value ? [e.target.value] : []),
-                placeholder: 'Поиск по названию',
-                style: 'width: 188px; margin-bottom: 8px; display: block',
-                onPressEnter: confirm
-              }),
-              h(Button, {
-                type: 'primary',
-                size: 'small',
-                style: 'width: 90px; margin-right: 8px',
-                onClick: confirm
-              }, () => 'Поиск'),
-              h(Button, {
-                size: 'small',
-                style: 'width: 90px',
-                onClick: clearFilters
-              }, () => 'Сброс')
-            ]);
-          },
-          onFilter: (value, record) => record.name.toLowerCase().includes(value.toLowerCase()),
-          filterIcon: filtered => h('i', {
-            class: `bi bi-search`
-          }),
-          width: 200 // Фиксированная ширина для названия
-        },
-        { title: 'Описание', dataIndex: 'description', key: 'description' },
-        {
-          title: 'Статус',
-          dataIndex: 'statusName',
-          key: 'statusName',
-          customHeaderCell: () => ({
-            style: { fontWeight: 'bold' } // Делаем заголовок жирным
-          }),
-        },
-        {
-          title: 'Дата',
-          dataIndex: 'date',
-          key: 'date',
-          sorter: (a, b) => new Date(a.date) - new Date(b.date), // Добавляем сортировку по дате
-          customRender: ({ text }) => dayjs(text).format('DD-MM-YYYY HH:mm'),
-        },
-        { title: 'Действия', key: 'action' },
-      ],
+      columns: [],
     };
+  },
+
+  async mounted() {
+    await this.fillingColumns();
   },
 
   components: {
@@ -102,6 +55,82 @@ export default {
   },
 
   methods: {
+    async fillingColumns() {
+      try {
+        const statuses = await getNewsStatuses(); // получение статусов
+        this.statuses = statuses;
+
+        // создание фильтра
+        const filters = Object.entries(statuses).map(([value, text]) => ({
+          text,
+          value: Number(value),
+        }));
+
+        // Заполнение колонок
+        this.columns = [
+          { title: 'ID', dataIndex: 'id', key: 'id' },
+          {
+            title: 'Название',
+            dataIndex: 'name',
+            key: 'name',
+            sorter: (a, b) => a.name.localeCompare(b.name),
+            filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
+              return h('div', { style: 'padding: 8px' }, [
+                h(Input, {
+                  value: selectedKeys[0],
+                  onInput: e => setSelectedKeys(e.target.value ? [e.target.value] : []),
+                  placeholder: 'Поиск по названию',
+                  style: 'width: 188px; margin-bottom: 8px; display: block',
+                  onPressEnter: confirm
+                }),
+                h(Button, {
+                  type: 'primary',
+                  size: 'small',
+                  style: 'width: 90px; margin-right: 8px',
+                  onClick: confirm
+                }, () => 'Поиск'),
+                h(Button, {
+                  size: 'small',
+                  style: 'width: 90px',
+                  onClick: clearFilters
+                }, () => 'Сброс')
+              ]);
+            },
+            onFilter: (value, record) => record.name.toLowerCase().includes(value.toLowerCase()),
+            filterIcon: filtered => h('i', {
+              class: `bi bi-search`
+            }),
+            width: 200 // Фиксированная ширина для названия
+          },
+          { title: 'Описание', dataIndex: 'description', key: 'description' },
+          {
+            title: 'Статус',
+            dataIndex: 'status',
+            key: 'status',
+            filters: filters,
+            onFilter: (value, record) => Number(record.status) === Number(value),
+            customRender: ({ text }) => statuses[text] || 'Неизвестно',
+            customHeaderCell: () => ({
+              style: { fontWeight: 'bold' },
+            }),
+          },
+          {
+            title: 'Дата',
+            dataIndex: 'date',
+            key: 'date',
+            sorter: (a, b) => new Date(a.date) - new Date(b.date), // Добавляем сортировку по дате
+            customRender: ({ text }) => dayjs(text).format('DD-MM-YYYY HH:mm'),
+            customHeaderCell: () => ({
+              style: { fontWeight: 'bold' } // Делаем заголовок жирным
+            }),
+          },
+          { title: 'Действия', key: 'action' },
+        ];
+      } catch (error) {
+        console.error('Ошибка заполнения колонок:', error);
+      }
+    },
+
     // Переход на страницу для удаления новости
     goToShowPage(newsItem) {
       console.log("Просмотр записи:", newsItem);
