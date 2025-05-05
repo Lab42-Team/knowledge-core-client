@@ -1,7 +1,7 @@
 <template>
 
   <!-- Рабочая таблица -->
-  <a-table :columns="columns" :data-source="news" row-key="id" :pagination="{ pageSize: 5 }" :sorter="true">
+  <a-table v-if="columns.length" :columns="columns" :data-source="news" row-key="id" :pagination="{ pageSize: 5 }" :sorter="true">
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'action'">
         <router-link :to="{ name: 'NewsShow', params: { id: record.id }}" class="btn btn-outline-primary">

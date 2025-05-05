@@ -10,8 +10,10 @@ export default {
 
   methods: {
     async loadUser() {
-      const response = await getUser()
-      console.log(response);
+      await getUser()
+      //вывод пользователя
+      //const response = await getUser()
+      //console.log(response);
     },
   }
 }
