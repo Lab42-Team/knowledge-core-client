@@ -151,7 +151,7 @@ export default {
 
       try {
         console.log("да удалить");
-        await deleteNews(newsItem.id);
+        await deleteNews(newsItem);
         this.$parent.loadNews();
       } catch (error) {
         console.error('Ошибка при удалении новости:', error);

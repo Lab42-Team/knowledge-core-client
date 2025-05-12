@@ -8,11 +8,9 @@
 </template>
 
 <script>
-import NewsTable from "@/admin/components/News/Table.vue";
 
 export default {
   name: "NewsLayout" ,
-  components: {NewsTable}
 }
 </script>
 
