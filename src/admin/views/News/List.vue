@@ -11,7 +11,7 @@
 <script>
 
 import { getNews } from '@/admin/api/news';
-import NewsTable from '@/admin/components/News/Table.vue';
+import NewsTable from './Table.vue';
 
 export default {
   name: "NewsList",
