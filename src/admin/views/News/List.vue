@@ -1,38 +1,46 @@
 <template>
-  <div>
-    <button type="button" class="btn btn-primary" @click="goToNewsCreate">Создать новость</button>
-  </div>
-
-  <div class="card-body">
-    <NewsTable :news="news" />
-  </div>
+  <n-space vertical size="large">
+    <n-button type="primary" @click="goToNewsCreate">
+      Создать новость
+    </n-button>
+    <n-card size="medium" :bordered="true" class="news-card">
+      <news-table :news="news" />
+    </n-card>
+  </n-space>
 </template>
 
 <script>
-
 import { getNews } from '@/admin/api/news';
 import NewsTable from './Table.vue';
+import { NButton, NCard, NSpace } from 'naive-ui';
 
 export default {
   name: "NewsList",
 
   components: {
     NewsTable,
+    NButton,
+    NCard,
+    NSpace,
   },
 
   data() {
     return {
       news: [],
-
     };
   },
+
   mounted() {
     this.loadNews();
   },
 
   methods: {
     async loadNews() {
-      this.news = await getNews();
+      try {
+        this.news = await getNews();
+      } catch (error) {
+        console.error('Ошибка при загрузке новостей:', error);
+      }
     },
 
     goToNewsCreate() {
@@ -44,10 +52,19 @@ export default {
 
 <style scoped>
 
-
-/* Стили для тела */
-.card-body {
-  padding: 20px;
+.news-card {
+  background-color: #ffffff; /* Фон*/
+  border-radius: 8px; /* Углы */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Тень */
 }
 
+:deep(.ant-table-wrapper) {
+  background-color: #ffffff;/* Фон*/
+  border-radius: 8px;/* Углы */
+  overflow: hidden;/* Скрытие переполнения */
+}
+
+:deep(.ant-table) {
+  background-color: #ffffff;/* Фон*/
+}
 </style>

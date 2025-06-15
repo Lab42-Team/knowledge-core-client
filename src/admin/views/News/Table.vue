@@ -1,32 +1,34 @@
 <template>
-
-  <!-- Рабочая таблица -->
-  <a-table v-if="columns.length" :columns="columns" :data-source="news" row-key="id" :pagination="{ pageSize: 5 }" :sorter="true">
-    <template #bodyCell="{ column, record }">
-      <template v-if="column.key === 'action'">
-        <router-link :to="{ name: 'NewsShow', params: { id: record.id }}" class="btn btn-outline-primary">
-          <i class="bi bi-eye"></i> Просмотр
-        </router-link>
-        <router-link :to="{ name: 'NewsEdit', params: { id: record.id }}" class="btn btn-outline-primary">
-          <i class="bi bi-pencil"></i> Изменить
-        </router-link>
-        <a @click.prevent="deleteNews(record.id)" href="#" class="btn btn-outline-danger">
-          <i class="bi bi-trash"></i> Удалить
-        </a>
+  <n-card size="medium" :bordered="true" class="news-table">
+    <a-table v-if="columns.length" :columns="columns" :data-source="news" row-key="id" :pagination="{ pageSize: 10 }" :sorter="true">
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'action'">
+          <n-space>
+            <n-button type="primary"size="small" class="action-button" title="Просмотр" @click="$router.push({ name: 'NewsShow', params: { id: record.id } })">
+              <i class="bi bi-eye"></i>
+            </n-button>
+            <n-button type="primary" size="small" class="action-button" title="Изменить" @click="$router.push({ name: 'NewsEdit', params: { id: record.id } })">
+              <i class="bi bi-pencil"></i>
+            </n-button>
+            <n-button type="error" size="small" class="action-button" title="Удалить" @click="deleteNews(record.id)">
+              <i class="bi bi-trash"></i>
+            </n-button>
+          </n-space>
+        </template>
       </template>
-    </template>
-  </a-table>
-
+    </a-table>
+  </n-card>
 </template>
 
 <script>
-
-import {deleteNews, getNewsStatuses} from '@/admin/api/news';
-import dayjs from "dayjs";
-import { Divider, Table, Input, Button } from 'ant-design-vue'; // Импортируем компоненты
+import { deleteNews, getNewsStatuses } from '@/admin/api/news';
+import dayjs from 'dayjs';
+import { Divider, Table, Input, Button } from 'ant-design-vue';
 import { h } from 'vue';
+import { NCard, NButton, NSpace } from 'naive-ui';
+
 export default {
-  name: "Table",
+  name: 'NewsTable',
 
   props: {
     news: {
@@ -51,162 +53,307 @@ export default {
     'a-button': Button,
     'a-divider': Divider,
     'a-table': Table,
-    'a-input': Input
+    'a-input': Input,
+    NCard,
+    NButton,
+    NSpace,
   },
 
   methods: {
+    // Асинхронное заполнение таблицы
     async fillingColumns() {
       try {
-        const statuses = await getNewsStatuses(); // получение статусов
+        // Получение статусов новостей через API
+        const statuses = await getNewsStatuses();
         this.statuses = statuses;
 
-        // создание фильтра
+        // Создание массива фильтров для колонки
         const filters = Object.entries(statuses).map(([value, text]) => ({
+          // Текст фильтра
           text,
+          // Значение фильтра
           value: Number(value),
         }));
 
-        // Заполнение колонок
+        // Создание массива колонок для таблицы
         this.columns = [
-          { title: 'ID', dataIndex: 'id', key: 'id' },
+          { title: 'ID', dataIndex: 'id', key: 'id', width: 64 },
           {
             title: 'Название',
             dataIndex: 'name',
             key: 'name',
+            // Сортировка по алфавиту
             sorter: (a, b) => a.name.localeCompare(b.name),
+            // Выпадающий фильтр
             filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
-              return h('div', { style: 'padding: 8px' }, [
+              return h('div', { style: 'padding: 8px' }, /* Контейнер фильтра */ [
                 h(Input, {
-                  value: selectedKeys[0],
-                  onInput: e => setSelectedKeys(e.target.value ? [e.target.value] : []),
-                  placeholder: 'Поиск по названию',
-                  style: 'width: 188px; margin-bottom: 8px; display: block',
-                  onPressEnter: confirm
+                  type: 'text',// Поле — текстовый ввод
+                  value: selectedKeys[0],// Текущее значение фильтра
+                  onInput: e => setSelectedKeys(e.target.value ? [e.target.value] : []),// Обработчик ввода для обновления фильтра
+                  placeholder: 'Введите название',// Плейсхолдер для поля ввода
+                  style: 'width: 188px; margin-bottom: 8px; display: block',// Стиль для поля ввода
+                  onPressEnter: () => confirm(),// Нажатие Enter
                 }),
-                h(Button, {
-                  type: 'primary',
-                  size: 'small',
-                  style: 'width: 90px; margin-right: 8px',
-                  onClick: confirm
-                }, () => 'Поиск'),
-                h(Button, {
-                  size: 'small',
-                  style: 'width: 90px',
-                  onClick: clearFilters
-                }, () => 'Сброс')
+                h('div', { style: 'display: flex; justify-content: space-between' }, /* Контейнер кнопок */ [
+                  h(Button, {
+                    type: 'primary',// Тип кнопки
+                    size: 'small',// Размер кнопки
+                    onClick: () => confirm(),// Обработчик клика для поиска
+                  }, () => 'Поиск'), // Текст кнопки
+                  h(Button, {
+                    size: 'small',// Размер кнопки
+                    onClick: () => clearFilters(),// Обработчик клика для сброса фильтров
+                  }, () => 'Сброс'), // Текст кнопки
+                ]),
               ]);
             },
-            onFilter: (value, record) => record.name.toLowerCase().includes(value.toLowerCase()),
-            filterIcon: filtered => h('i', {
-              class: `bi bi-search`
-            }),
-            width: 200 // Фиксированная ширина для названия
+            // Фильтрация по названию
+            onFilter: (value, record) => {
+              // Проверяем, что record.name существует и является строкой
+              if (typeof record.name !== 'string') return false;
+              // Сравниваем название (регистронезависимо) с введённым значением
+              return record.name.toLowerCase().includes(value.toLowerCase());
+            },
+            // Иконка фильтра, меняется в зависимости от состояния
+            filterIcon: filtered => h('i', { class: filtered ? 'bi bi-funnel-fill' : 'bi bi-funnel' }),
+            // Ширина колонки
+            width: 200,
           },
-          { title: 'Описание', dataIndex: 'description', key: 'description' },
+          { title: 'Описание', dataIndex: 'description', key: 'description', width: 300 },
           {
             title: 'Статус',
             dataIndex: 'status',
             key: 'status',
-            filters: filters,
+            filters,
             onFilter: (value, record) => Number(record.status) === Number(value),
-            customRender: ({ text }) => statuses[text] || 'Неизвестно',
-            customHeaderCell: () => ({
-              style: { fontWeight: 'bold' },
-            }),
+            customRender: ({ text }) => this.statuses[text] || 'Неизвестно',
+            width: 150,
           },
           {
             title: 'Дата',
             dataIndex: 'date',
             key: 'date',
-            sorter: (a, b) => new Date(a.date) - new Date(b.date), // Добавляем сортировку по дате
+            sorter: (a, b) => new Date(a.date) - new Date(b.date),
+            // Форматирование даты с помощью dayjs
             customRender: ({ text }) => dayjs(text).format('DD-MM-YYYY HH:mm'),
-            customHeaderCell: () => ({
-              style: { fontWeight: 'bold' } // Делаем заголовок жирным
-            }),
+            width: 180,
           },
-          { title: 'Действия', key: 'action' },
+          {
+            title: 'Действия',
+            key: 'action',
+            width: 120,
+          },
         ];
+        console.debug('Колонки сформированы:', this.columns);
       } catch (error) {
         console.error('Ошибка заполнения колонок:', error);
       }
     },
 
-    // Переход на страницу для удаления новости
-    goToShowPage(newsItem) {
-      console.log("Просмотр записи:", newsItem);
-      this.$router.push({ name: 'NewsShow', params: { id: newsItem.id } });
-    },
-
-    // Переход на страницу для редактирования новости
-    showEditModal(newsItem) {
-      console.log('Редактировать запись:', newsItem);
-      this.$router.push({ name: 'NewsEdit', params: { id: newsItem.id } });
-    },
-
-
-    // Метод удаления новости
-    async deleteNews(newsItem) {
+    // Удаления новости
+    async deleteNews(id) {
+      // Запрос подтверждения удаления
       const confirmDelete = confirm('Вы уверены, что хотите удалить эту новость?');
-      if (!confirmDelete) return;  // Если пользователь отменил, не делаем ничего
+      // Если отмена тогда выход
+      if (!confirmDelete) return;
 
       try {
-        console.log("да удалить");
-        await deleteNews(newsItem);
+        console.debug('Удаление новости ID:', id);
+        // Вызов API для удаления новости
+        await deleteNews(id);
+        // Обновления списка
         this.$parent.loadNews();
       } catch (error) {
         console.error('Ошибка при удалении новости:', error);
         this.error = 'Ошибка при удалении новости';
       }
     },
-
   },
-}
+};
 </script>
 
 <style scoped>
-
-/* Таблица */
-.table {
-  width: 100%; /* Таблица растягивается на весь экран */
-  border-collapse: collapse;
+.news-table {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px #d4edda;
 }
 
-/* Стили для ячеек таблицы */
-.table th, .table td {
+.news-table :deep(.n-card__content) {
+  padding: 0px;
+}
+
+/* Стили для контейнера таблицы Ant Design */
+:deep(.ant-table-wrapper) {
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+:deep(.ant-table) {
+  background-color: #ffffff;
+}
+
+:deep(.ant-table-thead) {
+  background-color: #d4edda;
+}
+
+/* Стиль заголовков столбцов */
+:deep(.ant-table-thead > tr > th) {
+  /* Цвет фона */
+  background-color: #d4edda;
+  /* Стиль текста */
+  color: black;
+  font-weight: 600;
+  font-size: 14px;
+  /* Отступы внутри ячеек заголовков */
   padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+  /* Граница снизу*/
+  border-bottom: 1px solid #2d7a4b;
+  box-shadow: 0 2px 4px #d4edda;
+  /* Переход фона при наведении */
+  transition: background-color 0.3s;
 }
 
-/* Одинаковый фон для всех строк */
-.table-striped tbody tr {
-  background-color: #f2fdf2;  /* Очень светлый зеленый для всех строк */
+/* Эффект наведения на заголовки столбцов */
+:deep(.ant-table-thead > tr > th:hover) {
+  background-color: #cce5d4;
 }
 
-/* Убираем изменение цвета для порядкового номера в строках */
-.table-striped tbody tr th {
-  background-color: transparent; /* Убираем фоновый цвет для номера */
+/* Стили для строк таблицы */
+:deep(.ant-table-tbody > tr) {
+  background-color: #ffffff;
 }
 
-/* Стили для строк при наведении */
-.table-striped tbody tr:hover {
-  background-color: #cce5d4; /* Светлый зеленый при наведении */
+:deep(.ant-table-tbody > tr.ant-table-row:hover > td) {
+  background-color: #f2fdf2;
 }
 
-/* Заголовки таблицы */
-.table th {
-  background-color: #d4edda;  /* Основной светло-зеленый фон для заголовков */
+/* Стили ячеек таблицы */
+:deep(.ant-table-tbody > tr > td) {
+  /* Отступы внутри ячеек */
+  padding: 10px;
+  /* Цвет текста */
+  color: black;
+  /* Разделение строк */
+  border-bottom: 1px solid #e8e8e8;
 }
 
-/* Цвет ссылок */
-.table td a {
+/* Стиль кнопок действий */
+:deep(.n-button) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;/* Отступ внутри кнопки */
+  border-radius: 4px;
+  margin-right: 0px;/* Отступ справа*/
+  transition: background-color 0.3s, color 0.3s;/* Плавный переход при наведении */
+  width: 32px;
+  height: 32px;
+}
+
+/* Стиль кнопки (просмотр, редактирование) */
+.n-button--primary-type {
+  background-color: #36BE76;
+  color: #ffffff;/* Цвет текста */
+  border: 1px solid #36BE76;
+}
+
+/* Стиль кнопки при наведении (просмотр, редактирование) */
+.n-button--primary-type:hover {
+  background-color: #159b51;
+  border-color: #159b51;
+}
+
+/* Стиль кнопки (удаление) */
+.n-button--error-type {
+  background-color: #ff4d4f;
+  color: #ffffff;/* Цвет текста */
+  border: 1px solid #ff4d4f;
+}
+
+/* Стиль кнопки при наведении (удаление) */
+.n-button--error-type:hover {
+  background-color: #e64446;
+  border-color: #e64446;
+}
+
+/* Стиль для иконок в кнопках */
+.n-button i {
+  font-size: 16px;/* Размер шрифта */
+}
+
+/* Стиль пагинации */
+:deep(.ant-pagination) {
+  /* Внутренние отступы для выравнивания */
+  padding: 0 12px;
+}
+
+/* Стиль элементов пагинации */
+:deep(.ant-pagination-item) {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  margin-right: 8px;/* Отступ справа */
+}
+
+/* Стиль ссылок пагинации */
+:deep(.ant-pagination-item a) {
+  /* Цвет текста */
   color: #2d7a4b;
-  text-decoration: none;
 }
 
-.table td a:hover {
-  text-decoration: underline;
+/* Стиль при наведения для элементов пагинации */
+:deep(.ant-pagination-item:hover) {
+  border-color: #18a058;/* Граница при наведении */
+  background-color: #18a058 !important;
 }
 
+/* Текст при наведении на элементы пагинации */
+:deep(.ant-pagination-item:hover a) {
+  color: #ffffff;/* Цвет текста при наведении */
+}
 
+/* Стиль активного элемента пагинации */
+:deep(.ant-pagination-item-active) {
+  background-color: #18a058;/* Фон активного элемента */
+  border-color: #18a058;/* Граница */
+}
+
+/* Текст активного элемента пагинации */
+:deep(.ant-pagination-item-active a) {
+  color: #ffffff;/* Цвет текста */
+}
+
+/* Стиль кнопок "предыдущая" и "следующая" */
+:deep(.ant-pagination-prev .ant-pagination-item-link),
+:deep(.ant-pagination-next .ant-pagination-item-link) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  color: #2d7a4b;
+}
+
+/* Стиль неактивных кнопок*/
+:deep(.ant-pagination-prev.ant-pagination-disabled .ant-pagination-item-link),
+:deep(.ant-pagination-next.ant-pagination-disabled .ant-pagination-item-link) {
+  color: #d9d9d9;
+}
+
+/* Стиль кнопок при наведении */
+:deep(.ant-pagination-prev:hover .ant-pagination-item-link),
+:deep(.ant-pagination-next:hover .ant-pagination-item-link) {
+  border-color: #18a058;
+  background-color: #18a058;
+  color: #ffffff;
+}
+
+/* Стиль неактивных кнопок при наведении*/
+:deep(.ant-pagination-prev.ant-pagination-disabled:hover .ant-pagination-item-link),
+:deep(.ant-pagination-next.ant-pagination-disabled:hover .ant-pagination-item-link) {
+  color: #d9d9d9;
+  border-color: #d9d9d9;
+}
 </style>
