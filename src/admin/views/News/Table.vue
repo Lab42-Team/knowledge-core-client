@@ -26,6 +26,7 @@ import dayjs from 'dayjs';
 import { Divider, Table, Input, Button } from 'ant-design-vue';
 import { h } from 'vue';
 import { NCard, NButton, NSpace } from 'naive-ui';
+import DateFilter from '@/admin/components/DateFilter.vue';
 
 export default {
   name: 'NewsTable',
@@ -57,6 +58,7 @@ export default {
     NCard,
     NButton,
     NSpace,
+    DateFilter,
   },
 
   methods: {
@@ -84,6 +86,9 @@ export default {
             key: 'name',
             // Сортировка по алфавиту
             sorter: (a, b) => a.name.localeCompare(b.name),
+            showSorterTooltip: {
+              title: 'Сортировать название',
+            },
             // Выпадающий фильтр
             filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
               return h('div', { style: 'padding: 8px' }, /* Контейнер фильтра */ [
@@ -135,6 +140,33 @@ export default {
             dataIndex: 'date',
             key: 'date',
             sorter: (a, b) => new Date(a.date) - new Date(b.date),
+            // Настройка выпадающего фильтра для столбца "Дата"
+            // setSelectedKeys — функция для установки выбранных значений фильтра
+            // selectedKeys — текущие выбранные значения фильтра
+            // confirm — функция для подтверждения применения фильтра
+            filterDropdown: ({setSelectedKeys, selectedKeys, confirm}) => {
+              return h(DateFilter, { setSelectedKeys, confirm,});
+            },
+            // Функция фильтрации записей таблицы
+            // value — значение фильтра (выбранная дата в формате 'DD-MM-YYYY')
+            // record — текущая запись таблицы
+            onFilter: (value, record) => {
+              // Если значение фильтра отсутствует, возвращаем true (показываем все записи)
+              if (!value) return true;
+              // Преобразование выбранной даты в объект dayjs и устанавка начало дня (00:00:00), для игнорирования времени
+              const selectedDate = dayjs(value, 'DD-MM-YYYY').startOf('day');
+              // Преобразование даты записи в объект dayjs и устанавка начала дня для сравнения
+              const recordDate = dayjs(record.date).startOf('day');
+              // Сравнение даты, true, если они совпадают
+              return selectedDate.isSame(recordDate);
+            },
+            // Настройка иконки фильтра
+            // Параметр filtered: true - фильтр активен, false - фильтр неактивен
+            filterIcon: (filtered) =>
+                h('i', {
+                  // всегда 'bi bi-search', 'filtered' для активного фильтра
+                  class: `bi bi-search${filtered ? ' filtered' : ''}`,
+                }),
             // Форматирование даты с помощью dayjs
             customRender: ({ text }) => dayjs(text).format('DD-MM-YYYY HH:mm'),
             width: 180,
@@ -163,7 +195,7 @@ export default {
         // Вызов API для удаления новости
         await deleteNews(id);
         // Обновления списка
-        this.$parent.loadNews();
+        this.$emit('news-load');
       } catch (error) {
         console.error('Ошибка при удалении новости:', error);
         this.error = 'Ошибка при удалении новости';
@@ -355,5 +387,17 @@ export default {
 :deep(.ant-pagination-next.ant-pagination-disabled:hover .ant-pagination-item-link) {
   color: #d9d9d9;
   border-color: #d9d9d9;
+}
+
+
+/* Стили для иконки лупы */
+.bi-search {
+  font-size: 14px;
+  color: #595959;
+  transition: color 0.3s;
+}
+
+.bi-search.filtered {
+  color: #1890ff;
 }
 </style>

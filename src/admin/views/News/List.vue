@@ -4,7 +4,7 @@
       Создать новость
     </n-button>
     <n-card size="medium" :bordered="true" class="news-card">
-      <news-table :news="news" />
+      <news-table :news="news" @news-load="loadNews"/>
     </n-card>
   </n-space>
 </template>
