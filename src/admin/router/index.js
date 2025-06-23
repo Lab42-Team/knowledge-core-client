@@ -37,19 +37,23 @@ const router = createRouter({
 //Навигационная защита
 router.beforeEach(async (to, from, next) => {
   const token = localStorage.getItem('token')
+  console.log('Проверка токена в роутере:', token);
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
 
   if (requiresAuth) {
     if (!token) {
-      return window.location.href = '/login'
+      console.warn('Токен отсутствует, перенаправление на /login');
+      return (window.location.href = '/login'); // Клиентский маршрут
     }
 
     try {
-      await getUser() // проверка токена через /auth/me
-      next()
+      await getUser();
+      console.log('Пользователь аутентифицирован');
+      next();
     } catch (error) {
-      localStorage.removeItem('token')
-      return window.location.href = '/login'
+      console.error('Ошибка проверки токена:', error);
+      localStorage.removeItem('token');
+      window.location.href = '/login'; // Клиентский маршрут
     }
   } else {
     next()

@@ -2,13 +2,18 @@ import api from './axios'
 
 export const login = async (data) => {
     try {
-        const response = await api.post('/auth/login', data)
-        const token = response.data.access_token
-        localStorage.setItem('token', token)
-        return response.data
+        const response = await api.post('/auth/login', data);
+        console.log('Ответ от /auth/login:', response.data);
+        const token = response.data.access_token;
+        if (!token) {
+            console.error('Токен не получен от сервера');
+            throw new Error('Токен отсутствует в ответе');
+        }
+        localStorage.setItem('token', token);
+        return response.data;
     } catch (error) {
-        console.error('Login error:', error)
-        throw error.response?.data || { message: 'Login failed' }
+        console.error('Login error:', error);
+        throw error.response?.data || { message: 'Login failed' };
     }
 }
 

@@ -19,8 +19,16 @@ export default {
   methods: {
     async loadUser() {
       try {
+        const token = localStorage.getItem('token');
+        console.log('Токен:', token);
+        if (!token) {
+          console.warn('Токен отсутствует, перенаправление на логин');
+          // Перенаправление на клиентский /login
+          window.location.href = '/login'; // Используем window.location, так как это клиентский маршрут
+          return;
+        }
         const response = await getUser();
-        this.user = response; // Сохранить данные
+        this.user = response;
       } catch (error) {
         console.error('Ошибка при загрузке пользователя:', error);
       }
