@@ -1,19 +1,22 @@
 import { createApp } from 'vue';
-import { createRouter, createWebHistory } from 'vue-router';
 
-// Импорт CSS Bootstrap
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
-import 'bootstrap-icons/font/bootstrap-icons.css';
-
-import 'ant-design-vue/dist/reset.css';
-// Подключаем Air datepicker
-import 'air-datepicker/air-datepicker.css';
+// Функция для динамической загрузки CSS
+const loadStyles = async (isAdmin) => {
+    if (isAdmin) {
+        await import('./styles/admin.css'); // Динамический импорт CSS для админки
+        document.body.classList.add('admin');
+    } else {
+        await import('./styles/client.css'); // Динамический импорт CSS для клиента
+        document.body.classList.add('client');
+    }
+};
 
 const isAdmin = location.pathname.startsWith('/admin');  // Проверяем, находится ли пользователь в админке
 
 const loadApp = async () => {
     try {
+        // Загружаем стили
+        await loadStyles(isAdmin);
         // Загружаем компоненты
         const { default: App } = await import(isAdmin ? './admin/app.vue' : './client/app.vue');
         // Загружаем маршруты

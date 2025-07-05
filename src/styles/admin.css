@@ -1,0 +1,53 @@
+@import './base.css';
+
+/* Базовые стили Ant Design Vue */
+@import 'ant-design-vue/dist/reset.css';
+
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import 'air-datepicker/air-datepicker.css';
+
+
+/* Кастомизация Tooltip для таблицы*/
+.ant-tooltip-inner {
+    background-color: #2d7a4b !important;
+    color: #ffffff !important;
+}
+
+.ant-tooltip-arrow::before {
+    background-color: #2d7a4b !important;
+}
+
+/* Стиль для внешнего контейнера (чтобы убрать черный фон) */
+body .n-tooltip,
+body .n-popover {
+    /*background-color: #2d7a4b !important;*/
+    --n-color: #2d7a4b !important; /* Цвет стрелки */
+    /*z-index: 1000 !important;  Добавляем z-index для подсказки */
+}
+
+
+/* Глобальные стили для n-tooltip с учетом структуры naive-ui */
+body .n-tooltip .n-popover__content,
+body .n-popover .n-popover__content {
+    background-color: #2d7a4b !important;
+    color: #ffffff !important;
+    border-radius: 8px; /* -------------------------------------------НЕ РАБОТАЕТ (не скругляет n-tooltip (не там применять) ) */
+
+    /* --n-color: #2d7a4b !important; /* фон для содержимого */
+    /* --n-text-color: #ffffff !important; /* цвет текста */
+}
+
+
+
+/* Скрытие или стилизация стрелки */
+/*body .n-tooltip .n-tooltip__arrow,
+body .n-popover .n-tooltip__arrow,
+body .n-popover .n-popover__arrow {
+    display: none !important; /* Скрываем стрелку
+}
+
+body .n-tooltip .n-tooltip__arrow::before,
+body .n-popover .n-tooltip__arrow::before,
+body .n-popover .n-popover__arrow::before {
+    background-color: #2d7a4b !important; /* Если стрелка видима, задаем зеленый цвет
+}*/
