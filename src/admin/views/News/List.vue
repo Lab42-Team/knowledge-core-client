@@ -1,6 +1,9 @@
 <template>
   <n-space vertical size="large">
     <n-button type="primary" @click="goToNewsCreate">
+      <template #icon>
+        <i class="bi bi-plus-lg"></i>
+      </template>
       Создать новость
     </n-button>
     <n-card size="medium" :bordered="true" class="news-card">
@@ -49,22 +52,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-.news-card {
-  background-color: #ffffff; /* Фон*/
-  border-radius: 8px; /* Углы */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Тень */
-}
-
-:deep(.ant-table-wrapper) {
-  background-color: #ffffff;/* Фон*/
-  border-radius: 8px;/* Углы */
-  overflow: hidden;/* Скрытие переполнения */
-}
-
-:deep(.ant-table) {
-  background-color: #ffffff;/* Фон*/
-}
-</style>

@@ -9,7 +9,7 @@
                 <n-button
                     type="primary"
                     size="small"
-                    class="action-button"
+                    class="action-button mini-button"
                     @click="$router.push({ name: 'NewsShow', params: { id: record.id } })"
                 >
                   <i class="bi bi-eye"></i>
@@ -17,12 +17,12 @@
               </template>
               Просмотр
             </n-tooltip>
-            <n-tooltip trigger="hover" :show-arrow="true" :show="true">
+            <n-tooltip trigger="hover" :show-arrow="true">
               <template #trigger>
                 <n-button
                     type="primary"
                     size="small"
-                    class="action-button"
+                    class="action-button mini-button"
                     @click="$router.push({ name: 'NewsEdit', params: { id: record.id } })"
                 >
                   <i class="bi bi-pencil"></i>
@@ -35,7 +35,7 @@
                 <n-button
                     type="error"
                     size="small"
-                    class="action-button"
+                    class="action-button mini-button"
                     @click="deleteNews(record.id)"
                 >
                   <i class="bi bi-trash"></i>
@@ -198,148 +198,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.news-table {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px #d4edda;
-}
-
-.news-table :deep(.n-card__content) {
-  padding: 0;
-}
-
-:deep(.ant-table-wrapper) {
-  background-color: #ffffff;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-:deep(.ant-table) {
-  background-color: #ffffff;
-}
-
-:deep(.ant-table-thead) {
-  background-color: #d4edda;
-}
-
-:deep(.ant-table-thead > tr > th) {
-  background-color: #d4edda;
-  color: black;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 12px;
-  border-bottom: 1px solid #2d7a4b;
-  box-shadow: 0 2px 4px #d4edda;
-  transition: background-color 0.3s;
-}
-
-:deep(.ant-table-column-title) {
-  font-weight: bold;
-}
-
-:deep(.ant-table-thead > tr > th:hover) {
-  background-color: #cce5d4;
-}
-
-:deep(.ant-table-tbody > tr) {
-  background-color: #ffffff;
-}
-
-:deep(.ant-table-tbody > tr.ant-table-row:hover > td) {
-  background-color: #f2fdf2;
-}
-
-:deep(.ant-table-tbody > tr > td) {
-  padding: 10px;
-  color: black;
-  border-bottom: 1px solid #e8e8e8;
-}
-
-:deep(.n-button) {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  border-radius: 4px;
-  margin-right: 0;
-  transition: background-color 0.3s, color 0.3s;
-  width: 32px;
-  height: 32px;
-}
-
-.n-button i {
-  font-size: 16px;
-}
-
-:deep(.ant-pagination) {
-  padding: 0 12px;
-}
-
-:deep(.ant-pagination-item) {
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
-  margin-right: 8px;
-}
-
-:deep(.ant-pagination-item a) {
-  color: #2d7a4b;
-}
-
-:deep(.ant-pagination-item:hover) {
-  border-color: #18a058;
-  background-color: #18a058 !important;
-}
-
-:deep(.ant-pagination-item:hover a) {
-  color: #ffffff;
-}
-
-:deep(.ant-pagination-item-active) {
-  background-color: #18a058;
-  border-color: #18a058;
-}
-
-:deep(.ant-pagination-item-active a) {
-  color: #ffffff;
-}
-
-:deep(.ant-pagination-prev .ant-pagination-item-link),
-:deep(.ant-pagination-next .ant-pagination-item-link) {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
-  color: #2d7a4b;
-}
-
-:deep(.ant-pagination-prev.ant-pagination-disabled .ant-pagination-item-link),
-:deep(.ant-pagination-next.ant-pagination-disabled .ant-pagination-item-link) {
-  color: #d9d9d9;
-}
-
-:deep(.ant-pagination-prev:hover .ant-pagination-item-link),
-:deep(.ant-pagination-next:hover .ant-pagination-item-link) {
-  border-color: #18a058;
-  background-color: #18a058;
-  color: #ffffff;
-}
-
-:deep(.ant-pagination-prev.ant-pagination-disabled:hover .ant-pagination-item-link),
-:deep(.ant-pagination-next.ant-pagination-disabled:hover .ant-pagination-item-link) {
-  color: #d9d9d9;
-  border-color: #d9d9d9;
-}
-
-.bi-search {
-  font-size: 14px;
-  color: #595959;
-  transition: color 0.3s;
-}
-
-.bi-search.filtered {
-  color: #1890ff;
-}
-</style>

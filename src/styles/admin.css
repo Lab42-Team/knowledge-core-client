@@ -7,47 +7,308 @@
 @import 'air-datepicker/air-datepicker.css';
 
 
-/* Кастомизация Tooltip для таблицы*/
+.header {
+    background-color: #ffffff;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 4px #00000014;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.menu {
+    background-color: transparent;
+}
+
+.n-menu-item-content {
+    color: #2d7a4b;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0 16px;
+    transition: color 0.3s;
+}
+
+.n-menu-item-content--selected {
+    color: #18a058;
+    font-weight: 600;
+}
+
+.n-menu-item-content:hover {
+    color: #18a058;
+}
+
+
+/* Стили List.vue */
+.news-card {
+    background-color: #ffffff !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.ant-table-wrapper {
+    background-color: #ffffff !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+}
+
+.ant-table {
+    background-color: #ffffff !important;
+}
+
+/* Стили таблицы Table.vue */
+.news-table {
+    background-color: #ffffff !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 8px #d4edda !important;
+}
+
+.news-table .n-card__content {
+    padding: 0 !important;
+}
+
+.ant-table-thead {
+    background-color: #d4edda !important;
+}
+
+.ant-table-thead > tr > th {
+    background-color: #d4edda !important;
+    color: black !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    padding: 12px !important;
+    border-bottom: 1px solid #2d7a4b !important;
+    box-shadow: 0 2px 4px #d4edda !important;
+    transition: background-color 0.3s !important;
+}
+
+.ant-table-column-title {
+    font-weight: bold !important;
+}
+
+.ant-table-thead > tr > th:hover {
+    background-color: #cce5d4 !important;
+}
+
+.ant-table-tbody > tr {
+    background-color: #ffffff !important;
+}
+
+.ant-table-tbody > tr.ant-table-row:hover > td {
+    background-color: #f2fdf2 !important;
+}
+
+.ant-table-tbody > tr > td {
+    padding: 5px !important;
+    color: black !important;
+    border-bottom: 1px solid #e8e8e8 !important;
+}
+
+.mini-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    border-radius: 4px !important;
+    margin-right: 0 !important;
+    transition: background-color 0.3s, color 0.3s !important;
+    width: 32px !important;
+    height: 32px !important;
+}
+
+.n-button i {
+    font-size: 16px !important;
+}
+
+.ant-pagination {
+    padding: 0 12px !important;
+}
+
+.ant-pagination-item {
+    border: 1px solid #d9d9d9 !important;
+    border-radius: 4px !important;
+    margin-right: 8px !important;
+}
+
+.ant-pagination-item a {
+    color: #2d7a4b !important;
+}
+
+.ant-pagination-item:hover {
+    border-color: #18a058 !important;
+    background-color: #18a058 !important;
+}
+
+.ant-pagination-item:hover a {
+    color: #ffffff !important;
+}
+
+.ant-pagination-item-active {
+    background-color: #18a058 !important;
+    border-color: #18a058 !important;
+}
+
+.ant-pagination-item-active a {
+    color: #ffffff !important;
+}
+
+.ant-pagination-prev .ant-pagination-item-link,
+.ant-pagination-next .ant-pagination-item-link {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    border: 1px solid #d9d9d9 !important;
+    border-radius: 4px !important;
+    color: #2d7a4b !important;
+}
+
+.ant-pagination-prev.ant-pagination-disabled .ant-pagination-item-link,
+.ant-pagination-next.ant-pagination-disabled .ant-pagination-item-link {
+    color: #d9d9d9 !important;
+}
+
+.ant-pagination-prev:hover .ant-pagination-item-link,
+.ant-pagination-next:hover .ant-pagination-item-link {
+    border-color: #18a058 !important;
+    background-color: #18a058 !important;
+    color: #ffffff !important;
+}
+
+.ant-pagination-prev.ant-pagination-disabled:hover .ant-pagination-item-link,
+.ant-pagination-next.ant-pagination-disabled:hover .ant-pagination-item-link {
+    color: #d9d9d9 !important;
+    border-color: #d9d9d9 !important;
+}
+
+/* Стиль подсказок в таблице*/
 .ant-tooltip-inner {
     background-color: #2d7a4b !important;
     color: #ffffff !important;
+    border-radius: 6px !important;
 }
 
 .ant-tooltip-arrow::before {
     background-color: #2d7a4b !important;
 }
 
-/* Стиль для внешнего контейнера (чтобы убрать черный фон) */
+/* Стиль в подсказках на кнопках */
 body .n-tooltip,
 body .n-popover {
-    /*background-color: #2d7a4b !important;*/
-    --n-color: #2d7a4b !important; /* Цвет стрелки */
-    /*z-index: 1000 !important;  Добавляем z-index для подсказки */
+    --n-color: #2d7a4b !important;
+    --n-border-radius: 6px !important;
 }
 
 
-/* Глобальные стили для n-tooltip с учетом структуры naive-ui */
-body .n-tooltip .n-popover__content,
-body .n-popover .n-popover__content {
-    background-color: #2d7a4b !important;
-    color: #ffffff !important;
-    border-radius: 8px; /* -------------------------------------------НЕ РАБОТАЕТ (не скругляет n-tooltip (не там применять) ) */
+/* Стили Create.vue */
+.news-card .n-card-header {
+    border-top-left-radius: 8px !important;
+    border-top-right-radius: 8px !important;
+    background-color: #d4edda !important;
+    color: #2d7a4b !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    padding: 12px 16px !important;
+    border-bottom: 1px solid #2d7a4b !important;
+}
 
-    /* --n-color: #2d7a4b !important; /* фон для содержимого */
-    /* --n-text-color: #ffffff !important; /* цвет текста */
+.news-card .n-form {
+    padding-bottom: 20px !important;
+}
+
+.news-card .n-form-item {
+    padding: 10px 0px !important;
+}
+
+/* Стиль для заголовков полей формы */
+.news-card .n-form-item-label {
+    color: #2d7a4b !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+}
+
+/* Стиль для полей ввода и текстовых областей */
+.news-card .n-input__input-el,
+.news-card .n-input__textarea-el {
+    width: 100% !important;
+    border-radius: 4px !important;
+    font-size: 14px !important;
+    color: black !important;
+    background-color: #ffffff !important;
+    transition: border-color 0.3s, box-shadow 0.3s !important;
+}
+
+/* Стиль для полей при фокусе */
+.news-card .n-input__input-el:focus,
+.news-card .n-input__textarea-el:focus {
+    border-color: #18a058 !important;
+    box-shadow: 0 0 0 2px rgba(24, 160, 88, 0.2) !important;
+    outline: none !important;
+}
+
+/* Стиль для текстовой области */
+.news-card .n-input__textarea-el {
+    min-height: 100px !important;
+    resize: vertical !important;
+}
+
+/* Стиль для сообщений об ошибках валидации */
+.news-card .n-form-item-feedback {
+    color: #ff4d4f !important;
+    font-size: 12px !important;
+    margin-top: 4px !important;
+}
+
+/* Стиль для кнопки */
+.news-card .n-button {
+    font-weight: 500 !important;
+    margin-top: 12px !important;
+    cursor: pointer !important;
+}
+
+/* Стиль для отключенной кнопки (пока не нужно)*/
+.news-card .n-button--disabled {
+    background-color: #cccccc !important;
+    border-color: #cccccc !important;
+    color: #666666 !important;
+    cursor: not-allowed !important;
+}
+
+/* Стиль для блока оповещения */
+.news-card .n-alert {
+    padding: 12px 16px !important;
+    border-radius: 4px !important;
+    font-size: 14px !important;
+}
+
+/* Стиль для оповещения об ошибке */
+.news-card .n-alert--error-type {
+    background-color: #fff1f0 !important;
+    color: #ff4d4f !important;
+    border: 1px solid #ffa39e !important;
 }
 
 
-
-/* Скрытие или стилизация стрелки */
-/*body .n-tooltip .n-tooltip__arrow,
-body .n-popover .n-tooltip__arrow,
-body .n-popover .n-popover__arrow {
-    display: none !important; /* Скрываем стрелку
+/* Стили Show.vue */
+.news-card .n-card__content {
+    padding: 16px !important;
 }
 
-body .n-tooltip .n-tooltip__arrow::before,
-body .n-popover .n-tooltip__arrow::before,
-body .n-popover .n-popover__arrow::before {
-    background-color: #2d7a4b !important; /* Если стрелка видима, задаем зеленый цвет
-}*/
+.news-card .field {
+    color: #2d7a4b !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+}
+
+.news-card .news-content {
+    padding: 0 8px !important;
+}
