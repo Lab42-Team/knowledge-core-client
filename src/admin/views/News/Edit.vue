@@ -162,7 +162,11 @@ export default {
         console.log('Отправляемые данные:', this.news);
         const response = await updateNews(this.news.id, this.news);
         console.log('Ответ от API:', response);
-        this.$router.push('/news');
+        // Перенаправляем пользователя с параметром успеха
+        this.$router.push({
+          path: '/news',
+          query: { successEdit: 'true' }
+        });
       } catch (err) {
         console.error('Ошибка при редактировании новости:', err);
         if (err.response && err.response.status === 422) {

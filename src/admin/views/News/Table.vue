@@ -55,7 +55,7 @@ import { deleteNews, getNewsStatuses } from '@/admin/api/news';
 import dayjs from 'dayjs';
 import { Divider, Table, Input, Button } from 'ant-design-vue';
 import { h } from 'vue';
-import { NCard, NButton, NSpace, NTooltip } from 'naive-ui';
+import { NCard, NButton, NSpace, NTooltip, useMessage } from 'naive-ui';
 import DateFilter from '@/admin/components/DateFilter.vue';
 
 export default {
@@ -68,6 +68,12 @@ export default {
     },
   },
 
+  setup() {
+    // Инициализация useMessage для уведомлений
+    const message = useMessage();
+    return { message };
+  },
+
   data() {
     return {
       statuses: {},
@@ -77,6 +83,24 @@ export default {
   },
 
   async mounted() {
+    // Проверяем параметр success в запросе
+    if (this.$route.query.success === 'true') {
+      this.message.success('Новость успешно создана!', {
+        duration: 4000,
+        closable: true,
+      });
+      // Очищаем параметр success из URL
+      this.$router.replace({ path: '/news', query: {} });
+    }
+    // Проверяем параметр successEdit в запросе
+    if (this.$route.query.successEdit === 'true') {
+      this.message.success('Новость успешно изменена!', {
+        duration: 4000,
+        closable: true,
+      });
+      // Очищаем параметр success из URL
+      this.$router.replace({ path: '/news', query: {} });
+    }
     await this.fillingColumns();
   },
 
@@ -190,6 +214,10 @@ export default {
         console.debug('Удаление новости ID:', id);
         await deleteNews(id);
         this.$emit('news-load');
+        this.message.success('Новость успешно удалена!', {
+          duration: 4000,
+          closable: true,
+        });
       } catch (error) {
         console.error('Ошибка при удалении новости:', error);
         this.error = 'Ошибка при удалении новости';

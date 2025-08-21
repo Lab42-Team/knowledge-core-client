@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { NCard, NForm, NFormItem, NInput, NSelect, NButton, NAlert } from 'naive-ui';
+import { NCard, NForm, NFormItem, NInput, NSelect, NButton, NAlert} from 'naive-ui';
 import { createNews, getNewsStatuses } from '@/admin/api/news';
 import AirDatepicker from 'air-datepicker';
 import dayjs from 'dayjs';
@@ -152,8 +152,11 @@ export default {
         const response = await createNews(this.news);
         // Логируем ответ от API
         console.log('Ответ от API:', response);
-        // Перенаправляем пользователя по указанному пути
-        this.$router.push('/news');
+        // Перенаправляем пользователя с параметром успеха
+        this.$router.push({
+          path: '/news',
+          query: { success: 'true' }
+        });
       } catch (err) {
         console.error('Ошибка при создании новости:', err);
         if (err.response && err.response.status === 422) {
