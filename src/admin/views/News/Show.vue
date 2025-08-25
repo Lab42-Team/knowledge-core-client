@@ -3,21 +3,45 @@
     <n-space v-if="news" vertical size="large" class="news-content">
       <n-text class="field"><strong>Id:</strong> {{ news.id }}</n-text>
       <n-text class="field"><strong>Название:</strong> {{ news.name }}</n-text>
-      <n-text class="field"><strong>Описание:</strong> {{ news.description }}</n-text>
       <n-text class="field"><strong>Статус:</strong> {{ news.status }}</n-text>
-      <n-text class="field"><strong>Дата:</strong> {{ news.date }}</n-text>
+      <n-text class="field"><strong>Дата:</strong> {{ formatDate(news.date) }}</n-text>
+      <n-text class="field"><strong>Описание:</strong> {{ news.description }}</n-text>
+    </n-space>
+
+    <n-space>
+      <n-button type="primary" @click="goToNewsEdit(news.id)">
+        <template #icon>
+          <i class="bi bi-pencil"></i>
+        </template>
+        Изменить
+      </n-button>
+
+      <n-button type="error" @click="deleteNews(news.id)">
+        <template #icon>
+          <i class="bi bi-trash"></i>
+        </template>
+        Удалить
+      </n-button>
     </n-space>
   </n-card>
 </template>
 
 <script>
-import { getNewsById } from '@/admin/api/news';
-import { NCard, NSpace, NText } from 'naive-ui';
+import {deleteNews, getNewsById, getNewsStatuses} from '@/admin/api/news';
+import {NButton, NCard, NSpace, NText, useMessage} from 'naive-ui';
+import dayjs from 'dayjs';
 
 export default {
   name: 'NewsShow',
 
+  setup() {
+    // Инициализация useMessage для уведомлений
+    const message = useMessage();
+    return { message };
+  },
+
   components: {
+    NButton,
     NCard,
     NSpace,
     NText,
@@ -37,9 +61,42 @@ export default {
     async getNewsItem(id) {
       this.isLoading = true;
       try {
-        this.news = await getNewsById(id);
+        const newsData = await getNewsById(id);
+        const statuses = await getNewsStatuses();
+        // Преобразование статуса из индекса в текстовое значение
+        this.news = {
+          ...newsData,
+          status: statuses[newsData.status],
+        };
       } catch (error) {
         console.error('Ошибка при загрузке новости:', error);
+      }
+    },
+
+    formatDate(date) {
+      return dayjs(date).format('DD.MM.YYYY HH:mm');
+    },
+
+    goToNewsEdit(id) {
+      this.$router.push({ name: 'NewsEdit', params: { id: id } });
+    },
+
+    async deleteNews(id) {
+      const confirmDelete = confirm('Вы уверены, что хотите удалить эту новость?');
+      if (!confirmDelete) return;
+
+      try {
+        console.debug('Удаление новости ID:', id);
+        await deleteNews(id);
+        //this.$emit('news-load');
+        this.$router.push('/news');
+        this.message.success('Новость успешно удалена!', {
+          duration: 4000,
+          closable: true,
+        });
+      } catch (error) {
+        console.error('Ошибка при удалении новости:', error);
+        this.error = 'Ошибка при удалении новости';
       }
     },
   },

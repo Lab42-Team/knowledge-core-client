@@ -15,14 +15,6 @@
             placeholder="Введите заголовок"
         />
       </n-form-item>
-      <n-form-item label="Описание" path="description">
-        <n-input
-            v-model:value="news.description"
-            type="textarea"
-            :autosize="{ minRows: 3, maxRows: 5 }"
-            placeholder="Введите описание"
-        />
-      </n-form-item>
       <n-form-item label="Статус" path="status">
         <n-select
             v-model:value="news.status"
@@ -38,9 +30,17 @@
             ref="datepicker"
         />
       </n-form-item>
+      <n-form-item label="Описание" path="description">
+        <n-input
+            v-model:value="news.description"
+            type="textarea"
+            :autosize="{ minRows: 3, maxRows: 5 }"
+            placeholder="Введите описание"
+        />
+      </n-form-item>
       <n-button type="primary" :disabled="submitting" @click="submitForm">
         <template #icon>
-          <i class="bi bi-door-open"></i>
+          <i class="bi bi-check2"></i>
         </template>
         Сохранить изменения
       </n-button>

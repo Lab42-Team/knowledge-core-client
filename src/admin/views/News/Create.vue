@@ -15,14 +15,6 @@
             placeholder="Введите заголовок"
         />
       </n-form-item>
-      <n-form-item label="Описание" path="description">
-        <n-input
-            v-model:value="news.description"
-            type="textarea"
-            :autosize="{ minRows: 3, maxRows: 5 }"
-            placeholder="Введите описание"
-        />
-      </n-form-item>
       <n-form-item label="Статус" path="status">
         <n-select
             v-model:value="news.status"
@@ -38,9 +30,17 @@
             ref="datepicker"
         />
       </n-form-item>
+      <n-form-item label="Описание" path="description">
+        <n-input
+            v-model:value="news.description"
+            type="textarea"
+            :autosize="{ minRows: 3, maxRows: 5 }"
+            placeholder="Введите описание"
+        />
+      </n-form-item>
       <n-button type="primary" :disabled="submitting" @click="submitForm">
         <template #icon>
-          <i class="bi bi-door-open"></i>
+          <i class="bi bi-check2"></i>
         </template>
         Создать новость
       </n-button>
@@ -76,15 +76,16 @@ export default {
   },
 
   data() {
+    const today = dayjs(); // Текущая дата и время
     return {
       news: {
         name: '',
         description: '',
         status: null,
-        date: ''
+        date: today.format('YYYY-MM-DD HH:mm:ss'), // Формат для API (по умолчанию текущая дата)
       },
       statuses: {}, // Список статусов, полученных из API
-      formattedDate: '', // Переменная для отображения форматированной даты
+      formattedDate: today.format('DD.MM.YYYY HH:mm'), // Переменная для отображения форматированной даты (по умолчанию текущая дата)
       errorList: [], // Массив для хранения списка ошибок
       submitting: false, // Флаг идет ли процесс отправки
       datepickerInstance: null,
@@ -111,10 +112,11 @@ export default {
   methods: {
     // Инициализация AirDatepicker для поля выбора даты
     initializeDatepicker() {
+      const today = new Date(); // Текущая дата для AirDatepicker
       // Создание AirDatepicker, привязанный к элементу input
       this.datepickerInstance = new AirDatepicker(this.$refs.datepicker.$el.querySelector('input'), {
         timepicker: true,// Включаем выбор времени
-        selectedDates: [],// Изначально нет выбранных дат
+        selectedDates: [today], // Устанавливаем текущую дату по умолчанию
         // Обработчик выбора даты
         onSelect: ({ date }) => {
           // Проверка, выбрана ли дата

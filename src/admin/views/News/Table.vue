@@ -165,7 +165,7 @@ export default {
             filterIcon: filtered => h('i', { class: filtered ? 'bi bi-funnel-fill' : 'bi bi-funnel' }),
             width: 200,
           },
-          { title: 'Описание', dataIndex: 'description', key: 'description', width: 300 },
+          //{ title: 'Описание', dataIndex: 'description', key: 'description', width: 300 },
           {
             title: 'Статус',
             dataIndex: 'status',
@@ -186,12 +186,12 @@ export default {
             },
             onFilter: (value, record) => {
               if (!value) return true;
-              const selectedDate = dayjs(value, 'DD-MM-YYYY').startOf('day');
+              const selectedDate = dayjs(value, 'DD.MM.YYYY').startOf('day');
               const recordDate = dayjs(record.date).startOf('day');
               return selectedDate.isSame(recordDate);
             },
             filterIcon: filtered => h('i', { class: `bi bi-search${filtered ? ' filtered' : ''}` }),
-            customRender: ({ text }) => dayjs(text).format('DD-MM-YYYY HH:mm'),
+            customRender: ({ text }) => dayjs(text).format('DD.MM.YYYY HH:mm'),
             width: 180,
           },
           {

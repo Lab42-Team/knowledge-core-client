@@ -104,6 +104,14 @@
     background-color: #ffffff !important;
 }
 
+.ant-table-tbody > tr:nth-child(odd) > td {
+    background-color: #ffffff; /* Фон для нечетных строк */
+}
+
+.ant-table-tbody > tr:nth-child(even) > td {
+    background-color: #f9f9f9; /* Фон для четных строк */
+}
+
 .ant-table-tbody > tr.ant-table-row:hover > td {
     background-color: #f2fdf2 !important;
 }
@@ -269,9 +277,9 @@ body .n-popover {
 }
 
 /* Стиль для кнопки */
-.news-card .n-button {
+.n-button {
     font-weight: 500 !important;
-    margin-top: 12px !important;
+    margin-top: 0px !important;
     cursor: pointer !important;
 }
 
@@ -304,7 +312,7 @@ body .n-popover {
 }
 
 .news-card .field {
-    color: #2d7a4b !important;
+    color: black !important;
     font-size: 14px !important;
     line-height: 1.5 !important;
 }
