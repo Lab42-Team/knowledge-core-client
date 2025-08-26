@@ -14,17 +14,17 @@ const routes = [
     path: '/',
     name: 'dashboard',
     component: DashboardView,
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: true},
   },
   {
     path: '/news',
     component: NewsLayout,
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: true, breadcrumb: 'Новости' },
     children: [
-      { path: '', name: 'NewsList', component: NewsList},
-      { path: 'create', name: 'NewsCreate', component: NewsCreate},
-      { path: 'show/:id', name: 'NewsShow', component: NewsShow},
-      { path: 'edit/:id', name: 'NewsEdit', component: NewsEdit},
+      { path: '', name: 'NewsList', component: NewsList, meta: { breadcrumb: 'Список новостей' }},
+      { path: 'create', name: 'NewsCreate', component: NewsCreate, meta: { breadcrumb: 'Создать новость' }},
+      { path: 'show/:id', name: 'NewsShow', component: NewsShow, meta: { breadcrumb: 'Просмотр новости' }},
+      { path: 'edit/:id', name: 'NewsEdit', component: NewsEdit, meta: { breadcrumb: 'Редактировать новость' }},
     ],
   },
 ];

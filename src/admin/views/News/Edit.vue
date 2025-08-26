@@ -1,5 +1,5 @@
 <template>
-  <n-card title="Редактирование новости" size="medium" :bordered="true" class="news-card">
+  <n-card title="Редактирование новости" size="medium" :bordered="true" class="panel-card">
     <n-form
         ref="formRef"
         :model="news"

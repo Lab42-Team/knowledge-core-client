@@ -1,6 +1,5 @@
 <template>
-  <n-card size="medium" :bordered="true" class="news-table">
-    <a-table v-if="columns.length" :columns="columns" :data-source="news" row-key="id" :pagination="{ pageSize: 10 }" :sorter="true">
+    <a-table class="panel-card" v-if="columns.length" :columns="columns" :data-source="news" row-key="id" :pagination="{ pageSize: 10 }" :sorter="true">
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
           <n-space>
@@ -47,7 +46,7 @@
         </template>
       </template>
     </a-table>
-  </n-card>
+
 </template>
 
 <script>

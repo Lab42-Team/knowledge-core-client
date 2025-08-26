@@ -1,13 +1,5 @@
 <template>
-  <n-card title="Просмотр новости" size="medium" :bordered="true" class="news-card">
-    <n-space v-if="news" vertical size="large" class="news-content">
-      <n-text class="field"><strong>Id:</strong> {{ news.id }}</n-text>
-      <n-text class="field"><strong>Название:</strong> {{ news.name }}</n-text>
-      <n-text class="field"><strong>Статус:</strong> {{ news.status }}</n-text>
-      <n-text class="field"><strong>Дата:</strong> {{ formatDate(news.date) }}</n-text>
-      <n-text class="field"><strong>Описание:</strong> {{ news.description }}</n-text>
-    </n-space>
-
+  <n-space vertical size="large">
     <n-space>
       <n-button type="primary" @click="goToNewsEdit(news.id)">
         <template #icon>
@@ -23,7 +15,24 @@
         Удалить
       </n-button>
     </n-space>
-  </n-card>
+
+    <n-card title="Просмотр новости" size="medium" :bordered="true" class="panel-card">
+      <n-space v-if="news" vertical size="large" class="panel-content">
+        <n-text class="field"><strong>Id:</strong> {{ news.id }}</n-text>
+        <n-text class="field"><strong>Название:</strong> {{ news.name }}</n-text>
+        <n-text class="field"><strong>Статус:</strong> {{ news.status }}</n-text>
+        <n-text class="field"><strong>Дата:</strong> {{ formatDate(news.date) }}</n-text>
+
+        <n-text class="field">
+          <strong>Описание:</strong>
+          <span v-if="news.description"> {{ news.description }}</span>
+          <span v-else style="color: red;"> Нет данных </span>
+        </n-text>
+
+      </n-space>
+    </n-card>
+  </n-space>
+
 </template>
 
 <script>

@@ -49,8 +49,23 @@
 }
 
 
+/* Стили для хлебных крошек */
+ .n-breadcrumb {
+     margin-bottom: 16px;
+ }
+
+.n-breadcrumb .current-element {
+    color: #18a058;
+}
+
+.n-breadcrumb-item__link:has(a):hover {
+    background-color: #f2fdf2 !important;
+    box-shadow: 0 2px 4px #d4edda;
+}
+
+
 /* Стили List.vue */
-.news-card {
+.panel-card {
     background-color: #ffffff !important;
     border-radius: 8px !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
@@ -67,14 +82,10 @@
 }
 
 /* Стили таблицы Table.vue */
-.news-table {
+.panel-table {
     background-color: #ffffff !important;
     border-radius: 8px !important;
     box-shadow: 0 2px 8px #d4edda !important;
-}
-
-.news-table .n-card__content {
-    padding: 0 !important;
 }
 
 .ant-table-thead {
@@ -218,7 +229,7 @@ body .n-popover {
 
 
 /* Стили Create.vue */
-.news-card .n-card-header {
+.panel-card .n-card-header {
     border-top-left-radius: 8px !important;
     border-top-right-radius: 8px !important;
     background-color: #d4edda !important;
@@ -229,24 +240,24 @@ body .n-popover {
     border-bottom: 1px solid #2d7a4b !important;
 }
 
-.news-card .n-form {
+.panel-card .n-form {
     padding-bottom: 20px !important;
 }
 
-.news-card .n-form-item {
+.panel-card .n-form-item {
     padding: 10px 0px !important;
 }
 
 /* Стиль для заголовков полей формы */
-.news-card .n-form-item-label {
+.panel-card .n-form-item-label {
     color: #2d7a4b !important;
     font-size: 14px !important;
     font-weight: 500 !important;
 }
 
 /* Стиль для полей ввода и текстовых областей */
-.news-card .n-input__input-el,
-.news-card .n-input__textarea-el {
+.panel-card .n-input__input-el,
+.panel-card .n-input__textarea-el {
     width: 100% !important;
     border-radius: 4px !important;
     font-size: 14px !important;
@@ -256,21 +267,21 @@ body .n-popover {
 }
 
 /* Стиль для полей при фокусе */
-.news-card .n-input__input-el:focus,
-.news-card .n-input__textarea-el:focus {
+.panel-card .n-input__input-el:focus,
+.panel-card .n-input__textarea-el:focus {
     border-color: #18a058 !important;
     box-shadow: 0 0 0 2px rgba(24, 160, 88, 0.2) !important;
     outline: none !important;
 }
 
 /* Стиль для текстовой области */
-.news-card .n-input__textarea-el {
+.panel-card .n-input__textarea-el {
     min-height: 100px !important;
     resize: vertical !important;
 }
 
 /* Стиль для сообщений об ошибках валидации */
-.news-card .n-form-item-feedback {
+.panel-card .n-form-item-feedback {
     color: #ff4d4f !important;
     font-size: 12px !important;
     margin-top: 4px !important;
@@ -284,7 +295,7 @@ body .n-popover {
 }
 
 /* Стиль для отключенной кнопки (пока не нужно)*/
-.news-card .n-button--disabled {
+.panel-card .n-button--disabled {
     background-color: #cccccc !important;
     border-color: #cccccc !important;
     color: #666666 !important;
@@ -292,14 +303,14 @@ body .n-popover {
 }
 
 /* Стиль для блока оповещения */
-.news-card .n-alert {
+.panel-card .n-alert {
     padding: 12px 16px !important;
     border-radius: 4px !important;
     font-size: 14px !important;
 }
 
 /* Стиль для оповещения об ошибке */
-.news-card .n-alert--error-type {
+.panel-card .n-alert--error-type {
     background-color: #fff1f0 !important;
     color: #ff4d4f !important;
     border: 1px solid #ffa39e !important;
@@ -307,16 +318,16 @@ body .n-popover {
 
 
 /* Стили Show.vue */
-.news-card .n-card__content {
+.panel-card .n-card__content {
     padding: 16px !important;
 }
 
-.news-card .field {
+.panel-card .field {
     color: black !important;
     font-size: 14px !important;
     line-height: 1.5 !important;
 }
 
-.news-card .news-content {
+.panel-card .panel-content {
     padding: 0 8px !important;
 }
