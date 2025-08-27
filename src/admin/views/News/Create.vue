@@ -156,7 +156,7 @@ export default {
         console.log('Ответ от API:', response);
         // Перенаправляем пользователя с параметром успеха
         this.$router.push({
-          path: '/news',
+          path: '/news/show/' + response.id,
           query: { success: 'true' }
         });
       } catch (err) {
