@@ -1,87 +1,85 @@
 <template>
-  <nav class="navbar">
-    <ul class="navbar-list">
-      <li class="navbar-item">
-        <router-link :to="{ name: 'dashboard' }" exact-active-class="active-link">Home</router-link>
-      </li>
+  <n-layout-header bordered class="header">
+    <div class="header-content">
+      <n-space align="center">
+        <n-menu
+            mode="horizontal"
+            :options="menuItems"
+            :value="activeItems"
+            @update:value="selectMenuItem"
+            class="menu"
+        />
+      </n-space>
 
-      <li class="navbar-item">
-        <router-link :to="{ name: 'NewsList' }" exact-active-class="active-link">News</router-link>
-      </li>
-
-      <li class="navbar-item"><a href="#" @click="goToClient">Перейти в клиентскую часть</a></li>
-
-      <li class="navbar-item"><a href="#" @click="btnLogout">Выход</a></li>
-    </ul>
-  </nav>
+      <n-button type="error" @click="btnLogout">
+        <template #icon>
+          <i class="bi bi-door-open"></i>
+        </template>
+        Выход
+      </n-button>
+    </div>
+  </n-layout-header>
 </template>
 
 <script>
-
-import { logout } from '@/client/api/auth'
+import { NLayoutHeader, NSpace, NMenu, NButton } from 'naive-ui';
+import { logout } from '@/client/api/auth';
+import { h } from 'vue';
+import { RouterLink } from 'vue-router';
 
 export default {
-  name: "Navbar",
+  name: 'NavbarComponent',
 
-  methods: {
-    goToClient() {
-      // переход на клиентскую часть с перезагрузкой страницы
-      window.location.href = '/';
-    },
+  components: {
+    NLayoutHeader,
+    NSpace,
+    NMenu,
+    NButton,
+  },
 
-    async btnLogout() {
-      try {
-        await logout()
-        localStorage.removeItem('token')
-        window.location.href = '/login'
-      } catch (error) {
-        console.error('Ошибка при выходе:', error)
-      }
+  data() {
+    return {
+      activeItems: this.$route.name, // Активный пункт меню, инициализируется текущим маршрутом
+      menuItems: [
+        {
+          label: () => h(RouterLink, { to: { name: 'dashboard' } }, { default: () => 'Главная' }),
+          key: 'dashboard',
+        },
+        {
+          label: () => h(RouterLink, { to: { name: 'NewsList' } }, { default: () => 'Новости' }),
+          key: 'NewsList',
+        },
+        {
+          label: 'В Клиент',
+          key: 'client',
+        },
+      ],
+    };
+  },
+
+  watch: {
+    // Отслеживание изменений маршрута для обновления активного пункта меню
+    '$route.name'(newName) {
+      this.activeItems = newName;
     },
   },
-}
+
+  methods: {
+    // Обработчик выбора пункта меню
+    selectMenuItem(key) {
+      if (key === 'client') {
+        window.location.href = '/'; // Перенаправление на главную страницу
+      } else {
+        this.$router.push({ name: key }); // Навигация к маршруту по имени
+      }
+    },
+
+    // Обработчик выхода
+    async btnLogout() {
+      await logout(); // Вызов API-функции для выполнения выхода
+      localStorage.removeItem('token'); // Удаление токена авторизации
+      window.location.href = '/login'; // Перенаправление на страницу входа
+    },
+  },
+};
 </script>
-
-
-<style scoped>
-.navbar {
-  background-color: #2d7a4b;
-  height: 68px;
-  padding: 0 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  display: block;
-}
-
-.navbar-list {
-  display: block;
-  padding: 0;
-  margin: 0;
-}
-
-.navbar-item {
-  display: inline-block;
-  margin-right: 10px;
-}
-
-.navbar-item a {
-  text-decoration: none;
-  color: white;
-  font-weight: bold;
-  display: block;
-  padding: 20px 20px;
-  border-radius: 2px;
-  background-color: transparent;
-  border: 2px solid transparent;
-  transition: all 0.3s ease;
-  height: auto;
-}
-
-.navbar-item a:hover {
-  background-color: white;
-  color: #359e6b;
-}
-
-.navbar-item a:focus {
-  outline: none;
-}
-</style>

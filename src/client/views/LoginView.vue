@@ -41,8 +41,6 @@ export default {
           email: this.email,
           password: this.password,
         })
-        // Сохраняем токен
-        localStorage.setItem('token', response.access_token)
 
         window.location.href = '/admin'; //переход в админку
       } catch (err) {

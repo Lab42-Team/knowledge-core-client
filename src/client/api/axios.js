@@ -1,4 +1,5 @@
 import axios from 'axios';
+import router from '@/client/router';
 
 const api = axios.create({
     baseURL: 'http://127.0.0.9/api',
@@ -30,6 +31,8 @@ api.interceptors.response.use(
                     }
                 })
 
+                console.log('Новый токен получен:', refreshResponse.data.access_token);
+
                 // Сохранение нового токена в localStorage
                 const newToken = refreshResponse.data.access_token
                 localStorage.setItem('token', newToken)
@@ -40,9 +43,11 @@ api.interceptors.response.use(
                 // Повтор исходного запроса с новым токеном
                 return api(originalRequest)
             } catch (refreshError) {
+                console.error('Ошибка обновления токена:', refreshError);
                 // Если обновление токена не удалось — очищаем токен и перенаправляем на логин
                 localStorage.removeItem('token')
-                window.location.href = '/login'
+                // Перенаправление
+                router.push('/login');
                 return Promise.reject(refreshError)
             }
         }

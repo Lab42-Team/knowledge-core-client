@@ -1,38 +1,47 @@
 <template>
-  <div>
-    <button type="button" class="btn btn-primary" @click="goToNewsCreate">Создать новость</button>
-  </div>
-
-  <div class="card-body">
-    <NewsTable :news="news" />
-  </div>
+  <n-space vertical size="large">
+    <n-button type="primary" @click="goToNewsCreate">
+      <template #icon>
+        <i class="bi bi-plus-lg"></i>
+      </template>
+      Создать новость
+    </n-button>
+    <news-table :news="news" @news-load="loadNews"/>
+  </n-space>
 </template>
 
 <script>
-
 import { getNews } from '@/admin/api/news';
 import NewsTable from './Table.vue';
+import { NButton, NCard, NSpace } from 'naive-ui';
 
 export default {
   name: "NewsList",
 
   components: {
     NewsTable,
+    NButton,
+    NCard,
+    NSpace,
   },
 
   data() {
     return {
       news: [],
-
     };
   },
+
   mounted() {
     this.loadNews();
   },
 
   methods: {
     async loadNews() {
-      this.news = await getNews();
+      try {
+        this.news = await getNews();
+      } catch (error) {
+        console.error('Ошибка при загрузке новостей:', error);
+      }
     },
 
     goToNewsCreate() {
@@ -41,13 +50,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-
-/* Стили для тела */
-.card-body {
-  padding: 20px;
-}
-
-</style>

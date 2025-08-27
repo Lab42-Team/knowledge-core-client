@@ -6,7 +6,11 @@ import LoginView from '../views/LoginView.vue';
 const routes = [
   { path: '/', name: 'home', component: HomeView },
   { path: '/about', name: 'about', component: AboutView },
-  { path: '/login', name: 'login', component: LoginView },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../views/LoginView.vue'), // Динамический импорт
+  },
 ];
 
 const router = createRouter({

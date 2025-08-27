@@ -1,155 +1,197 @@
 <template>
-  <div>
-    <div class="card">
-      <div class="card-header">
-        Создание новости
+  <n-card title="Создание новости" size="medium" :bordered="true" class="panel-card">
+    <n-form
+        ref="formRef"
+        :model="news"
+        :rules="rules"
+        label-placement="left"
+        label-width="auto"
+        require-mark-placement="right"
+    >
+      <n-form-item label="Заголовок" path="name">
+        <n-input
+            v-model:value="news.name"
+            type="text"
+            placeholder="Введите заголовок"
+        />
+      </n-form-item>
+      <n-form-item label="Статус" path="status">
+        <n-select
+            v-model:value="news.status"
+            :options="statusOptions"
+            placeholder="Выберите статус"
+            clearable
+        />
+      </n-form-item>
+      <n-form-item label="Дата" path="date">
+        <n-input
+            v-model:value="formattedDate"
+            placeholder="Выберите дату"
+            ref="datepicker"
+        />
+      </n-form-item>
+      <n-form-item label="Описание" path="description">
+        <n-input
+            v-model:value="news.description"
+            type="textarea"
+            :autosize="{ minRows: 3, maxRows: 5 }"
+            placeholder="Введите описание"
+        />
+      </n-form-item>
+      <n-button type="primary" :disabled="submitting" @click="submitForm">
+        <template #icon>
+          <i class="bi bi-check2"></i>
+        </template>
+        Создать новость
+      </n-button>
+    </n-form>
+    <n-alert v-if="errorList.length" type="error" class="mt-3">
+      <div>
+        Ошибка при создании новости:
+        <ul>
+          <li v-for="(error, index) in errorList" :key="index">{{ error }}</li>
+        </ul>
       </div>
-      <div class="card-body">
-        <form @submit.prevent="submitForm">
-          <div class="mb-3">
-            <label for="name" class="form-label">Заголовок</label>
-            <input v-model="news.name" id="name" class="form-control" type="text" />
-            <div v-if="errors.name" class="text-danger">{{ errors.name[0] }}</div>
-          </div>
-          <div class="mb-3">
-            <label for="description" class="form-label">Описание</label>
-            <textarea class="form-control" v-model="news.description" id="description"></textarea>
-            <div v-if="errors.description" class="text-danger">{{ errors.description[0] }}</div>
-          </div>
-          <div class="mb-3">
-            <label for="status" class="form-label">Статус</label>
-            <select v-model="news.status" id="status" class="form-control">
-              <option v-for="(label, value) in statuses" :key="value" :value="value">
-                {{ label }}
-              </option>
-            </select>
-            <div v-if="errors.status" class="text-danger">{{ errors.status[0] }}</div>
-          </div>
-
-          <div class="mb-3">
-            <label for="date" class="form-label">Дата</label>
-            <input v-model="formattedDate" id="date" ref="datepicker" type="text" class="form-control" :placeholder="placeholderText" />
-            <div v-if="errors.date" class="text-danger">{{ errors.date[0] }}</div>
-          </div>
-
-          <button type="submit" class="btn btn-primary">Создать новость</button>
-        </form>
-
-        <!-- Общая ошибка -->
-        <div v-if="error" class="alert alert-danger mt-3">{{ error }}</div>
-      </div>
-    </div>
-  </div>
+    </n-alert>
+  </n-card>
 </template>
 
 <script>
+import { NCard, NForm, NFormItem, NInput, NSelect, NButton, NAlert} from 'naive-ui';
 import { createNews, getNewsStatuses } from '@/admin/api/news';
 import AirDatepicker from 'air-datepicker';
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 export default {
-  name: "NewsCreate",
+  name: 'NewsCreate',
+
+  components: {
+    NCard,
+    NForm,
+    NFormItem,
+    NInput,
+    NSelect,
+    NButton,
+    NAlert
+  },
 
   data() {
+    const today = dayjs(); // Текущая дата и время
     return {
       news: {
         name: '',
         description: '',
-        status: '',
-        date: '',
+        status: null,
+        date: today.format('YYYY-MM-DD HH:mm:ss'), // Формат для API (по умолчанию текущая дата)
       },
-      statuses: {},
-      formattedDate: '',
-      placeholderText: 'Выберите дату',
-      error: null,
-      errors: {}, // Объект для хранения ошибок валидации
+      statuses: {}, // Список статусов, полученных из API
+      formattedDate: today.format('DD.MM.YYYY HH:mm'), // Переменная для отображения форматированной даты (по умолчанию текущая дата)
+      errorList: [], // Массив для хранения списка ошибок
+      submitting: false, // Флаг идет ли процесс отправки
       datepickerInstance: null,
+      // Правила валидации для полей формы
+      rules: {
+        name: [
+          { required: true, message: 'Пожалуйста, введите заголовок', trigger: ['input', 'blur'] },
+          { max: 255, message: 'Заголовок должен быть не длиннее 255 символов', trigger: ['input', 'blur'] }
+        ],
+        status: { required: true, message: 'Пожалуйста, выберите статус', trigger: ['change', 'blur'] },
+        date: { required: true, message: 'Пожалуйста, выберите дату', trigger: ['input', 'blur'] }
+      }
     };
   },
 
-  async mounted() {
-    await this.initializeDatepicker();
-    await this.loadStatuses();
-  },
-
-  beforeUnmount() {
-    if (this.datepickerInstance) {
-      this.datepickerInstance.destroy(); // Очищаем Datepicker при уходе
+  // Вычисляемые свойства
+  computed: {
+    // Преобразование объекта статусов в массив для n-select
+    statusOptions() {
+      return Object.entries(this.statuses).map(([value, label]) => ({ label, value }));
     }
   },
 
   methods: {
+    // Инициализация AirDatepicker для поля выбора даты
     initializeDatepicker() {
-      this.datepickerInstance = new AirDatepicker(this.$refs.datepicker, {
-        timepicker: true,
-        selectedDates: [],
+      const today = new Date(); // Текущая дата для AirDatepicker
+      // Создание AirDatepicker, привязанный к элементу input
+      this.datepickerInstance = new AirDatepicker(this.$refs.datepicker.$el.querySelector('input'), {
+        timepicker: true,// Включаем выбор времени
+        selectedDates: [today], // Устанавливаем текущую дату по умолчанию
+        // Обработчик выбора даты
         onSelect: ({ date }) => {
+          // Проверка, выбрана ли дата
           if (date) {
-            // Храним дату без изменения формата
-            this.news.date = dayjs(date).format('YYYY-MM-DD HH:mm:ss');
-            // Отображаем дату в нужном формате
-            this.formattedDate = dayjs(date).format('DD.MM.YYYY HH:mm');
+            this.news.date = dayjs(date).format('YYYY-MM-DD HH:mm:ss');//Форматирование даты для отправки в API
+            this.formattedDate = dayjs(date).format('DD.MM.YYYY HH:mm');//Форматирование даты для отображения пользователю
           }
-        },
+        }
       });
     },
 
-    async submitForm() {
+    // Асинхронная загрузка статусов из API
+    async loadStatuses() {
       try {
-        this.error = null;
-        this.errors = {}; // Очищаем ошибки перед отправкой
-
-        await createNews(this.news);
-        this.$router.push('/news');
-
-      } catch (error) {
-        console.error('Ошибка при создании новости:', error);
-
-        if (error.response && error.response.status === 422) {
-          this.errors = error.response.data.errors; // Записываем ошибки валидации
-        } else {
-          this.error = 'Ошибка при создании новости';
-        }
+        // Запрашиваем статусы через API
+        this.statuses = await getNewsStatuses();
+      } catch (err) {
+        // Логируем ошибку в консоль
+        console.error('Ошибка загрузки статусов:', err);
+        // Устанавливаем сообщение об ошибке для отображения
+        this.errorList = ['Не удалось загрузить статусы: ' + (err.message || 'Неизвестная ошибка')];
       }
     },
 
-    //clearError(field) {
-    //  if (this.errors[field]) {
-    //    this.$delete(this.errors, field);
-    //  }
-    //},
-
-    async loadStatuses() {
+    // Асинхронная отправка формы
+    async submitForm() {
       try {
-        this.statuses = await getNewsStatuses();
-      } catch (error) {
-        console.error('Ошибка загрузки статусов:', error);
+        this.submitting = true; // Устанавливка флага отправки в true
+        this.errorList = []; // Очищаем список ошибок
+        // Выполняем валидацию формы
+        await this.$refs.formRef.validate();
+        // Логируем данные, отправляемые в API
+        console.log('Отправляемые данные:', this.news);
+        // Выполняем запрос на создание новости
+        const response = await createNews(this.news);
+        // Логируем ответ от API
+        console.log('Ответ от API:', response);
+        // Перенаправляем пользователя с параметром успеха
+        this.$router.push({
+          path: '/news/show/' + response.id,
+          query: { success: 'true' }
+        });
+      } catch (err) {
+        console.error('Ошибка при создании новости:', err);
+        if (err.response && err.response.status === 422) {
+          const errors = err.response.data.errors;
+          // Преобразование серверных ошибок в массив для отображения списком
+          this.errorList = Object.values(errors).flat().filter(message => message && typeof message === 'string');
+        } else if (Array.isArray(err)) {
+          // Обработка клиентских ошибок валидации
+          this.errorList = err
+              .flatMap(errorArray => errorArray.map(error => error.message))
+              .filter(message => message && typeof message === 'string');
+        } else {
+          // Общее сообщение об ошибке
+          this.errorList = [err.message || 'Неизвестная ошибка'];
+        }
+      } finally {
+        // Сбрасываем флаг отправки
+        this.submitting = false;
       }
     }
+  },
 
+  // Выполнение при монтировании компонента
+  async mounted() {
+    await this.initializeDatepicker();// Запуск выбора даты
+    await this.loadStatuses();// Запуск загрузки статусов
+  },
+
+  beforeUnmount() {
+    // Проверка наличия AirDatepicker
+    if (this.datepickerInstance) {
+      this.datepickerInstance.destroy();
+    }
   }
 };
 </script>
-
-<style scoped>
-
-/* Стили для заголовка */
-.card-header {
-  background-color: #d4edda;
-  color: #2d7a4b;
-  padding: 15px;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-/* Стили для тела */
-.card-body {
-  padding: 20px;
-}
-
-.error-message {
-  color: red;
-  font-size: 14px;
-}
-
-</style>
