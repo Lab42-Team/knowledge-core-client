@@ -5,12 +5,14 @@ const api = axios.create({
     baseURL: 'http://127.0.0.9/api',
 })
 
-// Добавим токен перед каждым запросом
+// Добавление токена и Accept-Language перед каждым запросом
 api.interceptors.request.use(config => {
     const token = localStorage.getItem('token')
     if (token) {
         config.headers.Authorization = `Bearer ${token}`
     }
+    // Добавление заголовка Accept-Language
+    config.headers['Accept-Language'] = localStorage.getItem('locale') || 'en';
     return config
 })
 
@@ -57,5 +59,3 @@ api.interceptors.response.use(
 )
 
 export default api
-
-
