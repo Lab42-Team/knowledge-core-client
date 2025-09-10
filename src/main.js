@@ -22,7 +22,7 @@ const loadApp = async () => {
         // Загружаем маршруты
         const { default: router } = await import(isAdmin ? './admin/router' : './client/router');
         // Загрузка переводов
-        const { default: lang } = await import(isAdmin ? './admin/lang' : './client/lang');
+        const { default: i18n } = await import(isAdmin ? './admin/lang' : './client/lang');
 
         // Устанавливаем базовый путь для админки или клиента
         const historyBase = isAdmin ? '/admin' : '/';
@@ -33,7 +33,7 @@ const loadApp = async () => {
         // Используем роутер с правильным базовым путем
         app.use(router);
         // Используем нужный перевод
-        app.use(lang);
+        app.use(i18n);
 
         // Монтируем приложение в элемент с id="app"
         app.mount('#app');

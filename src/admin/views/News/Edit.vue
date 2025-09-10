@@ -24,10 +24,9 @@
         />
       </n-form-item>
       <n-form-item :label="$t('TABLE.DATE')" path="date">
-        <n-input
-            v-model:value="formattedDate"
+        <DateInput
+            v-model="news.date"
             :placeholder="$t('TABLE.PLACEHOLDER.DATE')"
-            ref="datepicker"
         />
       </n-form-item>
       <n-form-item :label="$t('TABLE.DESCRIPTION')" path="description">
@@ -59,8 +58,7 @@
 <script>
 import { NCard, NForm, NFormItem, NInput, NSelect, NButton, NAlert } from 'naive-ui';
 import { getNewsById, getNewsStatuses, updateNews } from '@/admin/api/news';
-import AirDatepicker from 'air-datepicker';
-import dayjs from 'dayjs';
+import DateInput from '@/admin/components/DateInput.vue';
 
 export default {
   name: 'NewsEdit',
@@ -72,7 +70,8 @@ export default {
     NInput,
     NSelect,
     NButton,
-    NAlert
+    NAlert,
+    DateInput
   },
 
   data() {
@@ -85,10 +84,8 @@ export default {
         date: ''
       },
       statuses: {}, // Список статусов, полученных из API
-      formattedDate: '', // Переменная для отображения форматированной даты
       errorList: [], // Массив для хранения списка ошибок
       submitting: false, // Флаг идет ли процесс отправки
-      datepickerInstance: null,
       // Правила валидации для полей формы
       rules: {
         name: [
@@ -110,26 +107,6 @@ export default {
   },
 
   methods: {
-    // Инициализация AirDatepicker для поля выбора даты
-    initializeDatepicker() {
-      // Создание AirDatepicker, привязанный к элементу input
-      this.datepickerInstance = new AirDatepicker(this.$refs.datepicker.$el.querySelector('input'), {
-        timepicker: true,// Включаем выбор времени
-        selectedDates: this.news.date ? [new Date(this.news.date)] : [],
-        // Обработчик выбора даты
-        onSelect: ({ date }) => {
-          // Проверка, выбрана ли дата
-          if (date) {
-            this.news.date = dayjs(date).format('YYYY-MM-DD HH:mm:ss');//Форматирование даты для отправки в API
-            this.formattedDate = dayjs(date).format('DD.MM.YYYY HH:mm');//Форматирование даты для отображения пользователю
-          }
-        }
-      });
-      if (this.news.date) {
-        this.formattedDate = dayjs(this.news.date).format('DD.MM.YYYY HH:mm');
-      }
-    },
-
     // Асинхронная загрузка статусов из API
     async loadStatuses() {
       try {
@@ -144,9 +121,6 @@ export default {
       try {
         const response = await getNewsById(id);
         this.news = {...response, id, status: response.status.toString()};
-        if (this.news.date) {
-          this.formattedDate = dayjs(this.news.date).format('DD.MM.YYYY HH:mm');
-        }
       } catch (err) {
         console.error('Ошибка при получении новости:', err);
         //this.error = 'Не удалось загрузить данные новости: ' + (err.message || 'Неизвестная ошибка');
@@ -192,13 +166,7 @@ export default {
     const newsId = this.$route.params.id;
     await this.loadStatuses(); // Сначала загружаем статусы
     await this.getNews(newsId); // Потом новость
-    this.initializeDatepicker();
   },
 
-  beforeUnmount() {
-    if (this.datepickerInstance) {
-      this.datepickerInstance.destroy();
-    }
-  }
 };
 </script>

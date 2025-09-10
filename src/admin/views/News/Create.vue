@@ -24,10 +24,9 @@
         />
       </n-form-item>
       <n-form-item :label="$t('TABLE.DATE')" path="date">
-        <n-input
-            v-model:value="formattedDate"
+        <DateInput
+            v-model="news.date"
             :placeholder="$t('TABLE.PLACEHOLDER.DATE')"
-            ref="datepicker"
         />
       </n-form-item>
       <n-form-item :label="$t('TABLE.DESCRIPTION')" path="description">
@@ -59,7 +58,7 @@
 <script>
 import { NCard, NForm, NFormItem, NInput, NSelect, NButton, NAlert} from 'naive-ui';
 import { createNews, getNewsStatuses } from '@/admin/api/news';
-import AirDatepicker from 'air-datepicker';
+import DateInput from '@/admin/components/DateInput.vue';
 import dayjs from 'dayjs';
 
 export default {
@@ -72,7 +71,8 @@ export default {
     NInput,
     NSelect,
     NButton,
-    NAlert
+    NAlert,
+    DateInput
   },
 
   data() {
@@ -85,10 +85,8 @@ export default {
         date: today.format('YYYY-MM-DD HH:mm:ss'), // Формат для API (по умолчанию текущая дата)
       },
       statuses: {}, // Список статусов, полученных из API
-      formattedDate: today.format('DD.MM.YYYY HH:mm'), // Переменная для отображения форматированной даты (по умолчанию текущая дата)
       errorList: [], // Массив для хранения списка ошибок
       submitting: false, // Флаг идет ли процесс отправки
-      datepickerInstance: null,
       // Правила валидации для полей формы
       rules: {
         name: [
@@ -96,7 +94,7 @@ export default {
           { max: 255, message: this.$t('MESSAGE.ERROR.TITLE_LONGE'), trigger: ['input', 'blur'] }
         ],
         status: { required: true, message: this.$t('MESSAGE.ERROR.SELECT_STATUS'), trigger: ['change', 'blur'] },
-        date: { required: true, message: this.$t('MESSAGE.ERROR.SELECT_DATE'), trigger: ['input', 'blur'] }
+        date: {required: true, message: this.$t('MESSAGE.ERROR.SELECT_DATE'), trigger: ['input', 'blur']}
       }
     };
   },
@@ -110,23 +108,6 @@ export default {
   },
 
   methods: {
-    // Инициализация AirDatepicker для поля выбора даты
-    initializeDatepicker() {
-      const today = new Date(); // Текущая дата для AirDatepicker
-      // Создание AirDatepicker, привязанный к элементу input
-      this.datepickerInstance = new AirDatepicker(this.$refs.datepicker.$el.querySelector('input'), {
-        timepicker: true,// Включаем выбор времени
-        selectedDates: [today], // Устанавливаем текущую дату по умолчанию
-        // Обработчик выбора даты
-        onSelect: ({ date }) => {
-          // Проверка, выбрана ли дата
-          if (date) {
-            this.news.date = dayjs(date).format('YYYY-MM-DD HH:mm:ss');//Форматирование даты для отправки в API
-            this.formattedDate = dayjs(date).format('DD.MM.YYYY HH:mm');//Форматирование даты для отображения пользователю
-          }
-        }
-      });
-    },
 
     // Асинхронная загрузка статусов из API
     async loadStatuses() {
@@ -183,15 +164,8 @@ export default {
 
   // Выполнение при монтировании компонента
   async mounted() {
-    await this.initializeDatepicker();// Запуск выбора даты
     await this.loadStatuses();// Запуск загрузки статусов
   },
 
-  beforeUnmount() {
-    // Проверка наличия AirDatepicker
-    if (this.datepickerInstance) {
-      this.datepickerInstance.destroy();
-    }
-  }
 };
 </script>

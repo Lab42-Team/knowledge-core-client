@@ -7,8 +7,11 @@ const messages = {
     ru,
 };
 
+// Локаль из localStorage сразу при создании i18n
+const savedLocale = localStorage.getItem('locale') || 'en';
+
 const i18n = createI18n({
-    locale: localStorage.getItem('locale') || 'en',
+    locale: savedLocale,
     fallbackLocale: 'en',
     messages,
 });
