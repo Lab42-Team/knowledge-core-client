@@ -106,6 +106,15 @@ export default {
     }
   },
 
+  watch: {
+    '$i18n.locale': {
+      handler() {
+        this.loadStatuses(); // Перезагрузка статусов при смене локализации
+      },
+      immediate: true // Вызов сразу при инициализации
+    }
+  },
+
   methods: {
     // Асинхронная загрузка статусов из API
     async loadStatuses() {

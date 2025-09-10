@@ -62,6 +62,17 @@ export default {
     };
   },
 
+  watch: {
+    '$i18n.locale': {
+      handler() {
+        if (this.news) { // Только если новость загружена
+          this.getNewsItem(this.$route.params.id); // Перезагрузка данных
+        }
+      },
+      immediate: false // Вызов не сразу при инициализации
+    }
+  },
+
   async mounted() {
     await this.getNewsItem(this.$route.params.id);
 
