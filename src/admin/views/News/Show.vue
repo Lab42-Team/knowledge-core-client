@@ -5,28 +5,28 @@
         <template #icon>
           <i class="bi bi-pencil"></i>
         </template>
-        Изменить
+        {{ $t('BUTTON.EDIT') }}
       </n-button>
 
       <n-button type="error" @click="deleteNews(news.id)">
         <template #icon>
           <i class="bi bi-trash"></i>
         </template>
-        Удалить
+        {{ $t('BUTTON.DELETE') }}
       </n-button>
     </n-space>
 
-    <n-card title="Просмотр новости" size="medium" :bordered="true" class="panel-card">
+    <n-card :title="$t('PAGE.NEWS.VIEW')" size="medium" :bordered="true" class="panel-card">
       <n-space v-if="news" vertical size="large" class="panel-content">
         <n-text class="field"><strong>Id:</strong> {{ news.id }}</n-text>
-        <n-text class="field"><strong>Название:</strong> {{ news.name }}</n-text>
-        <n-text class="field"><strong>Статус:</strong> {{ news.status }}</n-text>
-        <n-text class="field"><strong>Дата:</strong> {{ formatDate(news.date) }}</n-text>
+        <n-text class="field"><strong>{{ $t('TABLE.NAME') }}:</strong> {{ news.name }}</n-text>
+        <n-text class="field"><strong>{{ $t('TABLE.STATUS') }}:</strong> {{ news.status }}</n-text>
+        <n-text class="field"><strong>{{ $t('TABLE.DATE') }}:</strong> {{ formatDate(news.date) }}</n-text>
 
         <n-text class="field">
-          <strong>Описание:</strong>
+          <strong>{{ $t('TABLE.DESCRIPTION') }}: </strong>
           <span v-if="news.description"> {{ news.description }}</span>
-          <span v-else style="color: red;"> Нет данных </span>
+          <span v-else style="color: red;"> {{ $t('MESSAGE.TEXT.DESCRIPTION') }} </span>
         </n-text>
 
       </n-space>
@@ -62,8 +62,42 @@ export default {
     };
   },
 
+  watch: {
+    '$i18n.locale': {
+      handler() {
+        if (this.news) { // Только если новость загружена
+          this.getNewsItem(this.$route.params.id); // Перезагрузка данных
+        }
+      },
+      immediate: false // Вызов не сразу при инициализации
+    }
+  },
+
   async mounted() {
     await this.getNewsItem(this.$route.params.id);
+
+    // Проверяем параметр success в запросе
+    if (this.$route.query.success === 'true') {
+      this.message.success(this.$t('MESSAGE.SUCCESS.CREATE'), {
+        duration: 4000,
+        closable: true,
+      });
+      // Чистка query параметр из URL
+      this.$router.replace({
+        path: '/news/show/' + this.$route.params.id
+      });
+    }
+    // Проверяем параметр successEdit в запросе
+    if (this.$route.query.successEdit === 'true') {
+      this.message.success(this.$t('MESSAGE.SUCCESS.EDIT'), {
+        duration: 4000,
+        closable: true,
+      });
+      // Чистка query параметр из URL
+      this.$router.replace({
+        path: '/news/show/' + this.$route.params.id
+      });
+    }
   },
 
   methods: {
@@ -91,21 +125,19 @@ export default {
     },
 
     async deleteNews(id) {
-      const confirmDelete = confirm('Вы уверены, что хотите удалить эту новость?');
+      const confirmDelete = confirm(this.$t('CONFIRM.DELETE'));
       if (!confirmDelete) return;
 
       try {
-        console.debug('Удаление новости ID:', id);
         await deleteNews(id);
-        //this.$emit('news-load');
         this.$router.push('/news');
-        this.message.success('Новость успешно удалена!', {
+        this.message.success(this.$t('MESSAGE.SUCCESS.DELETE'), {
           duration: 4000,
           closable: true,
         });
       } catch (error) {
         console.error('Ошибка при удалении новости:', error);
-        this.error = 'Ошибка при удалении новости';
+        //this.message.error(this.$t('MESSAGE.ERROR.DELETE'));
       }
     },
   },

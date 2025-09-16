@@ -1,5 +1,5 @@
 <template>
-  <n-card title="Создание новости" size="medium" :bordered="true" class="panel-card">
+  <n-card :title="$t('PAGE.NEWS.CREATE')" size="medium" :bordered="true" class="panel-card">
     <n-form
         ref="formRef"
         :model="news"
@@ -8,46 +8,45 @@
         label-width="auto"
         require-mark-placement="right"
     >
-      <n-form-item label="Заголовок" path="name">
+      <n-form-item :label="$t('TABLE.NAME')" path="name">
         <n-input
             v-model:value="news.name"
             type="text"
-            placeholder="Введите заголовок"
+            :placeholder="$t('TABLE.PLACEHOLDER.NAME')"
         />
       </n-form-item>
-      <n-form-item label="Статус" path="status">
+      <n-form-item :label="$t('TABLE.STATUS')" path="status">
         <n-select
             v-model:value="news.status"
             :options="statusOptions"
-            placeholder="Выберите статус"
+            :placeholder="$t('TABLE.PLACEHOLDER.STATUS')"
             clearable
         />
       </n-form-item>
-      <n-form-item label="Дата" path="date">
-        <n-input
-            v-model:value="formattedDate"
-            placeholder="Выберите дату"
-            ref="datepicker"
+      <n-form-item :label="$t('TABLE.DATE')" path="date">
+        <DateInput
+            v-model="news.date"
+            :placeholder="$t('TABLE.PLACEHOLDER.DATE')"
         />
       </n-form-item>
-      <n-form-item label="Описание" path="description">
+      <n-form-item :label="$t('TABLE.DESCRIPTION')" path="description">
         <n-input
             v-model:value="news.description"
             type="textarea"
             :autosize="{ minRows: 3, maxRows: 5 }"
-            placeholder="Введите описание"
+            :placeholder="$t('TABLE.PLACEHOLDER.DESCRIPTION')"
         />
       </n-form-item>
       <n-button type="primary" :disabled="submitting" @click="submitForm">
         <template #icon>
           <i class="bi bi-check2"></i>
         </template>
-        Создать новость
+        {{ $t('BUTTON.CREATE_NEWS') }}
       </n-button>
     </n-form>
     <n-alert v-if="errorList.length" type="error" class="mt-3">
       <div>
-        Ошибка при создании новости:
+        {{ $t('MESSAGE.ERROR.CREATING') }}:
         <ul>
           <li v-for="(error, index) in errorList" :key="index">{{ error }}</li>
         </ul>
@@ -59,7 +58,7 @@
 <script>
 import { NCard, NForm, NFormItem, NInput, NSelect, NButton, NAlert} from 'naive-ui';
 import { createNews, getNewsStatuses } from '@/admin/api/news';
-import AirDatepicker from 'air-datepicker';
+import DateInput from '@/admin/components/DateInput.vue';
 import dayjs from 'dayjs';
 
 export default {
@@ -72,7 +71,8 @@ export default {
     NInput,
     NSelect,
     NButton,
-    NAlert
+    NAlert,
+    DateInput
   },
 
   data() {
@@ -85,18 +85,16 @@ export default {
         date: today.format('YYYY-MM-DD HH:mm:ss'), // Формат для API (по умолчанию текущая дата)
       },
       statuses: {}, // Список статусов, полученных из API
-      formattedDate: today.format('DD.MM.YYYY HH:mm'), // Переменная для отображения форматированной даты (по умолчанию текущая дата)
       errorList: [], // Массив для хранения списка ошибок
       submitting: false, // Флаг идет ли процесс отправки
-      datepickerInstance: null,
       // Правила валидации для полей формы
       rules: {
         name: [
-          { required: true, message: 'Пожалуйста, введите заголовок', trigger: ['input', 'blur'] },
-          { max: 255, message: 'Заголовок должен быть не длиннее 255 символов', trigger: ['input', 'blur'] }
+          { required: true, message: this.$t('MESSAGE.ERROR.ENTER_TITLE'), trigger: ['input', 'blur'] },
+          { max: 255, message: this.$t('MESSAGE.ERROR.TITLE_LONGE'), trigger: ['input', 'blur'] }
         ],
-        status: { required: true, message: 'Пожалуйста, выберите статус', trigger: ['change', 'blur'] },
-        date: { required: true, message: 'Пожалуйста, выберите дату', trigger: ['input', 'blur'] }
+        status: { required: true, message: this.$t('MESSAGE.ERROR.SELECT_STATUS'), trigger: ['change', 'blur'] },
+        date: {required: true, message: this.$t('MESSAGE.ERROR.SELECT_DATE'), trigger: ['input', 'blur']}
       }
     };
   },
@@ -109,24 +107,16 @@ export default {
     }
   },
 
+  watch: {
+    '$i18n.locale': {
+      handler() {
+        this.loadStatuses(); // Перезагрузка статусов при смене локализации
+      },
+      immediate: true // Вызов сразу при инициализации
+    }
+  },
+
   methods: {
-    // Инициализация AirDatepicker для поля выбора даты
-    initializeDatepicker() {
-      const today = new Date(); // Текущая дата для AirDatepicker
-      // Создание AirDatepicker, привязанный к элементу input
-      this.datepickerInstance = new AirDatepicker(this.$refs.datepicker.$el.querySelector('input'), {
-        timepicker: true,// Включаем выбор времени
-        selectedDates: [today], // Устанавливаем текущую дату по умолчанию
-        // Обработчик выбора даты
-        onSelect: ({ date }) => {
-          // Проверка, выбрана ли дата
-          if (date) {
-            this.news.date = dayjs(date).format('YYYY-MM-DD HH:mm:ss');//Форматирование даты для отправки в API
-            this.formattedDate = dayjs(date).format('DD.MM.YYYY HH:mm');//Форматирование даты для отображения пользователю
-          }
-        }
-      });
-    },
 
     // Асинхронная загрузка статусов из API
     async loadStatuses() {
@@ -137,7 +127,7 @@ export default {
         // Логируем ошибку в консоль
         console.error('Ошибка загрузки статусов:', err);
         // Устанавливаем сообщение об ошибке для отображения
-        this.errorList = ['Не удалось загрузить статусы: ' + (err.message || 'Неизвестная ошибка')];
+        //this.errorList = ['Не удалось загрузить статусы: ' + (err.message || 'Неизвестная ошибка')];
       }
     },
 
@@ -149,18 +139,18 @@ export default {
         // Выполняем валидацию формы
         await this.$refs.formRef.validate();
         // Логируем данные, отправляемые в API
-        console.log('Отправляемые данные:', this.news);
+        //console.log('Отправляемые данные:', this.news);
         // Выполняем запрос на создание новости
         const response = await createNews(this.news);
         // Логируем ответ от API
-        console.log('Ответ от API:', response);
+        //console.log('Ответ от API:', response);
         // Перенаправляем пользователя с параметром успеха
         this.$router.push({
           path: '/news/show/' + response.id,
           query: { success: 'true' }
         });
       } catch (err) {
-        console.error('Ошибка при создании новости:', err);
+        //console.error('Ошибка при создании новости:', err);
         if (err.response && err.response.status === 422) {
           const errors = err.response.data.errors;
           // Преобразование серверных ошибок в массив для отображения списком
@@ -183,15 +173,7 @@ export default {
 
   // Выполнение при монтировании компонента
   async mounted() {
-    await this.initializeDatepicker();// Запуск выбора даты
     await this.loadStatuses();// Запуск загрузки статусов
   },
-
-  beforeUnmount() {
-    // Проверка наличия AirDatepicker
-    if (this.datepickerInstance) {
-      this.datepickerInstance.destroy();
-    }
-  }
 };
 </script>

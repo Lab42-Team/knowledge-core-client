@@ -15,12 +15,14 @@ const isAdmin = location.pathname.startsWith('/admin');  // Проверяем, 
 
 const loadApp = async () => {
     try {
-        // Загружаем стили
+        // Загрузка стилей
         await loadStyles(isAdmin);
         // Загружаем компоненты
         const { default: App } = await import(isAdmin ? './admin/app.vue' : './client/app.vue');
         // Загружаем маршруты
         const { default: router } = await import(isAdmin ? './admin/router' : './client/router');
+        // Загрузка переводов
+        const { default: i18n } = await import(isAdmin ? './admin/lang' : './client/lang');
 
         // Устанавливаем базовый путь для админки или клиента
         const historyBase = isAdmin ? '/admin' : '/';
@@ -30,6 +32,8 @@ const loadApp = async () => {
 
         // Используем роутер с правильным базовым путем
         app.use(router);
+        // Используем нужный перевод
+        app.use(i18n);
 
         // Монтируем приложение в элемент с id="app"
         app.mount('#app');

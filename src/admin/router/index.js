@@ -19,12 +19,12 @@ const routes = [
   {
     path: '/news',
     component: NewsLayout,
-    meta: { requiresAuth: true, breadcrumb: 'Новости' },
+    meta: { requiresAuth: true, breadcrumb: 'PAGE.NEWS.NAME' },
     children: [
-      { path: '', name: 'NewsList', component: NewsList, meta: { breadcrumb: 'Список новостей' }},
-      { path: 'create', name: 'NewsCreate', component: NewsCreate, meta: { breadcrumb: 'Создать новость' }},
-      { path: 'show/:id', name: 'NewsShow', component: NewsShow, meta: { breadcrumb: 'Просмотр новости' }},
-      { path: 'edit/:id', name: 'NewsEdit', component: NewsEdit, meta: { breadcrumb: 'Редактировать новость' }},
+      { path: '', name: 'NewsList', component: NewsList, meta: { breadcrumb: 'PAGE.NEWS.NAME' }},
+      { path: 'create', name: 'NewsCreate', component: NewsCreate, meta: { breadcrumb: 'PAGE.NEWS.CREATE' }},
+      { path: 'show/:id', name: 'NewsShow', component: NewsShow, meta: { breadcrumb: 'PAGE.NEWS.VIEW' }},
+      { path: 'edit/:id', name: 'NewsEdit', component: NewsEdit, meta: { breadcrumb: 'PAGE.NEWS.EDIT' }},
     ],
   },
 ];

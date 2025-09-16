@@ -4,7 +4,7 @@
       <template #icon>
         <i class="bi bi-plus-lg"></i>
       </template>
-      Создать новость
+      {{ $t('BUTTON.CREATE_NEWS') }}
     </n-button>
     <news-table :news="news" @news-load="loadNews"/>
   </n-space>
