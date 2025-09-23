@@ -1,6 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import DashboardView from '../views/DashboardView.vue';
 
+import KnowledgeCoreLayout from '../layouts/KnowledgeCoreLayout.vue';
+import KnowledgeCoreShow from '../views/KnowledgeCore/Show.vue';
+import KnowledgeCoreEdit from '../views/KnowledgeCore/Edit.vue';
+
 import NewsLayout from '../layouts/NewsLayout.vue';
 import NewsList from '../views/News/List.vue';
 import NewsCreate from '../views/News/Create.vue';
@@ -25,6 +29,15 @@ const routes = [
       { path: 'create', name: 'NewsCreate', component: NewsCreate, meta: { breadcrumb: 'PAGE.NEWS.CREATE' }},
       { path: 'show/:id', name: 'NewsShow', component: NewsShow, meta: { breadcrumb: 'PAGE.NEWS.VIEW' }},
       { path: 'edit/:id', name: 'NewsEdit', component: NewsEdit, meta: { breadcrumb: 'PAGE.NEWS.EDIT' }},
+    ],
+  },
+  {
+    path: '/knowledge-core',
+    component: KnowledgeCoreLayout,
+    meta: { requiresAuth: true, breadcrumb: 'PAGE.KNOWLEDGE_CORE.NAME' },
+    children: [
+      { path: '', name: 'KnowledgeCoreShow', component: KnowledgeCoreShow, meta: { breadcrumb: 'PAGE.KNOWLEDGE_CORE.NAME' }},
+      { path: 'edit', name: 'KnowledgeCoreEdit', component: KnowledgeCoreEdit, meta: { breadcrumb: 'PAGE.KNOWLEDGE_CORE.EDIT' }},
     ],
   },
 ];

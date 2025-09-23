@@ -19,14 +19,14 @@
     <n-card :title="$t('PAGE.NEWS.VIEW')" size="medium" :bordered="true" class="panel-card">
       <n-space v-if="news" vertical size="large" class="panel-content">
         <n-text class="field"><strong>Id:</strong> {{ news.id }}</n-text>
-        <n-text class="field"><strong>{{ $t('TABLE.NAME') }}:</strong> {{ news.name }}</n-text>
-        <n-text class="field"><strong>{{ $t('TABLE.STATUS') }}:</strong> {{ news.status }}</n-text>
-        <n-text class="field"><strong>{{ $t('TABLE.DATE') }}:</strong> {{ formatDate(news.date) }}</n-text>
+        <n-text class="field"><strong>{{ $t('TABLE.NEWS.NAME') }}:</strong> {{ news.name }}</n-text>
+        <n-text class="field"><strong>{{ $t('TABLE.NEWS.STATUS') }}:</strong> {{ news.status }}</n-text>
+        <n-text class="field"><strong>{{ $t('TABLE.NEWS.DATE') }}:</strong> {{ formatDate(news.date) }}</n-text>
 
         <n-text class="field">
-          <strong>{{ $t('TABLE.DESCRIPTION') }}: </strong>
+          <strong>{{ $t('TABLE.NEWS.DESCRIPTION') }}: </strong>
           <span v-if="news.description"> {{ news.description }}</span>
-          <span v-else style="color: red;"> {{ $t('MESSAGE.TEXT.DESCRIPTION') }} </span>
+          <span v-else style="color: red;"> {{ $t('MESSAGE.NEWS.TEXT.DESCRIPTION') }} </span>
         </n-text>
 
       </n-space>
@@ -78,7 +78,7 @@ export default {
 
     // Проверяем параметр success в запросе
     if (this.$route.query.success === 'true') {
-      this.message.success(this.$t('MESSAGE.SUCCESS.CREATE'), {
+      this.message.success(this.$t('MESSAGE.NEWS.SUCCESS.CREATE'), {
         duration: 4000,
         closable: true,
       });
@@ -89,7 +89,7 @@ export default {
     }
     // Проверяем параметр successEdit в запросе
     if (this.$route.query.successEdit === 'true') {
-      this.message.success(this.$t('MESSAGE.SUCCESS.EDIT'), {
+      this.message.success(this.$t('MESSAGE.NEWS.SUCCESS.EDIT'), {
         duration: 4000,
         closable: true,
       });
@@ -125,13 +125,13 @@ export default {
     },
 
     async deleteNews(id) {
-      const confirmDelete = confirm(this.$t('CONFIRM.DELETE'));
+      const confirmDelete = confirm(this.$t('CONFIRM.NEWS.DELETE'));
       if (!confirmDelete) return;
 
       try {
         await deleteNews(id);
         this.$router.push('/news');
-        this.message.success(this.$t('MESSAGE.SUCCESS.DELETE'), {
+        this.message.success(this.$t('MESSAGE.NEWS.SUCCESS.DELETE'), {
           duration: 4000,
           closable: true,
         });

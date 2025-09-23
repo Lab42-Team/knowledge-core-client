@@ -8,33 +8,33 @@
         label-width="auto"
         require-mark-placement="right"
     >
-      <n-form-item :label="$t('TABLE.NAME')" path="name">
+      <n-form-item :label="$t('TABLE.NEWS.NAME')" path="name">
         <n-input
             v-model:value="news.name"
             type="text"
-            :placeholder="$t('TABLE.PLACEHOLDER.NAME')"
+            :placeholder="$t('TABLE.NEWS.PLACEHOLDER.NAME')"
         />
       </n-form-item>
-      <n-form-item :label="$t('TABLE.STATUS')" path="status">
+      <n-form-item :label="$t('TABLE.NEWS.STATUS')" path="status">
         <n-select
             v-model:value="news.status"
             :options="statusOptions"
-            :placeholder="$t('TABLE.PLACEHOLDER.STATUS')"
+            :placeholder="$t('TABLE.NEWS.PLACEHOLDER.STATUS')"
             clearable
         />
       </n-form-item>
-      <n-form-item :label="$t('TABLE.DATE')" path="date">
+      <n-form-item :label="$t('TABLE.NEWS.DATE')" path="date">
         <DateInput
             v-model="news.date"
-            :placeholder="$t('TABLE.PLACEHOLDER.DATE')"
+            :placeholder="$t('TABLE.NEWS.PLACEHOLDER.DATE')"
         />
       </n-form-item>
-      <n-form-item :label="$t('TABLE.DESCRIPTION')" path="description">
+      <n-form-item :label="$t('TABLE.NEWS.DESCRIPTION')" path="description">
         <n-input
             v-model:value="news.description"
             type="textarea"
             :autosize="{ minRows: 3, maxRows: 5 }"
-            :placeholder="$t('TABLE.PLACEHOLDER.DESCRIPTION')"
+            :placeholder="$t('TABLE.NEWS.PLACEHOLDER.DESCRIPTION')"
         />
       </n-form-item>
       <n-button type="primary" :disabled="submitting" @click="submitForm">
@@ -90,11 +90,11 @@ export default {
       // Правила валидации для полей формы
       rules: {
         name: [
-          { required: true, message: this.$t('MESSAGE.ERROR.ENTER_TITLE'), trigger: ['input', 'blur'] },
-          { max: 255, message: this.$t('MESSAGE.ERROR.TITLE_LONGE'), trigger: ['input', 'blur'] }
+          { required: true, message: this.$t('MESSAGE.NEWS.ERROR.ENTER_TITLE'), trigger: ['input', 'blur'] },
+          { max: 255, message: this.$t('MESSAGE.NEWS.ERROR.TITLE_LONGE'), trigger: ['input', 'blur'] }
         ],
-        status: { required: true, message: this.$t('MESSAGE.ERROR.SELECT_STATUS'), trigger: ['change', 'blur'] },
-        date: {required: true, message: this.$t('MESSAGE.ERROR.SELECT_DATE'), trigger: ['input', 'blur']}
+        status: { required: true, message: this.$t('MESSAGE.NEWS.ERROR.SELECT_STATUS'), trigger: ['change', 'blur'] },
+        date: {required: true, message: this.$t('MESSAGE.NEWS.ERROR.SELECT_DATE'), trigger: ['input', 'blur']}
       }
     };
   },

@@ -58,6 +58,10 @@ export default {
           key: 'dashboard',
         },
         {
+          label: () => h(RouterLink, { to: { name: 'KnowledgeCoreShow' } }, { default: () => this.$t('MENU.KNOWLEDGE_CORE') }),
+          key: 'KnowledgeCoreShow',
+        },
+        {
           label: () => h(RouterLink, { to: { name: 'NewsList' } }, { default: () => this.$t('MENU.NEWS') }),
           key: 'NewsList',
         },

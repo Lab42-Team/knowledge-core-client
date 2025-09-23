@@ -10,7 +10,7 @@
                 <i class="bi bi-eye"></i>
               </n-button>
             </template>
-            {{ $t('TABLE.TOOLTIP_ACTIONS.VIEW') }}
+            {{ $t('TABLE.NEWS.TOOLTIP_ACTIONS.VIEW') }}
           </n-tooltip>
           <n-tooltip trigger="hover" :show-arrow="true">
             <template #trigger>
@@ -20,7 +20,7 @@
                 <i class="bi bi-pencil"></i>
               </n-button>
             </template>
-            {{ $t('TABLE.TOOLTIP_ACTIONS.EDIT') }}
+            {{ $t('TABLE.NEWS.TOOLTIP_ACTIONS.EDIT') }}
           </n-tooltip>
           <n-tooltip trigger="hover" :show-arrow="true">
             <template #trigger>
@@ -29,7 +29,7 @@
                 <i class="bi bi-trash"></i>
               </n-button>
             </template>
-            {{ $t('TABLE.TOOLTIP_ACTIONS.DELETE') }}
+            {{ $t('TABLE.NEWS.TOOLTIP_ACTIONS.DELETE') }}
           </n-tooltip>
         </n-space>
       </template>
@@ -78,24 +78,24 @@ export default {
       return [
         { title: 'ID', dataIndex: 'id', key: 'id', width: 64 },
         {
-          title: this.$t('TABLE.NAME'),
+          title: this.$t('TABLE.NEWS.NAME'),
           dataIndex: 'name',
           key: 'name',
           sorter: (a, b) => a.name.localeCompare(b.name),
-          showSorterTooltip: { title: this.$t('TABLE.SORT.NAME') },
+          showSorterTooltip: { title: this.$t('TABLE.NEWS.SORT.NAME') },
           filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
             return h('div', { style: 'padding: 8px' }, [
               h(Input, {
                 type: 'text',
                 value: selectedKeys[0],
                 onInput: e => setSelectedKeys(e.target.value ? [e.target.value] : []),
-                placeholder: this.$t('TABLE.SEARCH.NAME'),
+                placeholder: this.$t('TABLE.NEWS.SEARCH.NAME'),
                 style: 'width: 188px; margin-bottom: 8px; display: block',
                 onPressEnter: () => confirm(),
               }),
               h('div', { style: 'display: flex; justify-content: space-between' }, [
-                h(Button, { type: 'primary', size: 'small', onClick: () => confirm() }, () => this.$t('TABLE.SEARCH.BUTTON')),
-                h(Button, { size: 'small', onClick: () => clearFilters() }, () => this.$t('TABLE.RESET.BUTTON')),
+                h(Button, { type: 'primary', size: 'small', onClick: () => confirm() }, () => this.$t('TABLE.NEWS.SEARCH.BUTTON')),
+                h(Button, { size: 'small', onClick: () => clearFilters() }, () => this.$t('TABLE.NEWS.RESET.BUTTON')),
               ]),
             ]);
           },
@@ -108,7 +108,7 @@ export default {
         },
         //{ title: 'Описание', dataIndex: 'description', key: 'description', width: 300 },
         {
-          title: this.$t('TABLE.STATUS'),
+          title: this.$t('TABLE.NEWS.STATUS'),
           dataIndex: 'status',
           key: 'status',
           filters,
@@ -119,11 +119,11 @@ export default {
           width: 150,
         },
         {
-          title: this.$t('TABLE.DATE'),
+          title: this.$t('TABLE.NEWS.DATE'),
           dataIndex: 'date',
           key: 'date',
           sorter: (a, b) => new Date(a.date) - new Date(b.date),
-          showSorterTooltip: { title: this.$t('TABLE.SORT.DATE') },
+          showSorterTooltip: { title: this.$t('TABLE.NEWS.SORT.DATE') },
           filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => {
             return h(DateFilter, { setSelectedKeys, confirm });
           },
@@ -138,7 +138,7 @@ export default {
           width: 180,
         },
         {
-          title: this.$t('TABLE.ACTIONS'),
+          title: this.$t('TABLE.NEWS.ACTIONS'),
           key: 'action',
           width: 120,
         },
@@ -166,13 +166,13 @@ export default {
     },
 
     async deleteNews(id) {
-      const confirmDelete = confirm(this.$t('CONFIRM.DELETE'));
+      const confirmDelete = confirm(this.$t('CONFIRM.NEWS.DELETE'));
       if (!confirmDelete) return;
 
       try {
         await deleteNews(id);
         this.$emit('news-load');
-        this.message.success(this.$t('MESSAGE.SUCCESS.DELETE'), {
+        this.message.success(this.$t('MESSAGE.NEWS.SUCCESS.DELETE'), {
           duration: 4000,
           closable: true,
         });

@@ -2,6 +2,7 @@ export default {
     MENU: {
         HOME: 'Home',
         NEWS: 'News',
+        KNOWLEDGE_CORE: 'General information',
         CLIENT: 'In client',
     },
     PAGE: {
@@ -11,6 +12,10 @@ export default {
             CREATE: 'Create news',
             VIEW: 'View news',
             EDIT: 'Edit news',
+        },
+        KNOWLEDGE_CORE: {
+            NAME: 'General information',
+            EDIT: 'Editing general information',
         },
     },
     BUTTON: {
@@ -22,55 +27,93 @@ export default {
         LOGOUT: 'Logout',
     },
     TABLE: {
-        NAME: 'Name',
-        STATUS: 'Status',
-        DATE: 'Date',
-        ACTIONS: 'Actions',
-        DESCRIPTION: 'Descrription',
-        TOOLTIP_ACTIONS: {
-            VIEW: 'View',
-            EDIT: 'Edit',
-            DELETE: 'Delete',
+        NEWS: {
+            NAME: 'Name',
+            STATUS: 'Status',
+            DATE: 'Date',
+            ACTIONS: 'Actions',
+            DESCRIPTION: 'Descrription',
+            TOOLTIP_ACTIONS: {
+                VIEW: 'View',
+                EDIT: 'Edit',
+                DELETE: 'Delete',
+            },
+            SORT: {
+                NAME: 'Sort by Name',
+                DATE: 'Sort by Date',
+            },
+            SEARCH: {
+                NAME: 'Enter name',
+                BUTTON: 'Search',
+            },
+            RESET: {
+                BUTTON: 'Reset',
+            },
+            PLACEHOLDER: {
+                NAME: 'Enter the name',
+                STATUS: 'Select status',
+                DATE: 'Select date',
+                DESCRIPTION: 'Enter a description',
+            },
         },
-        SORT: {
-            NAME: 'Sort by Name',
-            DATE: 'Sort by Date',
-        },
-        SEARCH: {
-            NAME: 'Enter name',
-            BUTTON: 'Search',
-        },
-        RESET: {
-            BUTTON: 'Reset',
-        },
-        PLACEHOLDER: {
-            NAME: 'Enter the name',
-            STATUS: 'Select status',
-            DATE: 'Select date',
-            DESCRIPTION: 'Enter a description',
+        KNOWLEDGE_CORE: {
+            DESCRIPTION: 'Description',
+            PHONE: 'Phone',
+            EMAIL: 'Email',
+            ADDRESS: 'Address',
+            REFERENCES: 'References',
+            LAB_LINK: 'Link to the laboratory website',
+            LAB_LINK_SHORT: 'Link',
+            GITHUB_LINK: 'GitHub group link',
+            GITHUB_LINK_SHORT: 'Link to GitHub',
+            PLACEHOLDER: {
+                DESCRIPTION: 'Enter a description',
+                PHONE: 'Enter the phone',
+                EMAIL: 'Enter the email',
+                ADDRESS: 'Enter the address',
+                REFERENCES: 'Enter the references',
+                LAB_LINK: 'Enter the link to the laboratory website',
+                GITHUB_LINK: 'Enter the gitHub group link',
+            },
         },
     },
     CONFIRM: {
-        DELETE: 'Are you sure you want to delete this news?',
+        NEWS: {
+            DELETE: 'Are you sure you want to delete this news?',
+        },
     },
     MESSAGE: {
-        TEXT:{
-            DESCRIPTION: 'No data',
+        NEWS: {
+            TEXT:{
+                DESCRIPTION: 'No data',
+            },
+            SUCCESS: {
+                CREATE: 'News created successfully!',
+                EDIT: 'News edited successfully!',
+                DELETE: 'News deleted successfully!',
+            },
+            ERROR: {
+                DELETE: 'Error deleting news',
+                STATUS: 'Error loading statuses',
+                CREATING: 'Error while creating news',
+                EDITING: 'Error while editing news',
+                ENTER_TITLE: 'Please enter a title',
+                TITLE_LONGE: 'Title must be no longer than 255 characters',
+                SELECT_STATUS: 'Please select a status',
+                SELECT_DATE: 'Please select a date',
+            },
         },
-        SUCCESS: {
-            CREATE: 'News created successfully!',
-            EDIT: 'News edited successfully!',
-            DELETE: 'News deleted successfully!',
-        },
-        ERROR: {
-            DELETE: 'Error deleting news',
-            STATUS: 'Error loading statuses',
-            CREATING: 'Error while creating news',
-            EDITING: 'Error while editing news',
-            ENTER_TITLE: 'Please enter a title',
-            TITLE_LONGE: 'Title must be no longer than 255 characters',
-            SELECT_STATUS: 'Please select a status',
-            SELECT_DATE: 'Please select a date',
+        KNOWLEDGE_CORE: {
+            SUCCESS: {
+                EDIT: 'General information edited successfully!',
+            },
+            ERROR: {
+                EMAIL: 'The email field must be a valid email address.',
+                EMAIL_LONGE: 'Email must be no longer than 255 characters',
+                EDITING: 'Error while editing general information',
+                PHONE_LONGE: 'Phone must be no longer than 255 characters',
+                ADDRESS_LONGE: 'Address must be no longer than 255 characters',
+            },
         },
     },
 };
