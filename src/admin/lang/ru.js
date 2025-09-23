@@ -16,6 +16,8 @@ export default {
         KNOWLEDGE_CORE: {
             NAME: 'Основная информация',
             EDIT: 'Редактирование основной информации',
+            EDIT_DESCRIPTION: 'Редактирование описание',
+            EDIT_REFERENCES: 'Редактирование публикации',
         },
     },
     BUTTON: {

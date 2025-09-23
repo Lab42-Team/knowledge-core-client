@@ -4,6 +4,8 @@ import DashboardView from '../views/DashboardView.vue';
 import KnowledgeCoreLayout from '../layouts/KnowledgeCoreLayout.vue';
 import KnowledgeCoreShow from '../views/KnowledgeCore/Show.vue';
 import KnowledgeCoreEdit from '../views/KnowledgeCore/Edit.vue';
+import KnowledgeCoreEditDescription from '../views/KnowledgeCore/EditDescription.vue';
+import KnowledgeCoreEditReferences from '../views/KnowledgeCore/EditReferences.vue';
 
 import NewsLayout from '../layouts/NewsLayout.vue';
 import NewsList from '../views/News/List.vue';
@@ -38,6 +40,8 @@ const routes = [
     children: [
       { path: '', name: 'KnowledgeCoreShow', component: KnowledgeCoreShow, meta: { breadcrumb: 'PAGE.KNOWLEDGE_CORE.NAME' }},
       { path: 'edit', name: 'KnowledgeCoreEdit', component: KnowledgeCoreEdit, meta: { breadcrumb: 'PAGE.KNOWLEDGE_CORE.EDIT' }},
+      { path: 'editDescription', name: 'KnowledgeCoreEditDescription', component: KnowledgeCoreEditDescription, meta: { breadcrumb: 'PAGE.KNOWLEDGE_CORE.EDIT_DESCRIPTION' }},
+      { path: 'editReferences', name: 'KnowledgeCoreEditReferences', component: KnowledgeCoreEditReferences, meta: { breadcrumb: 'PAGE.KNOWLEDGE_CORE.EDIT_REFERENCES' }},
     ],
   },
 ];
