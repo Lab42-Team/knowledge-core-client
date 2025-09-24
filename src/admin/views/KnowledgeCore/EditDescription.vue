@@ -1,46 +1,18 @@
 <template>
-  <n-card :title="$t('PAGE.KNOWLEDGE_CORE.EDIT')" size="medium" :bordered="true" class="panel-card">
+  <n-card :title="$t('PAGE.KNOWLEDGE_CORE.EDIT_DESCRIPTION')" size="medium" :bordered="true" class="panel-card">
     <n-form
         ref="formRef"
         :model="knowledge_core"
-        :rules="rules"
         label-placement="left"
         label-width="auto"
         require-mark-placement="right"
     >
-      <n-form-item :label="$t('TABLE.KNOWLEDGE_CORE.PHONE')" path="phone">
+      <n-form-item :label="$t('TABLE.KNOWLEDGE_CORE.DESCRIPTION')" path="description">
         <n-input
-            v-model:value="knowledge_core.phone"
-            type="text"
-            :placeholder="$t('TABLE.KNOWLEDGE_CORE.PLACEHOLDER.PHONE')"
-        />
-      </n-form-item>
-      <n-form-item :label="$t('TABLE.KNOWLEDGE_CORE.EMAIL')" path="email">
-        <n-input
-            v-model:value="knowledge_core.email"
-            type="text"
-            :placeholder="$t('TABLE.KNOWLEDGE_CORE.PLACEHOLDER.EMAIL')"
-        />
-      </n-form-item>
-      <n-form-item :label="$t('TABLE.KNOWLEDGE_CORE.ADDRESS')" path="address">
-        <n-input
-            v-model:value="knowledge_core.address"
-            type="text"
-            :placeholder="$t('TABLE.KNOWLEDGE_CORE.PLACEHOLDER.ADDRESS')"
-        />
-      </n-form-item>
-      <n-form-item :label="$t('TABLE.KNOWLEDGE_CORE.LAB_LINK')" path="lab_link">
-        <n-input
-            v-model:value="knowledge_core.lab_link"
-            type="text"
-            :placeholder="$t('TABLE.KNOWLEDGE_CORE.PLACEHOLDER.LAB_LINK')"
-        />
-      </n-form-item>
-      <n-form-item :label="$t('TABLE.KNOWLEDGE_CORE.GITHUB_LINK')" path="github_link">
-        <n-input
-            v-model:value="knowledge_core.github_link"
-            type="text"
-            :placeholder="$t('TABLE.KNOWLEDGE_CORE.PLACEHOLDER.GITHUB_LINK')"
+            v-model:value="knowledge_core.description"
+            type="textarea"
+            :autosize="{ minRows: 3, maxRows: 5 }"
+            :placeholder="$t('TABLE.KNOWLEDGE_CORE.PLACEHOLDER.DESCRIPTION')"
         />
       </n-form-item>
 
@@ -67,7 +39,7 @@ import {NCard, NForm, NFormItem, NInput, NSelect, NButton, NAlert, NText} from '
 import {getKnowledgeCore, updateKnowledgeCore} from "@/admin/api/knowledge-core.js";
 
 export default {
-  name: 'KnowledgeCoreEdit',
+  name: 'KnowledgeCoreEditDescription',
 
   components: {
     NText,
@@ -83,23 +55,10 @@ export default {
   data() {
     return {
       knowledge_core: {
-        phone: '',
-        email: '',
-        address: '',
-        lab_link: '',
-        github_link: '',
+        description: '',
       },
       errorList: [], // Массив для хранения списка ошибок
       submitting: false, // Флаг идет ли процесс отправки
-      // Правила валидации для полей формы
-      rules: {
-        email: [
-          { type: 'email', message: this.$t('MESSAGE.KNOWLEDGE_CORE.ERROR.EMAIL'), trigger: ['input', 'blur'] },
-          { max: 255, message: this.$t('MESSAGE.KNOWLEDGE_CORE.ERROR.EMAIL_LONGE'), trigger: ['input', 'blur'] },
-        ],
-        phone: { max: 255, message: this.$t('MESSAGE.KNOWLEDGE_CORE.ERROR.PHONE_LONGE'), trigger: ['input', 'blur'] },
-        address: { max: 255, message: this.$t('MESSAGE.KNOWLEDGE_CORE.ERROR.ADDRESS_LONGE'), trigger: ['input', 'blur'] },
-      }
     };
   },
 

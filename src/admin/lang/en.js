@@ -16,6 +16,8 @@ export default {
         KNOWLEDGE_CORE: {
             NAME: 'General information',
             EDIT: 'Editing general information',
+            EDIT_DESCRIPTION: 'Editing descrription',
+            EDIT_REFERENCES: 'Editing references',
         },
     },
     BUTTON: {

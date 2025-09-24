@@ -11,17 +11,54 @@
 
     <n-card :title="$t('PAGE.KNOWLEDGE_CORE.NAME')" size="medium" :bordered="true" class="panel-card">
       <n-space v-if="knowledge_core" vertical size="large" class="panel-content">
-        <n-text class="field"><strong>{{ $t('TABLE.KNOWLEDGE_CORE.DESCRIPTION') }}: </strong> {{ knowledge_core.description }}</n-text>
         <n-text class="field"><strong>{{ $t('TABLE.KNOWLEDGE_CORE.PHONE') }}: </strong> {{ knowledge_core.phone }}</n-text>
         <n-text class="field"><strong>{{ $t('TABLE.KNOWLEDGE_CORE.EMAIL') }}:</strong> {{ knowledge_core.email }}</n-text>
         <n-text class="field"><strong>{{ $t('TABLE.KNOWLEDGE_CORE.ADDRESS') }}:</strong> {{ knowledge_core.address }}</n-text>
-        <n-text class="field"><strong>{{ $t('TABLE.KNOWLEDGE_CORE.REFERENCES') }}: </strong> {{ knowledge_core.references }}</n-text>
         <n-text class="field"><strong>{{ $t('TABLE.KNOWLEDGE_CORE.LAB_LINK') }}: </strong> {{ knowledge_core.lab_link }}</n-text>
         <n-text class="field"><strong>{{ $t('TABLE.KNOWLEDGE_CORE.GITHUB_LINK') }}: </strong> {{ knowledge_core.github_link }}</n-text>
       </n-space>
     </n-card>
 
   </n-space>
+
+  <n-space vertical size="large" style="margin-top: 32px;">
+    <n-space>
+      <n-button type="primary" @click="goToKnowledgeCoreEditDescription()">
+        <template #icon>
+          <i class="bi bi-pencil"></i>
+        </template>
+        {{ $t('BUTTON.EDIT') }}
+      </n-button>
+    </n-space>
+
+    <n-card size="medium" :bordered="true" class="panel-card">
+      <n-space v-if="knowledge_core" vertical size="large" class="panel-content">
+        <n-text class="field"><strong>{{ $t('TABLE.KNOWLEDGE_CORE.DESCRIPTION') }}: </strong> {{ knowledge_core.description }}</n-text>
+      </n-space>
+    </n-card>
+
+  </n-space>
+
+
+  <n-space vertical size="large" style="margin-top: 32px;">
+    <n-space>
+      <n-button type="primary" @click="goToKnowledgeCoreEditReferences()">
+        <template #icon>
+          <i class="bi bi-pencil"></i>
+        </template>
+        {{ $t('BUTTON.EDIT') }}
+      </n-button>
+    </n-space>
+
+    <n-card size="medium" :bordered="true" class="panel-card">
+      <n-space v-if="knowledge_core" vertical size="large" class="panel-content">
+        <n-text class="field"><strong>{{ $t('TABLE.KNOWLEDGE_CORE.REFERENCES') }}: </strong> {{ knowledge_core.references }}</n-text>
+      </n-space>
+    </n-card>
+
+  </n-space>
+
+
 </template>
 
 <script>
@@ -88,6 +125,14 @@ export default {
 
     goToKnowledgeCoreEdit() {
       this.$router.push({ name: 'KnowledgeCoreEdit' });
+    },
+
+    goToKnowledgeCoreEditDescription() {
+      this.$router.push({ name: 'KnowledgeCoreEditDescription' });
+    },
+
+    goToKnowledgeCoreEditReferences() {
+      this.$router.push({ name: 'KnowledgeCoreEditReferences' });
     },
 
   },
