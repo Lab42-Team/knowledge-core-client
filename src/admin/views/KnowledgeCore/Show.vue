@@ -18,7 +18,6 @@
         <n-text class="field"><strong>{{ $t('TABLE.KNOWLEDGE_CORE.GITHUB_LINK') }}: </strong> {{ knowledge_core.github_link }}</n-text>
       </n-space>
     </n-card>
-
   </n-space>
 
   <n-space vertical size="large" style="margin-top: 32px;">
@@ -31,9 +30,9 @@
       </n-button>
     </n-space>
 
-    <n-card size="medium" :bordered="true" class="panel-card">
+    <n-card :title="$t('TABLE.KNOWLEDGE_CORE.DESCRIPTION')" size="medium" :bordered="true" class="panel-card">
       <n-space v-if="knowledge_core" vertical size="large" class="panel-content">
-        <n-text class="field"><strong>{{ $t('TABLE.KNOWLEDGE_CORE.DESCRIPTION') }}: </strong> {{ knowledge_core.description }}</n-text>
+        <n-text class="field">{{ knowledge_core.description }}</n-text>
       </n-space>
     </n-card>
 
@@ -50,9 +49,9 @@
       </n-button>
     </n-space>
 
-    <n-card size="medium" :bordered="true" class="panel-card">
+    <n-card :title="$t('TABLE.KNOWLEDGE_CORE.REFERENCES')" size="medium" :bordered="true" class="panel-card">
       <n-space v-if="knowledge_core" vertical size="large" class="panel-content">
-        <n-text class="field"><strong>{{ $t('TABLE.KNOWLEDGE_CORE.REFERENCES') }}: </strong> {{ knowledge_core.references }}</n-text>
+        <n-text class="field">{{ knowledge_core.references }}</n-text>
       </n-space>
     </n-card>
 
