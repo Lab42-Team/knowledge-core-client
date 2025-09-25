@@ -3,18 +3,21 @@
     <n-form
         ref="formRef"
         :model="knowledge_core"
-        label-placement="left"
+        label-placement="top"
         label-width="auto"
         require-mark-placement="right"
     >
-      <n-form-item :label="$t('TABLE.KNOWLEDGE_CORE.DESCRIPTION')" path="description">
-        <n-input
-            v-model:value="knowledge_core.description"
-            type="textarea"
-            :autosize="{ minRows: 3, maxRows: 5 }"
+
+      <div class="n-form-item-rich-text">
+        <QuillEditor
+            v-model:content="knowledge_core.description"
             :placeholder="$t('TABLE.KNOWLEDGE_CORE.PLACEHOLDER.DESCRIPTION')"
+            theme="snow"
+            content-type="html"
+            :toolbar="customToolbar"
+            class="ql-editor-container"
         />
-      </n-form-item>
+      </div>
 
       <n-button type="primary" :disabled="submitting" @click="submitForm">
         <template #icon>
@@ -37,6 +40,8 @@
 <script>
 import {NCard, NForm, NFormItem, NInput, NSelect, NButton, NAlert, NText} from 'naive-ui';
 import {getKnowledgeCore, updateKnowledgeCore} from "@/admin/api/knowledge-core.js";
+import { QuillEditor } from '@vueup/vue-quill';
+import 'quill/dist/quill.snow.css';
 
 export default {
   name: 'KnowledgeCoreEditDescription',
@@ -50,6 +55,7 @@ export default {
     NSelect,
     NButton,
     NAlert,
+    QuillEditor,
   },
 
   data() {
@@ -57,6 +63,17 @@ export default {
       knowledge_core: {
         description: '',
       },
+      customToolbar: [
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ 'script': 'sub'}, { 'script': 'super' }],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{'header': [1, 2, 3, false]}],
+        ['link'],
+        [{ 'color': [] }, { 'background': [] }],
+        [{ 'align': [] }],
+        [],
+        ['clean'] // Кнопка очистки форматирования
+      ],
       errorList: [], // Массив для хранения списка ошибок
       submitting: false, // Флаг идет ли процесс отправки
     };

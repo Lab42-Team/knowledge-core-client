@@ -3,17 +3,20 @@
     <n-form
         ref="formRef"
         :model="knowledge_core"
-        label-placement="left"
+        label-placement="top"
         label-width="auto"
         require-mark-placement="right"
     >
-      <n-form-item :label="$t('TABLE.KNOWLEDGE_CORE.REFERENCES')" path="references">
-        <n-input
-            v-model:value="knowledge_core.references"
-            type="text"
+      <div class="n-form-item-rich-text">
+        <QuillEditor
+            v-model:content="knowledge_core.references"
             :placeholder="$t('TABLE.KNOWLEDGE_CORE.PLACEHOLDER.REFERENCES')"
+            theme="snow"
+            content-type="html"
+            :toolbar="customToolbar"
+            class="ql-editor-container"
         />
-      </n-form-item>
+      </div>
 
       <n-button type="primary" :disabled="submitting" @click="submitForm">
         <template #icon>
@@ -36,6 +39,8 @@
 <script>
 import {NCard, NForm, NFormItem, NInput, NSelect, NButton, NAlert, NText} from 'naive-ui';
 import {getKnowledgeCore, updateKnowledgeCore} from "@/admin/api/knowledge-core.js";
+import { QuillEditor } from '@vueup/vue-quill';
+import 'quill/dist/quill.snow.css';
 
 export default {
   name: 'KnowledgeCoreEdit',
@@ -49,6 +54,7 @@ export default {
     NSelect,
     NButton,
     NAlert,
+    QuillEditor,
   },
 
   data() {
@@ -56,6 +62,17 @@ export default {
       knowledge_core: {
         references: '',
       },
+      customToolbar: [
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ 'script': 'sub'}, { 'script': 'super' }],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }], // Списки
+        [{'header': [1, 2, 3, false]}],
+        ['link'],
+        [{ 'color': [] }, { 'background': [] }],
+        [{ 'align': [] }],
+        [],
+        ['clean'] // Кнопка очистки форматирования
+      ],
       errorList: [], // Массив для хранения списка ошибок
       submitting: false, // Флаг идет ли процесс отправки
     };

@@ -277,6 +277,38 @@ body .n-popover {
     padding: 10px 0px !important;
 }
 
+.n-form-item-rich-text {
+    margin-bottom: 16px !important;
+}
+
+.n-form-item-rich-text .ql-toolbar {
+    background-color: #f2fdf2 !important;
+    border-color: #d4edda !important;
+    border-radius: 6px 6px 0px 0px;
+}
+
+.n-form-item-rich-text .ql-editor-container {
+    border-color: #d4edda !important;
+    border-radius: 0px 0px 6px 6px ;
+}
+
+/* Исправление отображения списков */
+.ql-snow .ql-editor ul {
+    list-style-type: disc !important;
+    padding-left: 2em;
+}
+
+.ql-snow .ql-editor ol {
+    list-style-type: decimal !important;
+    padding-left: 2em;
+}
+
+.ql-snow .ql-editor li {
+    list-style-type: inherit;
+    padding-left: 1.5em;
+    position: relative;
+}
+
 /* Стиль для заголовков полей формы */
 .panel-card .n-form-item-label {
     color: #2d7a4b !important;
