@@ -12,10 +12,16 @@
     <n-card :title="$t('PAGE.KNOWLEDGE_CORE.NAME')" size="medium" :bordered="true" class="panel-card">
       <n-space v-if="knowledge_core" vertical size="large" class="panel-content">
         <n-text class="field"><strong>{{ $t('TABLE.KNOWLEDGE_CORE.PHONE') }}: </strong> {{ knowledge_core.phone }}</n-text>
-        <n-text class="field"><strong>{{ $t('TABLE.KNOWLEDGE_CORE.EMAIL') }}:</strong> {{ knowledge_core.email }}</n-text>
+        <n-text class="field"><strong>{{ $t('TABLE.KNOWLEDGE_CORE.EMAIL') }}: </strong>
+          <a :href="'mailto:' + knowledge_core.email"> {{ knowledge_core.email }}</a>
+        </n-text>
         <n-text class="field"><strong>{{ $t('TABLE.KNOWLEDGE_CORE.ADDRESS') }}:</strong> {{ knowledge_core.address }}</n-text>
-        <n-text class="field"><strong>{{ $t('TABLE.KNOWLEDGE_CORE.LAB_LINK') }}: </strong> {{ knowledge_core.lab_link }}</n-text>
-        <n-text class="field"><strong>{{ $t('TABLE.KNOWLEDGE_CORE.GITHUB_LINK') }}: </strong> {{ knowledge_core.github_link }}</n-text>
+        <n-text class="field"><strong>{{ $t('TABLE.KNOWLEDGE_CORE.LAB_LINK') }}: </strong>
+          <a :href="knowledge_core.lab_link" target="_blank">{{ knowledge_core.lab_link }}</a>
+        </n-text>
+        <n-text class="field"><strong>{{ $t('TABLE.KNOWLEDGE_CORE.GITHUB_LINK') }}: </strong>
+          <a :href="knowledge_core.github_link" target="_blank">{{ knowledge_core.github_link }}</a>
+        </n-text>
       </n-space>
     </n-card>
   </n-space>
@@ -32,7 +38,7 @@
 
     <n-card :title="$t('TABLE.KNOWLEDGE_CORE.DESCRIPTION')" size="medium" :bordered="true" class="panel-card">
       <n-space v-if="knowledge_core" vertical size="large" class="panel-content">
-        <n-text class="field">{{ knowledge_core.description }}</n-text>
+        <n-text class="field" v-html="knowledge_core.description"></n-text>
       </n-space>
     </n-card>
 
@@ -51,7 +57,7 @@
 
     <n-card :title="$t('TABLE.KNOWLEDGE_CORE.REFERENCES')" size="medium" :bordered="true" class="panel-card">
       <n-space v-if="knowledge_core" vertical size="large" class="panel-content">
-        <n-text class="field">{{ knowledge_core.references }}</n-text>
+        <n-text class="field" v-html="knowledge_core.references"></n-text>
       </n-space>
     </n-card>
 
