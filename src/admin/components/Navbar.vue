@@ -66,6 +66,10 @@ export default {
           key: 'NewsList',
         },
         {
+          label: () => h(RouterLink, { to: { name: 'DevelopmentsList' } }, { default: () => this.$t('MENU.DEVELOPMENTS') }),
+          key: 'DevelopmentsList',
+        },
+        {
           label: () => this.$t('MENU.CLIENT'),
           key: 'client',
         },

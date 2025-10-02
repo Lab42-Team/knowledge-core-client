@@ -3,6 +3,7 @@ export default {
         HOME: 'Home',
         NEWS: 'News',
         KNOWLEDGE_CORE: 'General information',
+        DEVELOPMENTS: 'Developments',
         CLIENT: 'In client',
     },
     PAGE: {
@@ -19,12 +20,19 @@ export default {
             EDIT_DESCRIPTION: 'Editing descrription',
             EDIT_REFERENCES: 'Editing references',
         },
+        DEVELOPMENTS: {
+            NAME: 'Developments',
+            CREATE: 'Create developments',
+            VIEW: 'View developments',
+            EDIT: 'Edit developments',
+        },
     },
     BUTTON: {
         EDIT: 'Edit',
         DELETE: 'Delete',
         SAVE: 'Save',
         CREATE_NEWS: 'Create news',
+        CREATE_DEVELOPMENT: 'Create development',
         SAVE_CHANGES: 'Save changes',
         LOGOUT: 'Logout',
     },
@@ -42,7 +50,7 @@ export default {
             },
             SORT: {
                 NAME: 'Sort by Name',
-                DATE: 'Sort by Date',
+                YEAR: 'Sort by Year',
             },
             SEARCH: {
                 NAME: 'Enter name',
@@ -78,10 +86,60 @@ export default {
                 GITHUB_LINK: 'Enter the gitHub group link',
             },
         },
+        DEVELOPMENTS: {
+            NAME: 'Name',
+            DESCRIPTION: 'Descrription',
+            YEAR: 'Year',
+            AUTHORS: 'Authors',
+            PUBLICATIONS: 'Publications',
+            REQUIREMENTS: 'Requirements',
+            PRACTICAL_APPLICATION: 'Practical application',
+            VERSION_HISTORY: 'Version history',
+            DEMO_VIDEOS: 'Demo videos',
+            SOFTWARE_LINK: 'Software link',
+            DOCUMENTATION_LINK: 'Documentation link',
+            GITHUB_LINK: 'Link to GitHub',
+            ACTIONS: 'Actions',
+            TOOLTIP_ACTIONS: {
+                VIEW: 'View',
+                EDIT: 'Edit',
+                DELETE: 'Delete',
+            },
+            SORT: {
+                NAME: 'Sort by Name',
+                DATE: 'Sort by Date',
+            },
+
+            SEARCH: {
+                NAME: 'Enter name',
+                BUTTON: 'Search',
+            },
+            RESET: {
+                BUTTON: 'Reset',
+            },
+
+            PLACEHOLDER: {
+                NAME: 'Enter the name',
+                DESCRIPTION: 'Enter a description',
+                YEAR: 'Select year',
+                AUTHORS: 'Enter a authors',
+                PUBLICATIONS: 'Enter a publications',
+                REQUIREMENTS: 'Enter a requirements',
+                PRACTICAL_APPLICATION: 'Enter a practical application',
+                VERSION_HISTORY: 'Enter a version history',
+                DEMO_VIDEOS: 'Enter a demo videos',
+                SOFTWARE_LINK: 'Enter a software link',
+                DOCUMENTATION_LINK: 'Enter a documentation link',
+                GITHUB_LINK: 'Enter a link to GitHub',
+            },
+        },
     },
     CONFIRM: {
         NEWS: {
             DELETE: 'Are you sure you want to delete this news?',
+        },
+        DEVELOPMENTS: {
+            DELETE: 'Are you sure you want to delete this development?',
         },
     },
     MESSAGE: {
@@ -115,6 +173,18 @@ export default {
                 EDITING: 'Error while editing general information',
                 PHONE_LONGE: 'Phone must be no longer than 255 characters',
                 ADDRESS_LONGE: 'Address must be no longer than 255 characters',
+            },
+        },
+        DEVELOPMENTS: {
+            SUCCESS: {
+                CREATE: 'Developments created successfully!',
+                EDIT: 'Developments edited successfully!',
+                DELETE: 'Developments deleted successfully!',
+            },
+            ERROR: {
+                CREATING: 'Error while creating developments',
+                ENTER_TITLE: 'Please enter a title',
+                TITLE_LONGE: 'Title must be no longer than 255 characters',
             },
         },
     },
