@@ -13,6 +13,12 @@ import NewsCreate from '../views/News/Create.vue';
 import NewsShow from '../views/News/Show.vue';
 import NewsEdit from '../views/News/Edit.vue';
 
+import DevelopmentsLayout from '../layouts/DevelopmentsLayout.vue';
+import DevelopmentsList from '../views/Developments/List.vue';
+import DevelopmentsCreate from '../views/Developments/Create.vue';
+import DevelopmentsShow from '../views/Developments/Show.vue';
+import DevelopmentsEdit from '../views/Developments/Edit.vue';
+
 import { getUser } from '@/client/api/auth'
 
 const routes = [
@@ -42,6 +48,17 @@ const routes = [
       { path: 'edit', name: 'KnowledgeCoreEdit', component: KnowledgeCoreEdit, meta: { breadcrumb: 'PAGE.KNOWLEDGE_CORE.EDIT' }},
       { path: 'editDescription', name: 'KnowledgeCoreEditDescription', component: KnowledgeCoreEditDescription, meta: { breadcrumb: 'PAGE.KNOWLEDGE_CORE.EDIT_DESCRIPTION' }},
       { path: 'editReferences', name: 'KnowledgeCoreEditReferences', component: KnowledgeCoreEditReferences, meta: { breadcrumb: 'PAGE.KNOWLEDGE_CORE.EDIT_REFERENCES' }},
+    ],
+  },
+  {
+    path: '/developments',
+    component: DevelopmentsLayout,
+    meta: { requiresAuth: true, breadcrumb: 'PAGE.DEVELOPMENTS.NAME' },
+    children: [
+      { path: '', name: 'DevelopmentsList', component: DevelopmentsList, meta: { breadcrumb: 'PAGE.DEVELOPMENTS.NAME' }},
+      { path: 'create', name: 'DevelopmentsCreate', component: DevelopmentsCreate, meta: { breadcrumb: 'PAGE.DEVELOPMENTS.CREATE' }},
+      { path: 'show/:id', name: 'DevelopmentsShow', component: DevelopmentsShow, meta: { breadcrumb: 'PAGE.DEVELOPMENTS.VIEW' }},
+      { path: 'edit/:id', name: 'DevelopmentsEdit', component: DevelopmentsEdit, meta: { breadcrumb: 'PAGE.DEVELOPMENTS.EDIT' }},
     ],
   },
 ];
