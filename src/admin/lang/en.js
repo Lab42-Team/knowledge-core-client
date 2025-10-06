@@ -50,7 +50,7 @@ export default {
             },
             SORT: {
                 NAME: 'Sort by Name',
-                YEAR: 'Sort by Year',
+                DATE: 'Sort by date',
             },
             SEARCH: {
                 NAME: 'Enter name',
@@ -107,7 +107,7 @@ export default {
             },
             SORT: {
                 NAME: 'Sort by Name',
-                DATE: 'Sort by Date',
+                YEAR: 'Sort by Date',
             },
 
             SEARCH: {
@@ -186,6 +186,7 @@ export default {
                 ENTER_TITLE: 'Please enter a title',
                 TITLE_LONGE: 'Title must be no longer than 255 characters',
             },
+            TEXT: 'No data',
         },
     },
 };

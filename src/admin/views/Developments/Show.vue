@@ -20,21 +20,57 @@
       <n-space v-if="developments" vertical size="large" class="panel-content">
         <n-text class="field"><strong>Id:</strong> {{ developments.id }}</n-text>
         <n-text class="field"><strong>{{ $t('TABLE.DEVELOPMENTS.NAME') }}:</strong> {{ developments.name }}</n-text>
+        <n-text class="field"><strong>{{ $t('TABLE.DEVELOPMENTS.YEAR') }}:</strong> {{ formatDate(developments.year) }}</n-text>
+        <n-text class="field">
+          <strong>{{ $t('TABLE.DEVELOPMENTS.AUTHORS') }}: </strong>
+          <span v-if="developments.authors"> {{ developments.authors }}</span>
+          <span v-else style="color: red;"> {{ $t('MESSAGE.DEVELOPMENTS.TEXT') }} </span>
+        </n-text>
+        <n-text class="field">
+          <strong>{{ $t('TABLE.DEVELOPMENTS.PUBLICATIONS') }}: </strong>
+          <span v-if="developments.publications"> {{ developments.publications }}</span>
+          <span v-else style="color: red;"> {{ $t('MESSAGE.DEVELOPMENTS.TEXT') }} </span>
+        </n-text>
+        <n-text class="field">
+          <strong>{{ $t('TABLE.DEVELOPMENTS.REQUIREMENTS') }}: </strong>
+          <span v-if="developments.requirements"> {{ developments.requirements }}</span>
+          <span v-else style="color: red;"> {{ $t('MESSAGE.DEVELOPMENTS.TEXT') }} </span>
+        </n-text>
+        <n-text class="field">
+          <strong>{{ $t('TABLE.DEVELOPMENTS.PRACTICAL_APPLICATION') }}: </strong>
+          <span v-if="developments.practical_application"> {{ developments.practical_application }}</span>
+          <span v-else style="color: red;"> {{ $t('MESSAGE.DEVELOPMENTS.TEXT') }} </span>
+        </n-text>
+        <n-text class="field">
+          <strong>{{ $t('TABLE.DEVELOPMENTS.VERSION_HISTORY') }}: </strong>
+          <span v-if="developments.version_history"> {{ developments.version_history }}</span>
+          <span v-else style="color: red;"> {{ $t('MESSAGE.DEVELOPMENTS.TEXT') }} </span>
+        </n-text>
+        <n-text class="field">
+          <strong>{{ $t('TABLE.DEVELOPMENTS.DEMO_VIDEOS') }}: </strong>
+          <span v-if="developments.demo_videos"> {{ developments.demo_videos }}</span>
+          <span v-else style="color: red;"> {{ $t('MESSAGE.DEVELOPMENTS.TEXT') }} </span>
+        </n-text>
+        <n-text class="field">
+          <strong>{{ $t('TABLE.DEVELOPMENTS.SOFTWARE_LINK') }}: </strong>
+          <span v-if="developments.software_link"> {{ developments.software_link }}</span>
+          <span v-else style="color: red;"> {{ $t('MESSAGE.DEVELOPMENTS.TEXT') }} </span>
+        </n-text>
+        <n-text class="field">
+          <strong>{{ $t('TABLE.DEVELOPMENTS.DOCUMENTATION_LINK') }}: </strong>
+          <span v-if="developments.documentation_link"> {{ developments.documentation_link }}</span>
+          <span v-else style="color: red;"> {{ $t('MESSAGE.DEVELOPMENTS.TEXT') }} </span>
+        </n-text>
+        <n-text class="field">
+          <strong>{{ $t('TABLE.DEVELOPMENTS.GITHUB_LINK') }}: </strong>
+          <span v-if="developments.github_link"> {{ developments.github_link }}</span>
+          <span v-else style="color: red;"> {{ $t('MESSAGE.DEVELOPMENTS.TEXT') }} </span>
+        </n-text>
         <n-text class="field">
           <strong>{{ $t('TABLE.DEVELOPMENTS.DESCRIPTION') }}: </strong>
           <span v-if="developments.description"> {{ developments.description }}</span>
-          <span v-else style="color: red;"> {{ $t('MESSAGE.DEVELOPMENTS.TEXT.DESCRIPTION') }} </span>
+          <span v-else style="color: red;"> {{ $t('MESSAGE.DEVELOPMENTS.TEXT') }} </span>
         </n-text>
-        <n-text class="field"><strong>{{ $t('TABLE.DEVELOPMENTS.YEAR') }}:</strong> {{ formatDate(developments.year) }}</n-text>
-        <n-text class="field"><strong>{{ $t('TABLE.DEVELOPMENTS.AUTHORS') }}:</strong> {{ developments.authors }}</n-text>
-        <n-text class="field"><strong>{{ $t('TABLE.DEVELOPMENTS.PUBLICATIONS') }}:</strong> {{ developments.publications }}</n-text>
-        <n-text class="field"><strong>{{ $t('TABLE.DEVELOPMENTS.REQUIREMENTS') }}:</strong> {{ developments.requirements }}</n-text>
-        <n-text class="field"><strong>{{ $t('TABLE.DEVELOPMENTS.PRACTICAL_APPLICATION') }}:</strong> {{ developments.practical_application }}</n-text>
-        <n-text class="field"><strong>{{ $t('TABLE.DEVELOPMENTS.VERSION_HISTORY') }}:</strong> {{ developments.version_history }}</n-text>
-        <n-text class="field"><strong>{{ $t('TABLE.DEVELOPMENTS.DEMO_VIDEOS') }}:</strong> {{ developments.demo_videos }}</n-text>
-        <n-text class="field"><strong>{{ $t('TABLE.DEVELOPMENTS.SOFTWARE_LINK') }}:</strong> {{ developments.software_link }}</n-text>
-        <n-text class="field"><strong>{{ $t('TABLE.DEVELOPMENTS.DOCUMENTATION_LINK') }}:</strong> {{ developments.documentation_link }}</n-text>
-        <n-text class="field"><strong>{{ $t('TABLE.DEVELOPMENTS.GITHUB_LINK') }}:</strong> {{ developments.github_link }}</n-text>
       </n-space>
     </n-card>
   </n-space>

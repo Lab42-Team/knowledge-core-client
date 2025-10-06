@@ -119,15 +119,27 @@ export default {
           },
           filterIcon: filtered => h('i', { class: `bi bi-search${filtered ? ' filtered' : ''}` }),
           customRender: ({ text }) => (text ? dayjs(text).format('YYYY') : '-'),
-          width: 80,
+          width: 90,
         },
-        { title: this.$t('TABLE.DEVELOPMENTS.AUTHORS'), dataIndex: 'authors', key: 'authors', width: 180 },
+        {
+          title: this.$t('TABLE.DEVELOPMENTS.AUTHORS'),
+          dataIndex: 'authors',
+          key: 'authors',
+          customRender: ({ text }) => {
+            if (!text || typeof text !== 'string') {
+              return h('span', { style: { color: 'red' } }, this.$t('MESSAGE.DEVELOPMENTS.TEXT'));
+            }
+          },
+          width: 180
+        },
         {
           title: this.$t('TABLE.DEVELOPMENTS.DESCRIPTION'),
           dataIndex: 'description',
           key: 'description',
           customRender: ({ text }) => {
-            if (!text || typeof text !== 'string') return '-';
+            if (!text || typeof text !== 'string') {
+              return h('span', { style: { color: 'red' } }, this.$t('MESSAGE.DEVELOPMENTS.TEXT'));
+            }
             const maxLength = 100;
             return text.length > maxLength ? `${text.slice(0, maxLength)} ...` : text;
           },
