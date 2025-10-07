@@ -46,7 +46,7 @@
     </n-form>
     <n-alert v-if="errorList.length" type="error" class="mt-3">
       <div>
-        {{ $t('MESSAGE.ERROR.CREATING') }}:
+        {{ $t('MESSAGE.NEWS.ERROR.CREATING') }}:
         <ul>
           <li v-for="(error, index) in errorList" :key="index">{{ error }}</li>
         </ul>
