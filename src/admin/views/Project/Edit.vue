@@ -15,18 +15,20 @@
             :placeholder="$t('TABLE.PROJECTS.PLACEHOLDER.NAME')"
         />
       </n-form-item>
+      <n-form-item :label="$t('TABLE.PROJECTS.TYPE')" path="type">
+        <n-select
+            v-model:value="project.type"
+            :options="typesOptions"
+            :placeholder="$t('TABLE.PROJECTS.PLACEHOLDER.TYPE')"
+            clearable
+        />
+      </n-form-item>
       <n-form-item :label="$t('TABLE.PROJECTS.STATUS')" path="status">
         <n-select
             v-model:value="project.status"
             :options="statusOptions"
             :placeholder="$t('TABLE.PROJECTS.PLACEHOLDER.STATUS')"
             clearable
-        />
-      </n-form-item>
-      <n-form-item :label="$t('TABLE.PROJECTS.DATE')" path="date">
-        <DateInput
-            v-model="project.date"
-            :placeholder="$t('TABLE.PROJECTS.PLACEHOLDER.DATE')"
         />
       </n-form-item>
       <n-form-item :label="$t('TABLE.PROJECTS.DESCRIPTION')" path="description">
@@ -57,8 +59,7 @@
 
 <script>
 import { NCard, NForm, NFormItem, NInput, NSelect, NButton, NAlert } from 'naive-ui';
-import { getProjectById, updateProject } from '@/admin/api/project';
-import DateInput from '@/admin/components/DateInput.vue';
+import { getProjectById, updateProject, getProjectTypes, getProjectStatuses } from '@/admin/api/project';
 
 export default {
   name: 'ProjectEdit',
@@ -71,7 +72,6 @@ export default {
     NSelect,
     NButton,
     NAlert,
-    DateInput
   },
 
   data() {
@@ -80,35 +80,41 @@ export default {
         id: '',
         name: '',
         description: '',
+        type: null,
         status: null,
-        date: ''
       },
       statuses: {}, // Список статусов, полученных из API
+      types: {}, // Список типов, полученных из API
       errorList: [], // Массив для хранения списка ошибок
       submitting: false, // Флаг идет ли процесс отправки
       // Правила валидации для полей формы
       rules: {
         name: [
-          { required: true, message: this.$t('MESSAGE.PROJECTS.ERROR.ENTER_TITLE'), trigger: ['input', 'blur'] },
-          { max: 255, message: this.$t('MESSAGE.PROJECTS.ERROR.TITLE_LONGE'), trigger: ['input', 'blur'] }
+          { required: true, message: this.$t('MESSAGE.PROJECTS.ERROR.ENTER_NAME'), trigger: ['input', 'blur'] },
+          { max: 255, message: this.$t('MESSAGE.PROJECTS.ERROR.NAME_LONGE'), trigger: ['input', 'blur'] }
         ],
         status: { required: true, message: this.$t('MESSAGE.PROJECTS.ERROR.SELECT_STATUS'), trigger: ['change', 'blur'] },
-        date: { required: true, message: this.$t('MESSAGE.PROJECTS.ERROR.SELECT_DATE'), trigger: ['input', 'blur'] }
+        type: { required: true, message: this.$t('MESSAGE.PROJECTS.ERROR.SELECT_TYPE'), trigger: ['change', 'blur'] },
       }
     };
   },
 
   // Вычисляемые свойства
   computed: {
+    // Преобразование объекта типов в массив для n-select
+    typesOptions() {
+      return Object.entries(this.types).map(([value, label]) => ({ label, value }));
+    },
     // Преобразование объекта статусов в массив для n-select
     statusOptions() {
-      return Object.entries(this.statuses).map(([value, label]) => ({ label, value: value.toString() }));
-    }
+      return Object.entries(this.statuses).map(([value, label]) => ({ label, value }));
+    },
   },
 
   watch: {
     '$i18n.locale': {
       handler() {
+        this.loadTypes(); // Перезагрузка типов при смене локализации
         this.loadStatuses(); // Перезагрузка статусов при смене локализации
       },
       immediate: true // Вызов сразу при инициализации
@@ -116,20 +122,39 @@ export default {
   },
 
   methods: {
+    // Асинхронная загрузка типов из API
+    async loadTypes() {
+      try {
+        // Запрашиваем статусы через API
+        this.types = await getProjectTypes();
+      } catch (err) {
+        // Логируем ошибку в консоль
+        console.error('Ошибка загрузки статусов:', err);
+        // Устанавливаем сообщение об ошибке для отображения
+        //this.errorList = ['Не удалось загрузить статусы: ' + (err.message || 'Неизвестная ошибка')];
+      }
+    },
     // Асинхронная загрузка статусов из API
     async loadStatuses() {
       try {
+        // Запрашиваем статусы через API
         this.statuses = await getProjectStatuses();
       } catch (err) {
+        // Логируем ошибку в консоль
         console.error('Ошибка загрузки статусов:', err);
-        //this.error = 'Не удалось загрузить статусы: ' + (err.message || 'Неизвестная ошибка');
+        // Устанавливаем сообщение об ошибке для отображения
+        //this.errorList = ['Не удалось загрузить статусы: ' + (err.message || 'Неизвестная ошибка')];
       }
     },
 
     async getProject(id) {
       try {
         const response = await getProjectById(id);
-        this.project = {...response, id, status: response.status.toString()};
+        this.project = {
+          ...response, id,
+          type: response.type.toString(),
+          status: response.status.toString()
+        };
       } catch (err) {
         console.error('Ошибка при получении новости:', err);
         //this.error = 'Не удалось загрузить данные новости: ' + (err.message || 'Неизвестная ошибка');
@@ -173,8 +198,11 @@ export default {
 
   async mounted() {
     const projectId = this.$route.params.id;
-    await this.loadStatuses(); // Сначала загружаем статусы
-    await this.getProject(projectId); // Потом новость
+    await Promise.all([
+      this.loadTypes(), // Запуск загрузки статусов
+      this.loadStatuses(), // Запуск загрузки статусов
+      this.getProject(projectId),
+    ]);
   },
 
 };
