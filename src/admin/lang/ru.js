@@ -4,6 +4,7 @@ export default {
         NEWS: 'Новости',
         KNOWLEDGE_CORE: 'Основная информация',
         DEVELOPMENTS: 'Разработки',
+        PROJECTS: 'Проекты',
         CLIENT: 'В Клиент',
     },
     PAGE: {
@@ -26,6 +27,12 @@ export default {
             VIEW: 'Просмотр разработки',
             EDIT: 'Редактирование разработки',
         },
+        PROJECTS: {
+            NAME: 'Проекты',
+            CREATE: 'Создание проекта',
+            VIEW: 'Просмотр проекта',
+            EDIT: 'Редактирование проекта',
+        },
     },
     BUTTON: {
         EDIT: 'Изменить',
@@ -33,6 +40,7 @@ export default {
         SAVE: 'Сохранить',
         CREATE_NEWS: 'Создать новость',
         CREATE_DEVELOPMENT: 'Создать разработку',
+        CREATE_PROJECT: 'Создать проект',
         SAVE_CHANGES: 'Сохранить изменения',
         LOGOUT: 'Выход',
     },
@@ -131,6 +139,36 @@ export default {
                 GITHUB_LINK: 'Введите ссылку на GitHub',
             },
         },
+        PROJECTS: {
+            NAME: 'Название',
+            DESCRIPTION: 'Описание',
+            TYPE: 'Тип',
+            STATUS: 'Статус',
+            USERS: 'Пользователи',
+            ACTIONS: 'Действия',
+            TOOLTIP_ACTIONS: {
+                VIEW: 'Просмотр',
+                EDIT: 'Изменить',
+                DELETE: 'Удалить',
+            },
+            SORT: {
+                NAME: 'Сортировать по названию',
+            },
+            SEARCH: {
+                NAME: 'Введите название',
+                BUTTON: 'Поиск',
+            },
+            RESET: {
+                BUTTON: 'Сброс',
+            },
+            PLACEHOLDER: {
+                NAME: 'Введите название',
+                DESCRIPTION: 'Введите описание',
+                TYPE: 'Выберите тип',
+                STATUS: 'Выберите статус',
+                USERS: 'Добавьте пользователей',
+            },
+        },
     },
     CONFIRM: {
         NEWS: {
@@ -138,6 +176,9 @@ export default {
         },
         DEVELOPMENTS: {
             DELETE: 'Вы уверены, что хотите удалить эту разработку?',
+        },
+        PROJECTS: {
+            DELETE: 'Вы уверены, что хотите удалить этот проект?',
         },
     },
     MESSAGE: {
@@ -185,6 +226,20 @@ export default {
                 TITLE_LONGE: 'Название должно быть не длиннее 255 символов',
             },
             TEXT: 'Нет данных',
+        },
+        PROJECTS: {
+            TEXT: 'Нет данных',
+            SUCCESS: {
+                CREATE: 'Проект успешно создан!',
+                EDIT: 'Проект успешно изменен!',
+                DELETE: 'Проект успешно удален!',
+            },
+            ERROR: {
+                ENTER_NAME: 'Пожалуйста, введите название',
+                NAME_LONGE: 'Название должно быть не длиннее 255 символов',
+                SELECT_TYPE: 'Пожалуйста, выберите тип',
+                SELECT_STATUS: 'Пожалуйста, выберите статус',
+            },
         },
     },
 };
