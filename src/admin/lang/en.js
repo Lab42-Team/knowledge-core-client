@@ -4,6 +4,7 @@ export default {
         NEWS: 'News',
         KNOWLEDGE_CORE: 'General information',
         DEVELOPMENTS: 'Developments',
+        PROJECTS: 'Projects',
         CLIENT: 'In client',
     },
     PAGE: {
@@ -26,6 +27,12 @@ export default {
             VIEW: 'View developments',
             EDIT: 'Edit developments',
         },
+        PROJECTS: {
+            NAME: 'Projects',
+            CREATE: 'Create project',
+            VIEW: 'View project',
+            EDIT: 'Edit project',
+        },
     },
     BUTTON: {
         EDIT: 'Edit',
@@ -33,6 +40,7 @@ export default {
         SAVE: 'Save',
         CREATE_NEWS: 'Create news',
         CREATE_DEVELOPMENT: 'Create development',
+        CREATE_PROJECT: 'Create project',
         SAVE_CHANGES: 'Save changes',
         LOGOUT: 'Logout',
     },
@@ -133,6 +141,36 @@ export default {
                 GITHUB_LINK: 'Enter a link to GitHub',
             },
         },
+        PROJECTS: {
+            NAME: 'Name',
+            DESCRIPTION: 'Descrription',
+            TYPE:'Type',
+            STATUS: 'Status',
+            USERS: 'Users',
+            ACTIONS: 'Actions',
+            TOOLTIP_ACTIONS: {
+                VIEW: 'View',
+                EDIT: 'Edit',
+                DELETE: 'Delete',
+            },
+            SORT: {
+                NAME: 'Sort by Name',
+            },
+            SEARCH: {
+                NAME: 'Enter name',
+                BUTTON: 'Search',
+            },
+            RESET: {
+                BUTTON: 'Reset',
+            },
+            PLACEHOLDER: {
+                NAME: 'Enter the name',
+                DESCRIPTION: 'Enter a description',
+                TYPE: 'Select type',
+                STATUS: 'Select status',
+                USERS: 'Add users',
+            },
+        },
     },
     CONFIRM: {
         NEWS: {
@@ -140,6 +178,9 @@ export default {
         },
         DEVELOPMENTS: {
             DELETE: 'Are you sure you want to delete this development?',
+        },
+        PROJECTS: {
+            DELETE: 'Are you sure you want to delete this project?',
         },
     },
     MESSAGE: {
@@ -187,6 +228,20 @@ export default {
                 TITLE_LONGE: 'Title must be no longer than 255 characters',
             },
             TEXT: 'No data',
+        },
+        PROJECTS: {
+            TEXT: 'No data',
+            SUCCESS: {
+                CREATE: 'Project created successfully!',
+                EDIT: 'Project edited successfully!',
+                DELETE: 'Project deleted successfully!',
+            },
+            ERROR: {
+                ENTER_NAME: 'Please enter a name',
+                NAME_LONGE: 'Name must be no longer than 255 characters',
+                SELECT_TYPE: 'Please select a type',
+                SELECT_STATUS: 'Please select a status',
+            },
         },
     },
 };
