@@ -26,7 +26,7 @@
         <n-text class="field">
           <strong>{{ $t('TABLE.PROJECTS.DESCRIPTION') }}: </strong>
           <span v-if="project.description"> {{ project.description }}</span>
-          <span v-else style="color: red;"> {{ $t('MESSAGE.PROJECTS.TEXT.DESCRIPTION') }} </span>
+          <span v-else style="color: red;"> {{ $t('MESSAGE.PROJECTS.TEXT') }} </span>
         </n-text>
 
       </n-space>

@@ -237,6 +237,8 @@ export default {
                 DELETE: 'Project deleted successfully!',
             },
             ERROR: {
+                CREATING: 'Error while creating project',
+                EDITING: 'Error while editing project',
                 ENTER_NAME: 'Please enter a name',
                 NAME_LONGE: 'Name must be no longer than 255 characters',
                 SELECT_TYPE: 'Please select a type',
