@@ -74,6 +74,10 @@ export default {
           key: 'ProjectList',
         },
         {
+          label: () => h(RouterLink, { to: { name: 'UserList' } }, { default: () => this.$t('MENU.USERS') }),
+          key: 'UserList',
+        },
+        {
           label: () => this.$t('MENU.CLIENT'),
           key: 'client',
         },

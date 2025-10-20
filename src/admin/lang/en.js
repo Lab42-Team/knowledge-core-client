@@ -5,6 +5,7 @@ export default {
         KNOWLEDGE_CORE: 'General information',
         DEVELOPMENTS: 'Developments',
         PROJECTS: 'Projects',
+        USERS: 'Users',
         CLIENT: 'In client',
     },
     PAGE: {
@@ -33,6 +34,12 @@ export default {
             VIEW: 'View project',
             EDIT: 'Edit project',
         },
+        USERS: {
+            NAME: 'Users',
+            CREATE: 'Create user',
+            VIEW: 'View user',
+            EDIT: 'Edit user',
+        },
     },
     BUTTON: {
         EDIT: 'Edit',
@@ -41,6 +48,7 @@ export default {
         CREATE_NEWS: 'Create news',
         CREATE_DEVELOPMENT: 'Create development',
         CREATE_PROJECT: 'Create project',
+        CREATE_USER: 'Create user',
         SAVE_CHANGES: 'Save changes',
         LOGOUT: 'Logout',
     },
@@ -171,6 +179,41 @@ export default {
                 USERS: 'Add users',
             },
         },
+        USERS: {
+            NAME: 'Name',
+            FULL_NAME: 'Full name',
+            PASSWORD: 'Password',
+            PASSWORD_CONFIRMATION: 'Repeat password',
+            EMAIL:'Email',
+            ROLE:'Role',
+            STATUS: 'Status',
+            ACTIONS: 'Actions',
+            TOOLTIP_ACTIONS: {
+                VIEW: 'View',
+                EDIT: 'Edit',
+                DELETE: 'Delete',
+            },
+            SORT: {
+                NAME: 'Sort by Name',
+                EMAIL: 'Sort by Email',
+            },
+            SEARCH: {
+                NAME: 'Enter name',
+                EMAIL: 'Enter email',
+                BUTTON: 'Search',
+            },
+            RESET: {
+                BUTTON: 'Reset',
+            },
+            PLACEHOLDER: {
+                NAME: 'Enter the name',
+                PASSWORD: 'Enter a password',
+                EMAIL: 'Enter a email',
+                ROLE: 'Select role',
+                STATUS: 'Select status',
+                PASSWORD_CONFIRMATION: 'Repeat a password',
+            },
+        },
     },
     CONFIRM: {
         NEWS: {
@@ -181,6 +224,9 @@ export default {
         },
         PROJECTS: {
             DELETE: 'Are you sure you want to delete this project?',
+        },
+        USERS: {
+            DELETE: 'Are you sure you want to delete this user?',
         },
     },
     MESSAGE: {
@@ -243,6 +289,29 @@ export default {
                 NAME_LONGE: 'Name must be no longer than 255 characters',
                 SELECT_TYPE: 'Please select a type',
                 SELECT_STATUS: 'Please select a status',
+            },
+        },
+        USERS: {
+            TEXT: 'No data',
+            SUCCESS: {
+                CREATE: 'User created successfully!',
+                EDIT: 'User edited successfully!',
+                DELETE: 'User deleted successfully!',
+            },
+            ERROR: {
+                CREATING: 'Error while creating user',
+                EDITING: 'Error while editing user',
+                ENTER_NAME: 'Please enter a name',
+                NAME_LONGE: 'Name must be no longer than 255 characters',
+                SELECT_ROLE: 'Please select a role',
+                SELECT_STATUS: 'Please select a status',
+                EMAIL: 'The email field must be a valid email address',
+                EMAIL_LONGE: 'Email must be no longer than 255 characters',
+                ENTER_PASSWORD: 'Please enter a password',
+                PASSWORD_SHORT: 'Password must be no short than 8 characters',
+                PASSWORD_LONGE: 'Password must be no longer than 255 characters',
+                ENTER_PASSWORD_CONFIRMATION: 'Please enter a repeat password',
+                PASSWORD_MISMATCH: 'The passwords don\'t match',
             },
         },
     },

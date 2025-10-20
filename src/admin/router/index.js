@@ -25,6 +25,12 @@ import ProjectCreate from '../views/Project/Create.vue';
 import ProjectShow from '../views/Project/Show.vue';
 import ProjectEdit from '../views/Project/Edit.vue';
 
+import UserLayout from '../layouts/UserLayout.vue';
+import UserList from '../views/User/List.vue';
+import UserCreate from '../views/User/Create.vue';
+import UserShow from '../views/User/Show.vue';
+import UserEdit from '../views/User/Edit.vue';
+
 import { getUser } from '@/client/api/auth'
 
 const routes = [
@@ -76,6 +82,17 @@ const routes = [
       { path: 'create', name: 'ProjectCreate', component: ProjectCreate, meta: { breadcrumb: 'PAGE.PROJECTS.CREATE' }},
       { path: 'show/:id', name: 'ProjectShow', component: ProjectShow, meta: { breadcrumb: 'PAGE.PROJECTS.VIEW' }},
       { path: 'edit/:id', name: 'ProjectEdit', component: ProjectEdit, meta: { breadcrumb: 'PAGE.PROJECTS.EDIT' }},
+    ],
+  },
+  {
+    path: '/user',
+    component: ProjectLayout,
+    meta: { requiresAuth: true, breadcrumb: 'PAGE.USERS.NAME' },
+    children: [
+      { path: '', name: 'UserList', component: UserList, meta: { breadcrumb: 'PAGE.USERS.NAME' }},
+      { path: 'create', name: 'UserCreate', component: UserCreate, meta: { breadcrumb: 'PAGE.USERS.CREATE' }},
+      { path: 'show/:id', name: 'UserShow', component: UserShow, meta: { breadcrumb: 'PAGE.USERS.VIEW' }},
+      { path: 'edit/:id', name: 'UserEdit', component: UserEdit, meta: { breadcrumb: 'PAGE.USERS.EDIT' }},
     ],
   },
 ];
