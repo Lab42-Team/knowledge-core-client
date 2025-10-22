@@ -24,6 +24,16 @@
           </n-tooltip>
           <n-tooltip trigger="hover" :show-arrow="true">
             <template #trigger>
+              <n-button
+                  type="primary" size="small" class="action-button mini-button"
+                  @click="$router.push({ name: 'UserEditPassword', params: { id: record.id } })">
+                <i class="bi bi-key"></i>
+              </n-button>
+            </template>
+            {{ $t('TABLE.USERS.TOOLTIP_ACTIONS.EDIT_PASSWORD') }}
+          </n-tooltip>
+          <n-tooltip trigger="hover" :show-arrow="true">
+            <template #trigger>
               <n-button type="error" size="small" class="action-button mini-button"
                   @click="deleteUser(record.id)">
                 <i class="bi bi-trash"></i>

@@ -39,6 +39,7 @@ export default {
             CREATE: 'Создание пользователя',
             VIEW: 'Просмотр пользователя',
             EDIT: 'Редактирование пользователя',
+            EDIT_PASSWORD: 'Редактирование пароля',
         },
     },
     BUTTON: {
@@ -50,6 +51,7 @@ export default {
         CREATE_PROJECT: 'Создать проект',
         CREATE_USER: 'Создать пользователя',
         SAVE_CHANGES: 'Сохранить изменения',
+        EDIT_PASSWORD: 'Изменить пароль',
         LOGOUT: 'Выход',
     },
     TABLE: {
@@ -185,10 +187,13 @@ export default {
             EMAIL: 'Электронная почта',
             ROLE: 'Роль',
             STATUS: 'Статус',
+            LAST_LOGIN_DATE: 'Дата последнего входа',
+            LOGIN_IP: 'IP-адрес',
             ACTIONS: 'Действия',
             TOOLTIP_ACTIONS: {
                 VIEW: 'Просмотр',
                 EDIT: 'Изменить',
+                EDIT_PASSWORD: 'Изменить пароль',
                 DELETE: 'Удалить',
             },
             SORT: {
@@ -294,6 +299,7 @@ export default {
             SUCCESS: {
                 CREATE: 'Пользователь успешно создан!',
                 EDIT: 'Пользователь успешно изменен!',
+                EDIT_PASSWORD: 'Пароль пользователя успешно изменен!',
                 DELETE: 'Пользователь успешно удален!',
             },
             ERROR: {

@@ -39,6 +39,7 @@ export default {
             CREATE: 'Create user',
             VIEW: 'View user',
             EDIT: 'Edit user',
+            EDIT_PASSWORD: 'Edit password',
         },
     },
     BUTTON: {
@@ -50,6 +51,7 @@ export default {
         CREATE_PROJECT: 'Create project',
         CREATE_USER: 'Create user',
         SAVE_CHANGES: 'Save changes',
+        EDIT_PASSWORD: 'Edit password',
         LOGOUT: 'Logout',
     },
     TABLE: {
@@ -187,10 +189,13 @@ export default {
             EMAIL:'Email',
             ROLE:'Role',
             STATUS: 'Status',
+            LAST_LOGIN_DATE: 'Last login date',
+            LOGIN_IP: 'Login ip',
             ACTIONS: 'Actions',
             TOOLTIP_ACTIONS: {
                 VIEW: 'View',
                 EDIT: 'Edit',
+                EDIT_PASSWORD: 'Edit password',
                 DELETE: 'Delete',
             },
             SORT: {
@@ -296,6 +301,7 @@ export default {
             SUCCESS: {
                 CREATE: 'User created successfully!',
                 EDIT: 'User edited successfully!',
+                EDIT_PASSWORD: 'User password edited successfully!',
                 DELETE: 'User deleted successfully!',
             },
             ERROR: {

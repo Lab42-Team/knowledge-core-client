@@ -30,6 +30,7 @@ import UserList from '../views/User/List.vue';
 import UserCreate from '../views/User/Create.vue';
 import UserShow from '../views/User/Show.vue';
 import UserEdit from '../views/User/Edit.vue';
+import UserEditPassword from '../views/User/EditPassword.vue';
 
 import { getUser } from '@/client/api/auth'
 
@@ -93,6 +94,7 @@ const routes = [
       { path: 'create', name: 'UserCreate', component: UserCreate, meta: { breadcrumb: 'PAGE.USERS.CREATE' }},
       { path: 'show/:id', name: 'UserShow', component: UserShow, meta: { breadcrumb: 'PAGE.USERS.VIEW' }},
       { path: 'edit/:id', name: 'UserEdit', component: UserEdit, meta: { breadcrumb: 'PAGE.USERS.EDIT' }},
+      { path: 'edit-password/:id', name: 'UserEditPassword', component: UserEditPassword, meta: { breadcrumb: 'PAGE.USERS.EDIT_PASSWORD' }},
     ],
   },
 ];
