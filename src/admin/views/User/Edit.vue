@@ -38,29 +38,6 @@
             clearable
         />
       </n-form-item>
-      <n-form-item :label="$t('TABLE.USERS.PASSWORD')" path="password">
-        <n-input
-            v-model:value="user.password"
-            type="password"
-            :placeholder="$t('TABLE.USERS.PLACEHOLDER.PASSWORD')"
-            showPasswordOn="click"
-        />
-      </n-form-item>
-      <n-form-item :label="$t('TABLE.USERS.PASSWORD_CONFIRMATION')" path="password_confirmation">
-        <n-input
-            v-model:value="user.password_confirmation"
-            type="password"
-            :placeholder="$t('TABLE.USERS.PLACEHOLDER.PASSWORD_CONFIRMATION')"
-            showPasswordOn="click"
-        />
-      </n-form-item>
-      <n-progress
-          v-if="user.password"
-          :percentage="passwordStrength"
-          :show-indicator="true"
-          :status="passwordStrengthStatus"
-          class="mb-3"
-      />
       <n-button type="primary" :disabled="submitting" @click="submitForm">
         <template #icon>
           <i class="bi bi-check2"></i>
@@ -80,14 +57,13 @@
 </template>
 
 <script>
-import {NCard, NForm, NFormItem, NInput, NSelect, NButton, NAlert, NProgress} from 'naive-ui';
+import {NCard, NForm, NFormItem, NInput, NSelect, NButton, NAlert} from 'naive-ui';
 import { getUserById, updateUser, getUserRoles, getUserStatuses } from '@/admin/api/user';
 
 export default {
   name: 'UserEdit',
 
   components: {
-    NProgress,
     NCard,
     NForm,
     NFormItem,
@@ -105,7 +81,6 @@ export default {
         description: '',
         type: null,
         status: null,
-        password_confirmation: '',
       },
       statuses: {}, // Список статусов, полученных из API
       roles: {}, // Список типов, полученных из API
@@ -124,19 +99,6 @@ export default {
         ],
         role: { required: true, message: this.$t('MESSAGE.USERS.ERROR.SELECT_ROLE'), trigger: ['change', 'blur'] },
         status: { required: true, message: this.$t('MESSAGE.USERS.ERROR.SELECT_ROLE'), trigger: ['change', 'blur'] },
-        password: [
-          { required: true, message: this.$t('MESSAGE.USERS.ERROR.ENTER_PASSWORD'), trigger: ['input', 'blur'] },
-          { min: 8, message: this.$t('MESSAGE.USERS.ERROR.PASSWORD_SHORT'), trigger: ['input', 'blur'] },
-          { max: 255, message: this.$t('MESSAGE.USERS.ERROR.PASSWORD_LONGE'), trigger: ['input', 'blur'] }
-        ],
-        password_confirmation: [
-          { required: true, message: this.$t('MESSAGE.USERS.ERROR.ENTER_PASSWORD_CONFIRMATION'), trigger: ['input', 'blur'] },
-          {
-            validator: (rule, value) => value === this.user.password,
-            message: this.$t('MESSAGE.USERS.ERROR.PASSWORD_MISMATCH'),
-            trigger: ['input', 'blur']
-          }
-        ]
       }
     };
   },
@@ -151,23 +113,6 @@ export default {
     statusOptions() {
       return Object.entries(this.statuses).map(([value, label]) => ({ label, value }));
     },
-
-    passwordStrength() {
-      const password = this.user.password;
-      if (!password) return 0;
-      let strength = 0;
-      if (password.length >= 8) strength += 30;
-      if (password.match(/[A-Z]/)) strength += 20;
-      if (password.match(/[0-9]/)) strength += 20;
-      if (password.match(/[^A-Za-z0-9]/)) strength += 30;
-      return Math.min(strength, 100);
-    },
-    passwordStrengthStatus() {
-      const strength = this.passwordStrength;
-      if (strength < 40) return 'error';
-      if (strength < 70) return 'warning';
-      return 'success';
-    }
   },
 
   watch: {
@@ -227,8 +172,7 @@ export default {
         this.errorList = []; // Очищаем список ошибок
         await this.$refs.formRef.validate();
         //console.log('Отправляемые данные:', this.user);
-        const { password_confirmation, ...userData } = this.user;
-        const response = await updateUser(this.user.id, userData);
+        const response = await updateUser(this.user.id, this.user);
         //console.log('Ответ от API:', response);
         // Перенаправляем пользователя с параметром успеха
         this.$router.push({

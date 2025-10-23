@@ -8,6 +8,13 @@
         {{ $t('BUTTON.EDIT') }}
       </n-button>
 
+      <n-button type="primary" @click="goToUserEditPassword(user.id)">
+        <template #icon>
+          <i class="bi bi-key"></i>
+        </template>
+        {{ $t('BUTTON.EDIT_PASSWORD') }}
+      </n-button>
+
       <n-button type="error" @click="deleteUser(user.id)">
         <template #icon>
           <i class="bi bi-trash"></i>
@@ -20,10 +27,26 @@
       <n-space v-if="user" vertical size="large" class="panel-content">
         <n-text class="field"><strong>Id:</strong> {{ user.id }}</n-text>
         <n-text class="field"><strong>{{ $t('TABLE.USERS.NAME') }}:</strong> {{ user.name }}</n-text>
-        <n-text class="field"><strong>{{ $t('TABLE.USERS.EMAIL') }}:</strong> {{ user.email }}</n-text>
+        <n-text class="field"><strong>{{ $t('TABLE.USERS.EMAIL') }}: </strong>
+          <a :href="'mailto:' + user.email"> {{ user.email }}</a>
+        </n-text>
         <n-text class="field"><strong>{{ $t('TABLE.USERS.ROLE') }}:</strong> {{ user.role }}</n-text>
         <n-text class="field"><strong>{{ $t('TABLE.USERS.STATUS') }}:</strong> {{ user.status }}</n-text>
-        <n-text class="field"><strong>{{ $t('TABLE.USERS.FULL_NAME') }}:</strong> {{ user.full_name }}</n-text>
+        <n-text class="field">
+          <strong>{{ $t('TABLE.USERS.FULL_NAME') }}: </strong>
+          <span v-if="user.full_name"> {{ user.full_name }}</span>
+          <span v-else style="color: red;"> {{ $t('MESSAGE.USERS.TEXT') }} </span>
+        </n-text>
+        <n-text class="field">
+          <strong>{{ $t('TABLE.USERS.LAST_LOGIN_DATE') }}: </strong>
+          <span v-if="user.last_login_date"> {{ formatDate(user.last_login_date) }} </span>
+          <span v-else style="color: red;"> {{ $t('MESSAGE.USERS.TEXT') }} </span>
+        </n-text>
+        <n-text class="field">
+          <strong>{{ $t('TABLE.USERS.LOGIN_IP') }}: </strong>
+          <span v-if="user.login_ip"> {{ user.login_ip }}</span>
+          <span v-else style="color: red;"> {{ $t('MESSAGE.USERS.TEXT') }} </span>
+        </n-text>
       </n-space>
     </n-card>
   </n-space>
@@ -93,6 +116,17 @@ export default {
         path: '/user/show/' + this.$route.params.id
       });
     }
+    // Проверяем параметр successEditPassword в запросе
+    if (this.$route.query.successEditPassword === 'true') {
+      this.message.success(this.$t('MESSAGE.USERS.SUCCESS.EDIT_PASSWORD'), {
+        duration: 4000,
+        closable: true,
+      });
+      // Чистка query параметр из URL
+      this.$router.replace({
+        path: '/user/show/' + this.$route.params.id
+      });
+    }
   },
 
   methods: {
@@ -115,6 +149,14 @@ export default {
 
     goToUserEdit(id) {
       this.$router.push({ name: 'UserEdit', params: { id: id } });
+    },
+
+    goToUserEditPassword(id) {
+      this.$router.push({ name: 'UserEditPassword', params: { id: id } });
+    },
+
+    formatDate(date) {
+      return dayjs(date).format('DD.MM.YYYY HH:mm');
     },
 
     async deleteUser(id) {
