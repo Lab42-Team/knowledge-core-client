@@ -38,7 +38,7 @@ export default {
   methods: {
     async loadProject() {
       try {
-        this.project = await getProject();
+        this.project = await getProject()
       } catch (error) {
         console.error('Ошибка при загрузке новостей:', error);
       }

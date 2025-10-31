@@ -24,6 +24,9 @@ import ProjectList from '../views/Project/List.vue';
 import ProjectCreate from '../views/Project/Create.vue';
 import ProjectShow from '../views/Project/Show.vue';
 import ProjectEdit from '../views/Project/Edit.vue';
+import ProjectTeam from '../views/Project/Team.vue';
+import ProjectEditTeam from '../views/Project/EditTeam.vue';
+import ProjectShowUser from '../views/Project/ShowUser.vue';
 
 import UserLayout from '../layouts/UserLayout.vue';
 import UserList from '../views/User/List.vue';
@@ -83,11 +86,21 @@ const routes = [
       { path: 'create', name: 'ProjectCreate', component: ProjectCreate, meta: { breadcrumb: 'PAGE.PROJECTS.CREATE' }},
       { path: 'show/:id', name: 'ProjectShow', component: ProjectShow, meta: { breadcrumb: 'PAGE.PROJECTS.VIEW' }},
       { path: 'edit/:id', name: 'ProjectEdit', component: ProjectEdit, meta: { breadcrumb: 'PAGE.PROJECTS.EDIT' }},
+      {
+        path: 'team/:id',
+        name: 'ProjectTeam',
+        component: ProjectTeam,
+        meta: { breadcrumb: 'PAGE.PROJECTS.TEAM' },
+        children: [
+          { path: 'edit-team', name: 'ProjectEditTeam', component: ProjectEditTeam, meta: { breadcrumb: 'PAGE.PROJECTS.EDIT_TEAM' }},
+          { path: 'user/:id_user', name: 'ProjectShowUser', component: ProjectShowUser, meta: { breadcrumb: 'PAGE.PROJECTS.VIEW_USER' }},
+        ],
+      },
     ],
   },
   {
     path: '/user',
-    component: ProjectLayout,
+    component: UserLayout,
     meta: { requiresAuth: true, breadcrumb: 'PAGE.USERS.NAME' },
     children: [
       { path: '', name: 'UserList', component: UserList, meta: { breadcrumb: 'PAGE.USERS.NAME' }},
