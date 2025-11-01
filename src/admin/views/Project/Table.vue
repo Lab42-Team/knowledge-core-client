@@ -24,6 +24,16 @@
           </n-tooltip>
           <n-tooltip trigger="hover" :show-arrow="true">
             <template #trigger>
+              <n-button
+                  type="primary" size="small" class="action-button mini-button"
+                  @click="$router.push({ name: 'ProjectTeam', params: { id: record.id } })">
+                <i class="bi bi-people-fill"></i>
+              </n-button>
+            </template>
+            {{ $t('TABLE.PROJECTS.TOOLTIP_ACTIONS.TEAM') }}
+          </n-tooltip>
+          <n-tooltip trigger="hover" :show-arrow="true">
+            <template #trigger>
               <n-button type="error" size="small" class="action-button mini-button"
                   @click="deleteProject(record.id)">
                 <i class="bi bi-trash"></i>
@@ -146,7 +156,7 @@ export default {
         {
           title: this.$t('TABLE.PROJECTS.ACTIONS'),
           key: 'action',
-          width: 130,
+          width: 180,
         },
       ];
     },

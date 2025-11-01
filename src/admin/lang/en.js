@@ -33,6 +33,9 @@ export default {
             CREATE: 'Create project',
             VIEW: 'View project',
             EDIT: 'Edit project',
+            TEAM: 'Project team',
+            VIEW_USER: 'View user project',
+            EDIT_TEAM: 'Edit project team',
         },
         USERS: {
             NAME: 'Users',
@@ -52,7 +55,10 @@ export default {
         CREATE_USER: 'Create user',
         SAVE_CHANGES: 'Save changes',
         EDIT_PASSWORD: 'Edit password',
+        EDIT_TEAM: 'Edit team',
         LOGOUT: 'Logout',
+        CANCEL: 'Cancel',
+        EXCLUDE_USER: 'Exclude user',
     },
     TABLE: {
         NEWS: {
@@ -161,7 +167,9 @@ export default {
             TOOLTIP_ACTIONS: {
                 VIEW: 'View',
                 EDIT: 'Edit',
+                TEAM: 'Team',
                 DELETE: 'Delete',
+                EXCLUDE: 'Exclude',
             },
             SORT: {
                 NAME: 'Sort by Name',
@@ -229,6 +237,7 @@ export default {
         },
         PROJECTS: {
             DELETE: 'Are you sure you want to delete this project?',
+            EXCLUDE_USER: 'Are you sure you want to exclude user this project?',
         },
         USERS: {
             DELETE: 'Are you sure you want to delete this user?',
@@ -286,6 +295,8 @@ export default {
                 CREATE: 'Project created successfully!',
                 EDIT: 'Project edited successfully!',
                 DELETE: 'Project deleted successfully!',
+                TEAM_UPDATED: 'Team project updated!',
+                EXCLUDE_USER: 'User exclude successfully!',
             },
             ERROR: {
                 CREATING: 'Error while creating project',

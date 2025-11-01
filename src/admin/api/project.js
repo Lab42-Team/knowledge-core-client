@@ -54,6 +54,26 @@ export const deleteProject = async (id) => {
     }
 };
 
+export const getUsersByIdProject = async (id) => {
+    try {
+        const response = await api.get(`/v1/project/show-users-project/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Ошибка при получении новости по id:', error);
+        throw error;
+    }
+};
+
+export const deleteUserFromProject = async (id_user, id_project) => {
+    try {
+        const response = await api.delete(`/v1/project/${id_project}/user/${id_user}`);
+        return response.data;
+    } catch (error) {
+        console.error('Ошибка при получении новости по id:', error);
+        throw error;
+    }
+};
+
 export const getProjectStatuses = async () => {
     try {
         const response = await api.get(`/v1/project/get-statuses`);
