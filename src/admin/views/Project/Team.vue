@@ -9,15 +9,15 @@
 
     <router-view v-if="$route.name === 'ProjectShowUser' || $route.name === 'ProjectEditTeam'" />
 
-    <a-table v-else class="panel-card" v-if="columns.length" :columns="columns" :data-source="usersList" row-key="id" :pagination="{ pageSize: 10 }" :sorter="true">
-      <template #bodyCell="{ column, record }">
+    <a-table v-else class="panel-card" v-if="columns.length" :columns="columns" :data-source="usersList" row-key="id" :pagination="{ pageSize: 10 }" :sorter="true" >
+      <template #bodyCell="{ column, record }" >
         <template v-if="column.key === 'action'">
           <n-space>
 
             <n-tooltip trigger="hover" :show-arrow="true">
               <template #trigger>
                 <n-button type="primary" size="small" class="action-button mini-button"
-                          @click="$router.push({ name: 'ProjectShowUser', params: { id: this.$route.params.id, id_user: record.id } })">
+                          @click="$router.push({ name: 'ProjectShowUser', params: { id: $route.params.id, id_user: record.id } })">
                   <i class="bi bi-eye"></i>
                 </n-button>
               </template>
@@ -37,13 +37,19 @@
           </n-space>
         </template>
       </template>
+
+      <!-- Пустое состояние — Naïve UI -->
+      <template #emptyText>
+        <n-empty :description="$t('TABLE.EMPTY')" />
+      </template>
+
     </a-table>
   </n-space>
 </template>
 
 <script>
-import { NButton, NSpace, NTooltip, useMessage } from 'naive-ui';
-import { Divider, Table, Input, Button } from 'ant-design-vue';
+import { NButton, NSpace, NTooltip, NEmpty, useMessage } from 'naive-ui';
+import { Divider, Table, Input, Button} from 'ant-design-vue';
 import { getUserRoles, getUserStatuses } from '@/admin/api/user';
 import { getUsersByIdProject, deleteUserFromProject } from "@/admin/api/project.js";
 import { h } from 'vue';
@@ -59,6 +65,7 @@ export default {
     NTooltip,
     NButton,
     NSpace,
+    NEmpty
   },
 
   setup() {
@@ -269,7 +276,7 @@ export default {
       if (!confirmDelete) return;
       try {
         await deleteUserFromProject(id, this.$route.params.id);
-        this.loadUsersProject(this.$route.params.id),
+        await this.loadUsersProject(this.$route.params.id);
         this.message.success(this.$t('MESSAGE.PROJECTS.SUCCESS.EXCLUDE_USER'), {
           duration: 4000,
           closable: true,

@@ -8,6 +8,13 @@
         {{ $t('BUTTON.EDIT') }}
       </n-button>
 
+      <n-button type="primary" @click="goToTeam(project.id)">
+        <template #icon>
+          <i class="bi bi-people-fill"></i>
+        </template>
+        {{ $t('BUTTON.TEAM') }}
+      </n-button>
+
       <n-button type="error" @click="deleteProject(project.id)">
         <template #icon>
           <i class="bi bi-trash"></i>
@@ -124,6 +131,10 @@ export default {
 
     goToProjectEdit(id) {
       this.$router.push({ name: 'ProjectEdit', params: { id: id } });
+    },
+
+    goToTeam(id) {
+      this.$router.push({ name: 'ProjectTeam', params: { id: id } })
     },
 
     async deleteProject(id) {

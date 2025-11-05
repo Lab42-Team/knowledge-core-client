@@ -55,12 +55,15 @@ export default {
         CREATE_USER: 'Create user',
         SAVE_CHANGES: 'Save changes',
         EDIT_PASSWORD: 'Edit password',
+        TEAM: 'Team project',
         EDIT_TEAM: 'Edit team',
         LOGOUT: 'Logout',
         CANCEL: 'Cancel',
+        BACK: 'Back',
         EXCLUDE_USER: 'Exclude user',
     },
     TABLE: {
+        EMPTY: "No data",
         NEWS: {
             NAME: 'Name',
             STATUS: 'Status',
