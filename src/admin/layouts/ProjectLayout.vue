@@ -1,5 +1,5 @@
 <template>
-  <n-card :title="$t('PAGE.PROJECTS.NAME')" size="medium" :bordered="true">
+  <n-card :title="cardTitle" size="medium" :bordered="true">
 
     <!-- Хлебные крошки -->
     <n-breadcrumb>
@@ -35,6 +35,17 @@ export default {
   },
 
   computed: {
+    cardTitle() {
+      const titles = {
+        ProjectTeam: this.$t('PAGE.PROJECTS.TEAM'),
+        ProjectShowUser: this.$t('PAGE.PROJECTS.VIEW_USER'),
+        ProjectEditTeam: this.$t('PAGE.PROJECTS.EDIT_TEAM'),
+      };
+
+      // Если текущий маршрут есть в titles — берём его, иначе — общий
+      return titles[this.$route.name] || this.$t('PAGE.PROJECTS.NAME');
+    },
+
     breadcrumbRoutes() {
       // Получение текущих маршрутов из $route.matched
       const routes = this.$route.matched

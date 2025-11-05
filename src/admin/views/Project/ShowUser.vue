@@ -5,7 +5,7 @@
         <template #icon>
           <i class="bi bi-arrow-90deg-left"></i>
         </template>
-        {{ $t('BUTTON.CANCEL') }}
+        {{ $t('BUTTON.BACK') }}
       </n-button>
 
       <n-button type="error" @click="excludeUser(user.id)">
@@ -117,7 +117,8 @@ export default {
       try {
         await deleteUserFromProject(id, this.$route.params.id);
         this.$router.push({
-          path: '/project/team/' + this.$route.params.id,
+          name: 'ProjectTeam',
+          params: { id: this.$route.params.id },
           query: { successDeleteUserTeam: 'true' }
         });
       } catch (error) {
