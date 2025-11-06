@@ -62,6 +62,11 @@ export default {
         BACK: 'Назад',
         EXCLUDE_USER: 'Исключить пользователя',
     },
+    FILTER: {
+        ALL: "Все пользователи",
+        SELECTED: "В команде",
+        UNSELECTED: "Не в команде"
+    },
     TABLE: {
         EMPTY: "Нет данных",
         NEWS: {
