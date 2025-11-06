@@ -17,10 +17,16 @@
         </template>
         {{ $t('BUTTON.CANCEL') }}
       </n-button>
+
+      <n-select
+          v-model:value="selectionFilter"
+          :options="filterOptions"
+          style="width: 200px;"
+      />
     </n-space>
 
     <a-table class="panel-card" v-if="columns.length" :columns="columns"
-             :data-source="allUsers" row-key="id" :pagination="{ pageSize: 10 }" :sorter="true" :row-selection="rowSelection">>
+             :data-source="filteredUsers" row-key="id" :pagination="{ pageSize: 10 }" :sorter="true" :row-selection="rowSelection">>
       <template #bodyCell="{ column, record }"></template>
     </a-table>
 
@@ -28,7 +34,7 @@
 </template>
 
 <script>
-import { NButton, NSpace, NTooltip, useMessage } from 'naive-ui';
+import { NButton, NSpace, NTooltip, NSelect, useMessage } from 'naive-ui';
 import { Divider, Table, Input, Button } from 'ant-design-vue';
 import { getUser, getUserRoles, getUserStatuses} from '@/admin/api/user';
 import { getProjectById, updateProject, getUsersByIdProject } from '@/admin/api/project'
@@ -45,6 +51,7 @@ export default {
     NTooltip,
     NButton,
     NSpace,
+    NSelect,
   },
 
   setup() {
@@ -60,6 +67,7 @@ export default {
       roles: {},
       searchText: '',
       selectedUserIds: [],
+      selectionFilter: 'all',
     };
   },
 
@@ -177,6 +185,42 @@ export default {
       };
     },
 
+    filterOptions() {
+      return [
+        {
+          label: () => h('span', [
+            h('i', { class: 'bi bi-list-ul', style: 'margin-right: 6px' }),
+            this.$t('FILTER.ALL')
+          ]),
+          value: 'all'
+        },
+        {
+          label: () => h('span', [
+            h('i', { class: 'bi bi-check-square-fill', style: 'margin-right: 6px' }),
+            this.$t('FILTER.SELECTED')
+          ]),
+          value: 'selected'
+        },
+        {
+          label: () => h('span', [
+            h('i', { class: 'bi bi-square', style: 'margin-right: 6px' }),
+            this.$t('FILTER.UNSELECTED')
+          ]),
+          value: 'unselected'
+        }
+      ];
+    },
+
+    filteredUsers() {
+      if (this.selectionFilter === 'all') return this.allUsers;
+      if (this.selectionFilter === 'selected') {
+        return this.allUsers.filter(u => this.selectedUserIds.includes(u.id));
+      }
+      if (this.selectionFilter === 'unselected') {
+        return this.allUsers.filter(u => !this.selectedUserIds.includes(u.id));
+      }
+      return this.allUsers;
+    }
   },
 
   watch: {

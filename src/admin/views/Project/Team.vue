@@ -38,7 +38,7 @@
         </template>
       </template>
 
-      <!-- Пустое состояние — Naïve UI -->
+      <!-- Пустое состояние -->
       <template #emptyText>
         <n-empty :description="$t('TABLE.EMPTY')" />
       </template>

@@ -62,6 +62,11 @@ export default {
         BACK: 'Back',
         EXCLUDE_USER: 'Exclude user',
     },
+    FILTER: {
+        ALL: "All users",
+        SELECTED: "In team",
+        UNSELECTED: "Not in team"
+    },
     TABLE: {
         EMPTY: "No data",
         NEWS: {
