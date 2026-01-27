@@ -1,6 +1,288 @@
-@import './base.css';
+@import url('light.css'); /* Загрузка светлой темы (по умолчанию)  */
+@import url('dark.css'); /* Загрузка темной темы */
 
-/* Базовые стили для клиента */
-@import 'bootstrap/dist/css/bootstrap.min.css';
-@import 'bootstrap-icons/font/bootstrap-icons.css';
-@import 'air-datepicker/air-datepicker.css';
+/* ===================================================== */
+/*            Стили шаблона ClientLayout.vue             */
+/* ===================================================== */
+
+.client-layout {
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Фон всей страницы и контента */
+.client-layout,
+.content {
+    background: var(--bg-page) !important;     /* фон */
+    --n-color: var(--bg-page) !important;      /* для Naive UI */
+}
+
+/* Отступ контента под навбар */
+.content {
+    padding: 88px 24px 24px;
+    min-height: calc(100vh - 88px);
+    box-sizing: border-box;
+}
+
+/* ===================================================== */
+/*              Стили компонента Navbar.vue              */
+/* ===================================================== */
+
+/* Плавная анимация для всего контейнера navbar */
+.navbar-container {
+    transition: all 280ms cubic-bezier(0.4, 0, 0.2, 1); /* синхронная анимация при скролле (отключение мерцания)*/
+}
+
+/* Основной блок navbar */
+.navbar {
+    height: 60px;
+    position: fixed;
+    left: 0; right: 0;
+    z-index: 1000;
+    background: transparent;
+    padding: 0 24px;
+    box-sizing: border-box;
+    top: 15px;
+}
+
+/* Центрирование контента внутри navbar */
+.navbar-content {
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Состояние navbar после скролла */
+.navbar-container.scrolled .navbar {
+    top: 0;                                     /* прилипание к самому верху */
+    background: var(--bg-nav);                  /* фон после скролла */
+    backdrop-filter: blur(12px);                /* эффект стекла */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);  /* лёгкая тень */
+}
+
+/* Отступы между элементами в navbar */
+.nav-right > * + * {
+    margin-left: 16px;
+}
+
+/* Иконки в navbar */
+.navbar-container .svg-inline--fa {
+    font-size: 18px !important; /* Размер иконок */
+}
+
+/* Navbar  — до скролла */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 20px;
+    background: var(--bg-nav);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+}
+
+/* Navbar после скролла — фон полностью исчезает */
+.navbar-container.scrolled .nav-right {
+    background: transparent;
+    border: none;
+    backdrop-filter: none;
+    box-shadow: none;
+    padding: 8px 20px;
+    gap: 16px;
+}
+
+/* =================== Логотип ==================== */
+.logo {
+    height: 55px;
+    display: flex;
+    align-items: center;
+    gap: 12px;                    /* расстояние между картинкой и текстом */
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    text-decoration: none;
+}
+
+.logo-image {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
+/* =================== Пункты меню ==================== */
+/* Цвет пункта меню при наведении */
+.nav-menu .n-menu-item-content:hover > .n-menu-item-content-header {
+    color: var(--item-menu-text-hover) !important;
+}
+
+/* Цвет при активном пункте меню */
+.nav-menu .n-menu-item-content--selected > .n-menu-item-content-header,
+.nav-menu .n-menu-item-content-header[aria-selected="true"] {
+    color: var(--item-menu-text-hover) !important;
+    font-weight: 600 !important;
+}
+
+/* =================== Кнопка входа ==================== */
+/* Кнопка входа */
+.login-btn {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+}
+/* Цвет кнопки входа */
+.login-btn {
+    background: var(--btn-login) !important;
+    color: var(--btn-login-text) !important;
+    /* Убираем все внутренние бордеры */
+    --n-border: none !important;
+    --n-border-hover: none !important;
+    --n-border-focus: none !important;
+    --n-border-pressed: none !important;
+    --n-border-disabled: none !important;
+}
+
+/* Кнопка входа при наведении*/
+.login-btn:hover {
+    background: var(--btn-login-hover) !important;
+    transform: scale(1.04); /* Увеличение размера */
+    transition: all 180ms ease; /* Скорость увеличения размера */
+}
+
+/* ============== Кнопка переключения темы =============== */
+/* Переключатель темы */
+.theme-toggle {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    background: var(--btn-theme-toggle) !important;
+    /* Убираем все внутренние бордеры */
+    --n-border: none !important;
+    --n-border-hover: none !important;
+    --n-border-focus: none !important;
+    --n-border-pressed: none !important;
+    --n-border-disabled: none !important;
+}
+
+/* При наведении на переключатель темы */
+.theme-toggle:hover {
+    background: var(--btn-theme-toggle-hover) !important;
+}
+
+/* Иконка переключения темы*/
+.theme-toggle .svg-inline--fa {
+    color: var(--btn-theme-toggle-hover) !important;
+}
+
+.theme-toggle:hover .svg-inline--fa {
+    color: var(--btn-theme-toggle) !important;
+}
+
+
+/* ===================================================== */
+/*           Стили компонента LastNews.vue.vue           */
+/* ===================================================== */
+
+.last-news { padding: 40px 0; }
+
+h2 { margin-bottom: 28px; font-size: 28px; font-weight: 700; }
+
+.empty { margin: 80px 0; text-align: center; }
+
+/* Отступы под кнопки ← → */
+.carousel-wrapper {
+    position: relative;
+    padding: 0 75px;
+}
+
+/* Чтобы крайние карточки не обрезались */
+.carousel-wrapper :deep(.n-carousel__slides) {
+    overflow: visible !important;
+}
+
+.carousel { height: 370px; }
+
+/* Карточка */
+.card {
+    height: 95%;
+    cursor: pointer;
+    border-radius: 3%;
+    transition: transform 0.3s ease;
+
+}
+.card:hover {
+    transform: translateY(5px);
+    box-shadow: none !important;   /* убираем любую тень при ховере*/
+
+}
+
+/* Текст внутри карточки */
+.header { margin-bottom: 12px; text-align: right; }
+.date { font-size: 13px; color: #888; font-weight: 500; }
+.title { margin: 0 0 12px; font-size: 19px; font-weight: 600; line-height: 1.4; }
+.desc { flex: 1; color: #595959; line-height: 1.6; font-size: 15px; margin-bottom: 16px; }
+
+/* Круглые кнопки навигации */
+.nav-btn {
+    width: 40px;
+    height: 40px;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--text-primary) !important;
+    background: transparent;
+    /* Убираем все внутренние бордеры */
+    --n-border: none !important;
+    --n-border-hover: none !important;
+    --n-border-focus: none !important;
+    --n-border-pressed: none !important;
+    --n-border-disabled: none !important;
+
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+.nav-btn:hover {
+    color: var(--text-secondary) !important;
+    border: 1px solid var(--text-secondary) !important;
+    transform: translateY(-50%) scale(1.12);
+}
+
+.nav-btn:disabled {
+    background: transparent !important;
+    border-color: #d9d9d9 !important;
+    color: #d9d9d9 !important;
+
+
+
+    opacity: 0.3;
+    box-shadow: none !important;
+    transform: translateY(-50%) scale(1) !important;
+}
+
+.nav-btn:disabled:hover {
+    background: transparent !important;
+    border-color: #d9d9d9 !important;
+    color: #d9d9d9 !important;
+
+
+
+    transform: translateY(-50%) scale(1) !important;
+}
+
+
+/* ===================================================== */
+/*        */
+/* ===================================================== */
+

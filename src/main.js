@@ -35,6 +35,44 @@ const loadApp = async () => {
         // Используем нужный перевод
         app.use(i18n);
 
+        // Подключение иконок Font Awesome
+        const { library } = await import('@fortawesome/fontawesome-svg-core');
+        const { FontAwesomeIcon } = await import('@fortawesome/vue-fontawesome');
+
+        // Добавление нужных иконок
+        // Добавление админке
+        if (isAdmin) {
+            const {
+                faCog,
+                faUsers,
+                faHome,
+                faSignOutAlt,
+                faBell,
+                faChartBar,
+            } = await import('@fortawesome/free-solid-svg-icons');
+            library.add(faCog, faUsers, faHome, faSignOutAlt, faBell, faChartBar);
+        // Добавление клиенту
+        } else {
+            const {
+                faSun,
+                faMoon,
+                faSignInAlt,
+                faAngleRight,
+                faAngleLeft,
+                //faUser,
+                //faHome,
+                //faBars,
+                //faTimes,
+                //faSearch,
+                //faHeart,
+                //faShoppingCart
+            } = await import('@fortawesome/free-solid-svg-icons');
+            library.add(faSun, faMoon, faSignInAlt, faAngleRight, faAngleLeft);
+        }
+
+        // Глобальная регистрация компонента
+        app.component('font-awesome-icon', FontAwesomeIcon);
+
         // Монтируем приложение в элемент с id="app"
         app.mount('#app');
     } catch (error) {

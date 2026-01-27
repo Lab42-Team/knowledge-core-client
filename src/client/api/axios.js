@@ -1,5 +1,4 @@
 import axios from 'axios';
-import router from '@/client/router';
 
 const api = axios.create({
     baseURL: 'http://127.0.0.9/api',
@@ -49,7 +48,8 @@ api.interceptors.response.use(
                 // Если обновление токена не удалось — очищаем токен и перенаправляем на логин
                 localStorage.removeItem('token')
                 // Перенаправление
-                router.push('/login');
+                //router.push('/login'); ------с ним ошибка
+                window.location.href = '/login'
                 return Promise.reject(refreshError)
             }
         }

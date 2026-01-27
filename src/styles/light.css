@@ -1,0 +1,44 @@
+:root,                                   /* ← применяется всегда (дефолт) */
+:root[data-theme="tropical"] {           /* ← и при активной tropical */
+
+    /* ========= палитра ========= */
+    --text-primary:         #118AB2;
+    --text-secondary:       rgba(6, 214, 160);
+
+
+    /* ========= отсортированнное ========= палитра Navbar */
+    --bg-nav:                   rgba(6, 214, 160, 0.40);        /* цвет таблетки */
+    --btn-login:                #118AB2;                        /* Кнопка входа */
+    --btn-login-hover:          rgba(6, 214, 160, 0.40);        /* Кнопка входа при наведении */
+    --btn-login-text:           #FFFFFF;                        /* Текст кнопки входа */
+    --item-menu-text-hover:     #118AB2;                        /* Текст пункта меню */
+    --btn-theme-toggle:         #FFFFFF;
+    --btn-theme-toggle-hover:   rgba(6, 214, 160, 0.40);
+
+    /* ================== */
+
+
+
+    /* ================== */
+    --bg-page:            #F9FAFB;         /* почти белый фон страницы */
+
+
+    --text-dark:          #073B4C;
+    --text-light:         #FFFFFF;
+
+
+    --theme-indicator:    #FFD166;         /* жёлтый цвет иконки солнца FFD166 */
+
+    --accent-hover:       #06D6A0;
+    
+    /*--bg-page-primary:*/
+    /*--bg-page-secondary:*/
+    /*--text-primary*/
+    /*--text-secondary*/
+    /*--btn-primary*/
+    /*--btn-secondary*/
+    /*--btn-text-primary*/
+    /*--btn-text-secondary*/
+    /*--btn-text-primary:*/
+    /*--btn-text-secondary:*/
+}

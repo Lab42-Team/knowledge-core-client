@@ -1,0 +1,13 @@
+:root[data-theme="deepspace"] {
+    --bg-page:            #1B2A49;        /* основной тёмный фон */
+    --bg-nav-right:       #3A7BD5;        /* цвет таблетки до скролла */
+    --navbar-scrolled:    rgba(27, 42, 73, 0.97);
+    --text-dark:          #B0BEC5;
+    --text-light:         #F9FAFB;
+    --accent-hover:       #5B9AFC;
+    --btn-primary:        #FFD700;        /* золотой */
+    --btn-primary-text:   #1B2A49;
+    --btn-scrolled:       #FFFFFF;
+    --btn-scrolled-text:  #FFD700;
+    --theme-indicator:    #FFD700;        /* золотой = тёмная тема активна */
+}
