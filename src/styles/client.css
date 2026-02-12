@@ -187,6 +187,185 @@
 
 
 /* ===================================================== */
+/*           Стили компонента AllProjects.vue            */
+/* ===================================================== */
+
+.projects-carousel {
+    width: 100%;
+    padding: 0 10px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+/* Основные стили Swiper */
+.projects-swiper {
+    width: 100%;
+    padding: 30px 0;
+}
+
+/* Стиль карточек */
+.project-card {
+    background: var(--bg-projects);
+    border-radius: 12px;
+    height: 270px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 12px var(--shadow-dim);
+    transition: all 0.28s ease;
+    position: relative;           /* для позиционирования статуса */
+    padding-bottom: 60px;         /* место для статуса снизу */
+}
+
+.project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px -12px var(--shadow-bright);
+}
+
+/* Внутренний контейнер с обрезкой */
+.project-card-inner {
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card p {
+    margin: 0 16px;
+    font-size: 0.95rem;
+    color: var(--text-basic);
+    flex-grow: 1;                 /* заполнение остального пространства */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 20;       /* большое число чтобы не ограничивать жёстко */
+    -webkit-box-orient: vertical;
+}
+
+.project-status {
+    position: absolute;
+    bottom: 4px;
+    right: -10px;        /* прижатие к правому краю с отступом */
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 8px;
+    white-space: nowrap;  /* вывод в одну строку */
+    line-height: 1.3;
+    box-shadow: 0 2px 6px var(--shadow-dim);
+    border: 1px solid;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Цвета для разных статусов */
+.status-editing {
+    color: var(--st-edit-c);
+    background: var(--st-edit-bg);
+    border-color: var(--st-edit-bc);
+}
+
+.status-ready {
+    color: var(--st-ready-c);
+    background: var(--st-ready-bg);
+    border-color: var(--st-ready-bc);
+}
+
+.status-outdated {
+    color: var(--st-out-c);
+    background: var(--st-out-bg);
+    border-color: var(--st-out-bc);
+}
+
+.status-unknown {
+    color: var(--st-unkn-c);
+    background: var(--st-unkn-bg);
+    border-color: var(--st-unkn-bc);
+}
+
+/* Градиент фона */
+.project-name {
+    height: 3.2em; /* фиксированная высота на 2 строки */
+    background: linear-gradient(45deg, var(--bg-card-name-first) 0%, var(--bg-card-name-second) 100%);
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding: 16px 16px 8px 16px;
+    line-height: 1.4;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    flex-shrink: 0;                   /* не сжимается */
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+/* Стеклянный эффект фона */
+.project-card .project-name::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.18) 0%,
+            rgba(255, 255, 255, 0) 50%,
+            rgba(255, 255, 255, 0.08) 100%
+    );
+    pointer-events: none;
+}
+
+/* Вид стрелок */
+.projects-swiper .swiper-button-next,
+.projects-swiper .swiper-button-prev {
+    width: 44px !important;
+    height: 44px !important;
+    background: var(--bg-bright) !important;
+    border-radius: 25% !important;
+    color: var(--text-light) !important;
+    box-shadow: 0 3px 10px var(--shadow-dim) !important;
+    transition: all 0.25s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Установление размера стрелки SVG */
+.projects-swiper .swiper-button-next svg,
+.projects-swiper .swiper-button-prev svg {
+    width: 22px !important;
+    height: 22px !important;
+}
+
+/* Увеличение масштаба стрелки */
+.projects-swiper .swiper-button-next svg {
+    transform: scale(1.15) !important;  /* увеличение размера стрелки */
+}
+
+.projects-swiper .swiper-button-prev svg {
+    transform: scaleX(-1) scale(1.15) !important;   /* увеличение размера + переворот стрелки */
+}
+
+/* Hover-эффект */
+.projects-swiper .swiper-button-next:hover,
+.projects-swiper .swiper-button-prev:hover {
+    transform: scale(1.1) !important;
+    background: var(--bg-bright) !important;
+}
+
+/* Отключённые стрелки */
+.projects-swiper .swiper-button-disabled {
+    opacity: 0.4 !important;
+    background: var(--bg-dim) !important;
+    box-shadow: none !important;
+    pointer-events: none !important;
+}
+
+
+/* ===================================================== */
 /*           Стили компонента LastNews.vue.vue           */
 /* ===================================================== */
 

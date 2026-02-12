@@ -1,11 +1,13 @@
 <script>
 import LastNews from '@/client/components/LastNews.vue'
+import AllProject from '@/client/components/AllProjects.vue'
 
 export default {
   name: 'HomeView',
 
   components: {
     LastNews,
+    AllProject,
   },
 
   methods: {
@@ -18,6 +20,11 @@ export default {
 
 <template>
   <h2>Домашняя</h2>
+
+
+
+  <AllProject />
+
 
   <LastNews />
 

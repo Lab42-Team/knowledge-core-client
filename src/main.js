@@ -1,5 +1,9 @@
 import { createApp } from 'vue';
 
+import 'swiper/css'
+import 'swiper/css/navigation'     // для стрелок
+import 'swiper/css/pagination'     // для точек пагинации
+
 // Функция для динамической загрузки CSS
 const loadStyles = async (isAdmin) => {
     if (isAdmin) {

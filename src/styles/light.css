@@ -1,12 +1,14 @@
 :root,                                   /* ← применяется всегда (дефолт) */
 :root[data-theme="tropical"] {           /* ← и при активной tropical */
 
+
+
     /* ========= палитра ========= */
     --text-primary:         #118AB2;
     --text-secondary:       rgba(6, 214, 160);
 
 
-    /* ========= отсортированнное ========= палитра Navbar */
+    /* ================== палитра Navbar */
     --bg-nav:                   rgba(6, 214, 160, 0.40);        /* цвет таблетки */
     --btn-login:                #118AB2;                        /* Кнопка входа */
     --btn-login-hover:          rgba(6, 214, 160, 0.40);        /* Кнопка входа при наведении */
@@ -17,20 +19,44 @@
 
     /* ================== */
 
+    /* =========AllProjects========= */
+    --bg-projects:      #F8FAFC;
+    --bg-bright:        #3B82F6;
+    --bg-dim:           #D1E8FF;
+    --bg-card-name-first:    #60A5FA;
+    --bg-card-name-second:   #3B82F6;
+    --shadow-dim:       #D1E8FF;
+    --shadow-bright:    #3B82F6;
+    --text-basic:       #0F172A;
+    --text-light:       #F8FAFC;
+    /*===Стили статусов=== */
+    --st-edit-c:       #92400e;
+    --st-edit-bg:      #fef3c7;
+    --st-edit-bc:      #fcd34d;
+    --st-ready-c:      #065f46;
+    --st-ready-bg:     #d1fae5;
+    --st-ready-bc:     #6ee7b7;
+    --st-out-c:        #991b1b;
+    --st-out-bg:       #fee2e2;
+    --st-out-bc:       #f87171;
+    --st-unkn-c:       #4b5563;
+    --st-unkn-bg:      #f3f4f6;
+    --st-unkn-bc:      #9ca3af;
+    /* ================================ */
 
 
     /* ================== */
-    --bg-page:            #F9FAFB;         /* почти белый фон страницы */
+    --bg-page:            #F0F7FF;         /* почти белый фон страницы */
 
 
     --text-dark:          #073B4C;
-    --text-light:         #FFFFFF;
+
 
 
     --theme-indicator:    #FFD166;         /* жёлтый цвет иконки солнца FFD166 */
 
     --accent-hover:       #06D6A0;
-    
+
     /*--bg-page-primary:*/
     /*--bg-page-secondary:*/
     /*--text-primary*/
