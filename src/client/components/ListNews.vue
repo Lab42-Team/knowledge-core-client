@@ -1,34 +1,35 @@
 <template>
-  <div class="projects-carousel">
+  <div class="news-carousel">
+    <h2>Последние новости</h2>
 
     <!-- показ пока данные не загрузились или пустого места -->
     <div v-if="loading" class="loading">Загрузка...</div>
     <div v-else-if="error" class="error">Ошибка: {{ error }}</div>
-    <div v-else-if="projects.length === 0" class="empty">Проекты не найдены</div>
+    <div v-else-if="news.length === 0" class="empty">Новости не найдены</div>
 
     <swiper
         :slides-per-view="1"
         :space-between="16"
         :navigation="true"
         :modules="modules"
-        class="projects-swiper"
+        class="news-swiper"
         :breakpoints="breakpoints"
         :centered-slides="true"
         :centered-slides-bounds="true"
         :center-insufficient-slides="true"
     >
 
-      <swiper-slide v-for="project in projects" :key="project.id">
-        <div class="project-card">
-          <div class="project-card-inner">
-            <div class="project-name">
-              {{ project.name }}
+      <swiper-slide v-for="item in news" :key="item.id">
+        <div class="news-card">
+          <div class="news-card-inner">
+            <div class="news-name">
+              {{ item.name }}
             </div>
-            <p>{{ project.description }}</p>
+            <p>{{ item.description }}</p>
           </div>
-          <h3 class="project-status"
-              :class="statusClass(project.status)">
-            {{ getStatusName(project.status) }}
+
+          <h3 class="news-date">
+            {{ dayjs(item.date).format('DD MMMM YYYY') }}
           </h3>
         </div>
       </swiper-slide>
@@ -38,16 +39,17 @@
 </template>
 
 <script setup>
+import dayjs from 'dayjs';
 import { ref, onMounted } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Navigation} from 'swiper/modules'
-import { getProjects, getProjectStatuses } from '@/client/api/client.js'
+import { getLatestNews } from '@/client/api/client.js'
+
 
 // Импорт модулей
 const modules = [Navigation]
 
-const projects = ref([])
-const statusNames = ref([])
+const news = ref([])
 const loading = ref(true)
 const error = ref(null)
 
@@ -60,31 +62,15 @@ const breakpoints = {
   1280: { slidesPerView: 5,   spaceBetween: 32  }, // >= 1280px
 }
 
-const getStatusName = (statusId) => {
-  const id = Number(statusId)
-  if (isNaN(id) || id < 0) return '—'
-  return statusNames.value[id] || `Статус ${id}`
-}
-
-const statusClass = (statusId) => {
-  const id = Number(statusId)
-  if (id === 0) return 'status-editing'
-  if (id === 1) return 'status-ready'
-  if (id === 2) return 'status-outdated'
-  return 'status-unknown'
-}
 
 
 // Загрузка данных при монтировании компонента
 onMounted(async () => {
   try {
-    // Загрузка обоих запросов параллельно
-    const [projectsData, statusesData] = await Promise.all([
-      getProjects(),
-      getProjectStatuses()
-    ])
-    projects.value = projectsData
-    statusNames.value = statusesData
+    loading.value = true;
+    const data = await getLatestNews();
+    news.value = data;
+    console.log("Новости загружены:", news.value);
   } catch (err) {
     console.error('Не удалось загрузить проекты:', err)
     error.value = err.message || 'Неизвестная ошибка'

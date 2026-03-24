@@ -187,7 +187,7 @@
 
 
 /* ===================================================== */
-/*           Стили компонента AllProjects.vue            */
+/*           Стили компонента ListProjects.vue            */
 /* ===================================================== */
 
 .projects-carousel {
@@ -366,98 +366,163 @@
 
 
 /* ===================================================== */
-/*           Стили компонента LastNews.vue.vue           */
+/*           Стили компонента ListNews.vue.vue           */
 /* ===================================================== */
 
-.last-news { padding: 40px 0; }
-
-h2 { margin-bottom: 28px; font-size: 28px; font-weight: 700; }
-
-.empty { margin: 80px 0; text-align: center; }
-
-/* Отступы под кнопки ← → */
-.carousel-wrapper {
-    position: relative;
-    padding: 0 75px;
+.news-carousel {
+    width: 100%;
+    padding: 0 10px;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
 
-/* Чтобы крайние карточки не обрезались */
-.carousel-wrapper :deep(.n-carousel__slides) {
-    overflow: visible !important;
+/* Основные стили Swiper */
+.news-swiper {
+    width: 100%;
+    padding: 30px 0;
 }
 
-.carousel { height: 370px; }
-
-/* Карточка */
-.card {
-    height: 95%;
-    cursor: pointer;
-    border-radius: 3%;
-    transition: transform 0.3s ease;
-
-}
-.card:hover {
-    transform: translateY(5px);
-    box-shadow: none !important;   /* убираем любую тень при ховере*/
-
+/* Стиль карточек */
+.news-card {
+    background: var(--bg-projects);
+    border-radius: 12px;
+    height: 270px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 12px var(--shadow-dim);
+    transition: all 0.28s ease;
+    position: relative;           /* для позиционирования статуса */
+    padding-bottom: 60px;         /* место для статуса снизу */
 }
 
-/* Текст внутри карточки */
-.header { margin-bottom: 12px; text-align: right; }
-.date { font-size: 13px; color: #888; font-weight: 500; }
-.title { margin: 0 0 12px; font-size: 19px; font-weight: 600; line-height: 1.4; }
-.desc { flex: 1; color: #595959; line-height: 1.6; font-size: 15px; margin-bottom: 16px; }
+.news-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px -12px var(--shadow-bright);
+}
 
-/* Круглые кнопки навигации */
-.nav-btn {
-    width: 40px;
-    height: 40px;
-    color: var(--text-primary) !important;
-    border: 1px solid var(--text-primary) !important;
-    background: transparent;
-    /* Убираем все внутренние бордеры */
-    --n-border: none !important;
-    --n-border-hover: none !important;
-    --n-border-focus: none !important;
-    --n-border-pressed: none !important;
-    --n-border-disabled: none !important;
+/* Внутренний контейнер с обрезкой */
+.news-card-inner {
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
 
+.news-card p {
+    margin: 0 16px;
+    font-size: 0.95rem;
+    color: var(--text-basic);
+    flex-grow: 1;                 /* заполнение остального пространства */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 20;       /* большое число чтобы не ограничивать жёстко */
+    -webkit-box-orient: vertical;
+}
+
+.news-date {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-    transition: all 0.3s ease;
+    bottom: 4px;
+    right: -10px;        /* прижатие к правому краю с отступом */
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 8px;
+    white-space: nowrap;  /* вывод в одну строку */
+    line-height: 1.3;
+    box-shadow: 0 2px 6px var(--shadow-dim);
+    border: 1px solid;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.prev { left: 10px; }
-.next { right: 10px; }
-
-.nav-btn:hover {
-    color: var(--text-secondary) !important;
-    border: 1px solid var(--text-secondary) !important;
-    transform: translateY(-50%) scale(1.12);
+/* Цвета для даты */
+.news-date {
+    color: var(--st-ready-c);
+    background: var(--st-ready-bg);
+    border-color: var(--st-ready-bc);
 }
 
-.nav-btn:disabled {
-    background: transparent !important;
-    border-color: #d9d9d9 !important;
-    color: #d9d9d9 !important;
+/* Градиент фона */
+.news-name {
+    height: 3.2em; /* фиксированная высота на 2 строки */
+    background: linear-gradient(45deg, var(--bg-card-name-first) 0%, var(--bg-card-name-second) 100%);
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding: 16px 16px 8px 16px;
+    line-height: 1.4;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    flex-shrink: 0;                   /* не сжимается */
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
 
+/* Стеклянный эффект фона */
+.news-card .news-name::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.18) 0%,
+            rgba(255, 255, 255, 0) 50%,
+            rgba(255, 255, 255, 0.08) 100%
+    );
+    pointer-events: none;
+}
 
+/* Вид стрелок */
+.news-swiper .swiper-button-next,
+.news-swiper .swiper-button-prev {
+    width: 44px !important;
+    height: 44px !important;
+    background: var(--bg-bright) !important;
+    border-radius: 25% !important;
+    color: var(--text-light) !important;
+    box-shadow: 0 3px 10px var(--shadow-dim) !important;
+    transition: all 0.25s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
 
-    opacity: 0.3;
+/* Установление размера стрелки SVG */
+.news-swiper .swiper-button-next svg,
+.news-swiper .swiper-button-prev svg {
+    width: 22px !important;
+    height: 22px !important;
+}
+
+/* Увеличение масштаба стрелки */
+.news-swiper .swiper-button-next svg {
+    transform: scale(1.15) !important;  /* увеличение размера стрелки */
+}
+
+.news-swiper .swiper-button-prev svg {
+    transform: scaleX(-1) scale(1.15) !important;   /* увеличение размера + переворот стрелки */
+}
+
+/* Hover-эффект */
+.news-swiper .swiper-button-next:hover,
+.news-swiper .swiper-button-prev:hover {
+    transform: scale(1.1) !important;
+    background: var(--bg-bright) !important;
+}
+
+/* Отключённые стрелки */
+.news-swiper .swiper-button-disabled {
+    opacity: 0.4 !important;
+    background: var(--bg-dim) !important;
     box-shadow: none !important;
-    transform: translateY(-50%) scale(1) !important;
-}
-
-.nav-btn:disabled:hover {
-    background: transparent !important;
-    border-color: #d9d9d9 !important;
-    color: #d9d9d9 !important;
-
-
-
-    transform: translateY(-50%) scale(1) !important;
+    pointer-events: none !important;
 }
 
 

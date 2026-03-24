@@ -1,13 +1,13 @@
 <script>
-import LastNews from '@/client/components/LastNews.vue'
-import AllProject from '@/client/components/AllProjects.vue'
+import ListNews from '@/client/components/ListNews.vue'
+import ListProject from '@/client/components/ListProjects.vue'
 
 export default {
   name: 'HomeView',
 
   components: {
-    LastNews,
-    AllProject,
+    ListNews,
+    ListProject,
   },
 
   methods: {
@@ -23,10 +23,10 @@ export default {
 
 
 
-  <AllProject />
+  <ListProject />
 
 
-  <LastNews />
+  <ListNews />
 
 
 
