@@ -15,6 +15,20 @@ export const getLatestNews = async (limit = 10) => {
     }
 };
 
+export const getAllNews = async () => {
+    try {
+        const { data: news } = await api.get('/v1/news');
+
+        return news
+            .filter(item => item.status === 0)                  // только с status = 0
+            .sort((a, b) => b.date.localeCompare(a.date))       // от новой к старой
+
+    } catch (error) {
+        console.error('Ошибка получения данных:', error);
+        throw error;
+    }
+};
+
 export const getProjects = async () => {
     try {
         const { data: projects } = await api.get('/v1/project');

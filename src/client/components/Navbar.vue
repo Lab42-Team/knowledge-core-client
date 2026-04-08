@@ -42,8 +42,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router'
+import {ref, onMounted, onUnmounted, h} from 'vue'
+import {RouterLink, useRouter} from 'vue-router'
 import { NSpace, NMenu, NButton } from 'naive-ui'
 import altair from '@/assets/altair.png'
 
@@ -54,10 +54,11 @@ const currentTheme = ref('tropical')
 const menuOptions = [
   { label: 'Home',   key: 'home',   name: 'HomeView' },
   { label: 'About',  key: 'about',  name: 'AboutView' },
+  { label: 'News',  key: 'news',  name: 'NewsView' },
 ]
 
 const handleMenuClick = (key) => {
-  const map = { home: 'HomeView', about: 'AboutView' }
+  const map = { home: 'HomeView', about: 'AboutView', news: 'NewsView' }
   router.push({ name: map[key] })
 }
 

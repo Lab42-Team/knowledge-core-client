@@ -13,13 +13,14 @@ const routes = [
     children: [
       { path: '', name: 'HomeView', component: HomeView, meta: { breadcrumb: 'PAGE.CLIENT.HOME' }},
       { path: '/about', name: 'AboutView', component: AboutView, meta: { breadcrumb: 'PAGE.CLIENT.ABOUT' }},
+      { path: '/news', name: 'NewsView', component: NewsView, meta: { breadcrumb: 'PAGE.CLIENT.NEWS' }},
       { path: '/login', name: 'LoginView',
         component: () => import('../views/LoginView.vue'), // Динамический импорт
         meta: { breadcrumb: 'PAGE.CLIENT.LOGIN' }
       },
-      {
-        path: '/news/:id', name: 'News', component: NewsView,
-      }
+      //{
+        //path: '/news/:id', name: 'News', component: NewsView,
+      //}
     ],
   },
 ];

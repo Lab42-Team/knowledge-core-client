@@ -1,155 +1,129 @@
 <template>
-  <div class="news-detail-container">
-    <!-- Спиннер загрузки -->
-    <n-spin v-if="loading" size="large" class="spinner" />
+  <div class="all-news">
+    <div class="header">
+      <h2>Все новости</h2>
 
-    <!-- Новость не найдена -->
-    <n-empty
-        v-else-if="error || !news"
-        description="Новость не найдена"
-        class="empty"
+      <!-- Переключатель режимов -->
+      <div class="view-toggle">
+        <button :class="{ active: viewMode === 'tile' }" @click="viewMode = 'tile'">
+          Плитка
+        </button>
+        <button :class="{ active: viewMode === 'simple' }" @click="viewMode = 'simple'">
+          Список
+        </button>
+      </div>
+    </div>
+
+    <!-- Состояния -->
+    <div v-if="loading" class="loading">Загрузка новостей...</div>
+    <div v-else-if="error" class="error">Ошибка: {{ error }}</div>
+
+    <!-- Сетка / Список новостей -->
+    <div :class="{'news-grid': viewMode === 'tile', 'news-list': viewMode === 'simple'}"
     >
-      <template #extra>
-        <n-button type="primary" @click="$router.go(-1)">
-          ← Вернуться назад
-        </n-button>
-      </template>
-    </n-empty>
-
-    <!-- Сама новость -->
-    <n-card v-else class="news-card" :bordered="false">
-      <template #header>
-        <div class="news-header">
-          <n-text type="info" class="date">
-            {{ formatDate(news.date) }}
-          </n-text>
-          <n-button text @click="$router.go(-1)">
-            ← Назад
-          </n-button>
-        </div>
-      </template>
-
-      <h1 class="title">{{ news.name }}</h1>
-
-      <div class="content" v-html="news.description || news.content"></div>
-    </n-card>
+      <NewsCard
+          v-for="item in news"
+          :key="item.id"
+          :news-item="item"
+          :view-mode="viewMode"
+      />
+    </div>
   </div>
 </template>
 
-<script>
-import {
-  NCard,
-  NButton,
-  NEmpty,
-  NSpin,
-  NText
-} from 'naive-ui'
+<script setup>
+import { ref, onMounted } from 'vue'
+import {getAllNews} from '@/client/api/client.js'
+import NewsCard from '@/client/components/NewsCard.vue'
 
-import { getNewsById } from '@/client/api/client.js'
-import dayjs from 'dayjs'
+const news = ref([])
+const loading = ref(true)
+const error = ref(null)
+const viewMode = ref('tile')   // 'tile' или 'simple'
 
-export default {
-  name: 'NewsDetailView',
-
-  components: {
-    NCard,
-    NButton,
-    NEmpty,
-    NSpin,
-    NText
-  },
-
-  data() {
-    return {
-      news: null,
-      loading: true,
-      error: false
-    }
-  },
-
-  async mounted() {
-    await this.loadNews()
-  },
-
-  methods: {
-    async loadNews() {
-      this.loading = true
-      this.error = false
-      try {
-        const id = this.$route.params.id
-        this.news = await getNewsById(id)
-      } catch (err) {
-        console.error('Ошибка загрузки новости:', err)
-        this.error = true
-      } finally {
-        this.loading = false
-      }
-    },
-
-    formatDate(date) {
-      return dayjs(date).format('D MMMM YYYY, HH:mm')
-    }
-  },
-
-  watch: {
-    '$route.params.id'(newId, oldId) {
-      if (newId !== oldId) this.loadNews()
-    }
+// Загрузка данных при монтировании компонента
+onMounted(async () => {
+  try {
+    loading.value = true;
+    const data = await getAllNews();
+    news.value = data;
+    console.log("Новости загружены:", news.value);
+  } catch (err) {
+    console.error('Не удалось загрузить проекты:', err)
+    error.value = err.message || 'Неизвестная ошибка'
+  } finally {
+    loading.value = false
   }
-}
+})
+
 </script>
 
+
 <style scoped>
-.news-detail-container {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 0 20px;
+.all-news {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-.spinner {
-  margin: 120px auto;
-  text-align: center;
-}
-
-.empty {
-  margin: 120px auto;
-  text-align: center;
-}
-
-.news-card {
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-}
-
-.news-header {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
-.date {
-  font-size: 15px;
+.header h2 {
+  margin: 0;
+  font-size: 2.2rem;
+  color: #222;
+}
+
+.view-toggle {
+  display: flex;
+  background: #f1f1f1;
+  border-radius: 12px;
+  padding: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.view-toggle button {
+  padding: 10px 24px;
+  border: none;
+  background: transparent;
+  border-radius: 10px;
   font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.title {
-  margin: 32px 0;
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 1.3;
-  color: #1a1a1a;
+.view-toggle button.active {
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  color: #0066ff;
 }
 
-.content {
-  font-size: 17px;
-  line-height: 1.8;
-  color: #333;
+.loading, .error {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 1.1rem;
 }
 
-.content :deep(p) { margin-bottom: 20px; }
-.content :deep(img) { max-width: 100%; border-radius: 12px; margin: 24px 0; }
-.content :deep(h2),
-.content :deep(h3) { margin: 32px 0 16px; font-weight: 600; }
+.error {
+  color: #e74c3c;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 </style>
