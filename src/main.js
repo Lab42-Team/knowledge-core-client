@@ -63,6 +63,7 @@ const loadApp = async () => {
                 faSignInAlt,
                 faAngleRight,
                 faAngleLeft,
+                faNewspaper,
                 //faUser,
                 //faHome,
                 //faBars,
@@ -71,7 +72,7 @@ const loadApp = async () => {
                 //faHeart,
                 //faShoppingCart
             } = await import('@fortawesome/free-solid-svg-icons');
-            library.add(faSun, faMoon, faSignInAlt, faAngleRight, faAngleLeft);
+            library.add(faSun, faMoon, faSignInAlt, faAngleRight, faAngleLeft, faNewspaper);
         }
 
         // Глобальная регистрация компонента

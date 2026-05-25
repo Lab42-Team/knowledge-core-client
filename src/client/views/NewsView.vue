@@ -1,5 +1,6 @@
 <template>
-  <div class="all-news">
+  <div class="wrapper">
+
     <div class="header">
       <h2>Все новости</h2>
 
@@ -19,8 +20,7 @@
     <div v-else-if="error" class="error">Ошибка: {{ error }}</div>
 
     <!-- Сетка / Список новостей -->
-    <div :class="{'news-grid': viewMode === 'tile', 'news-list': viewMode === 'simple'}"
-    >
+    <div :class="{'news-grid': viewMode === 'tile', 'news-list': viewMode === 'simple'}">
       <NewsCard
           v-for="item in news"
           :key="item.id"
@@ -57,73 +57,3 @@ onMounted(async () => {
 })
 
 </script>
-
-
-<style scoped>
-.all-news {
-  padding: 20px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-.header h2 {
-  margin: 0;
-  font-size: 2.2rem;
-  color: #222;
-}
-
-.view-toggle {
-  display: flex;
-  background: #f1f1f1;
-  border-radius: 12px;
-  padding: 4px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-
-.view-toggle button {
-  padding: 10px 24px;
-  border: none;
-  background: transparent;
-  border-radius: 10px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.view-toggle button.active {
-  background: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  color: #0066ff;
-}
-
-.loading, .error {
-  text-align: center;
-  padding: 60px 20px;
-  font-size: 1.1rem;
-}
-
-.error {
-  color: #e74c3c;
-}
-
-.news-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 24px;
-}
-
-.news-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-</style>

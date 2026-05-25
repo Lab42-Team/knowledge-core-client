@@ -2,33 +2,35 @@
 :root[data-theme="tropical"] {           /* ← и при активной tropical */
 
 
-
-    /* ========= палитра ========= */
-    --text-primary:         #118AB2;
-    --text-secondary:       rgba(6, 214, 160);
-
-
     /* ================== палитра Navbar */
-    --bg-nav:                   rgba(6, 214, 160, 0.40);        /* цвет таблетки */
-    --btn-login:                #118AB2;                        /* Кнопка входа */
-    --btn-login-hover:          rgba(6, 214, 160, 0.40);        /* Кнопка входа при наведении */
+    --bg-nav:                   rgba(59, 130, 246, 0.35);       /* цвет таблетки */
+    --btn-login:                #3B82F6;                        /* Кнопка входа */
+    --btn-login-hover:          #2563EB;                        /* Кнопка входа при наведении */
     --btn-login-text:           #FFFFFF;                        /* Текст кнопки входа */
-    --item-menu-text-hover:     #118AB2;                        /* Текст пункта меню */
+    --item-menu-text-hover:     #3B82F6;                        /* Текст пункта меню */
     --btn-theme-toggle:         #FFFFFF;
-    --btn-theme-toggle-hover:   rgba(6, 214, 160, 0.40);
+    --btn-theme-toggle-hover:   rgba(59, 130, 246, 0.25);
 
     /* ================== */
 
+
     /* =========AllProjects========= */
     --bg-projects:      #F8FAFC;
+    --bg-light:         #E4EEFF;
     --bg-bright:        #3B82F6;
     --bg-dim:           #D1E8FF;
     --bg-card-name-first:    #60A5FA;
     --bg-card-name-second:   #3B82F6;
+    --bg-scrollbar-first:   #3B82F60D;
+    --bg-scrollbar-second:  #3B82F64D;
+    --bg-scrollbar-third:   #3B82F680;
     --shadow-dim:       #D1E8FF;
     --shadow-bright:    #3B82F6;
     --text-basic:       #0F172A;
     --text-light:       #F8FAFC;
+    --text-active:      #3B82F6;
+
+
     /*===Стили статусов=== */
     --st-edit-c:       #92400e;
     --st-edit-bg:      #fef3c7;
@@ -45,6 +47,9 @@
     /* ================================ */
 
 
+
+
+
     /* ================== */
     --bg-page:            #F0F7FF;         /* почти белый фон страницы */
 
@@ -53,10 +58,12 @@
 
 
 
+
+
     --theme-indicator:    #FFD166;         /* жёлтый цвет иконки солнца FFD166 */
-
     --accent-hover:       #06D6A0;
-
+    --text-primary:         #118AB2;
+    --text-secondary:       rgba(6, 214, 160);
     /*--bg-page-primary:*/
     /*--bg-page-secondary:*/
     /*--text-primary*/

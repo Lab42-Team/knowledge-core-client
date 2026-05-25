@@ -20,8 +20,8 @@
 /* Отступ контента под навбар */
 .content {
     padding: 88px 24px 24px;
-    min-height: calc(100vh - 88px);
-    box-sizing: border-box;
+    /* min-height: calc(100vh - 88px); */
+    /* box-sizing: border-box; */
 }
 
 /* ===================================================== */
@@ -187,7 +187,7 @@
 
 
 /* ===================================================== */
-/*           Стили компонента ListProjects.vue            */
+/*           Стили компонента ListProjects.vue           */
 /* ===================================================== */
 
 .projects-carousel {
@@ -527,6 +527,86 @@
 
 
 /* ===================================================== */
+/*           Стили компонента NewsView.vue           */
+/* ===================================================== */
+
+.wrapper {
+    width: 100%;
+    padding: 0 10px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.header h2 {
+    margin: 0;
+    font-size: 2.2rem;
+    color: #222;
+}
+
+.view-toggle {
+    display: flex;
+    background: var(--bg-projects);
+    border-radius: 12px;
+    padding: 4px;
+    box-shadow: 0 2px 6px var(--shadow-dim);
+}
+
+.view-toggle button {
+    padding: 10px 24px;
+    border: none;
+    background: transparent;
+    border-radius: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-basic);
+}
+
+.view-toggle button.active {
+    background: white;
+    box-shadow: 0 2px 6px var(--shadow-bright);
+    color: var(--text-active);
+}
+
+.loading, .error {
+    text-align: center;
+    padding: 60px 20px;
+    font-size: 1.1rem;
+}
+
+.error {
+    color: #e74c3c;
+}
+
+
+
+
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+.news-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+/* ===================================================== */
 /*        */
 /* ===================================================== */
+
+
 
